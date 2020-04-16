@@ -2,8 +2,20 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
+  { path: '', redirectTo: 'movies', pathMatch: 'full' },  //nasa pocetna strana
+  { path: 'movies', loadChildren: () => import('./movies/movies.module').then( m => m.MoviesPageModule)},
+  {
+    path: 'log-in',
+    loadChildren: () => import('./auth/log-in/log-in.module').then( m => m.LogInPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'movies',
+    loadChildren: () => import('./movies/movies.module').then( m => m.MoviesPageModule)
+  }
 ];
 
 @NgModule({
