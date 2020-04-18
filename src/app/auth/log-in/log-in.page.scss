@@ -1,0 +1,28 @@
+
+  //za sliku kao pozadina:
+  //.bg-image {
+  // background-image: url("uneti putanju") ;
+  //  background-repeat: no-repeat;
+  //  background-position: center;
+  //  background-size: contain;
+  //}
+
+  //za gradijente
+
+.bg{
+  --ion-background-color: linear-gradient(to bottom, #519897 0%, #ff00b0 100%);
+}
+//ion-content{
+//--ion-background-color: #3880ff;
+//}
+  .white {
+    --ion-background-color: #fff;
+  }
+
+  //.center {
+  //  display: flex;
+  //  justify-content: center;
+  //  align-content: center;
+  //  align-items: center;
+  //  width: 50%;
+  //}

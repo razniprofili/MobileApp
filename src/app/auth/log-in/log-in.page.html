@@ -1,9 +1,52 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>log-in</ion-title>
+  <ion-toolbar color="filmlo">
+    <ion-title class="center">Log in</ion-title>
   </ion-toolbar>
 </ion-header>
+<!--TO DO: srediti boje polja, da ne budu plava kad se klikne na polje!-->
+<ion-content >
+  <div class="center">
+    <app-logo></app-logo>
+    <h1>Prijava</h1>
+  </div>
+  <form #LogInForm="ngForm" (ngSubmit)="onLogIn(LogInForm)" >
+    <ion-grid>
+      <!--sirina u gridu je ogranicena na 12-->
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <!--      ofset govori kolika je udualjenost el od leve strane, siye je 6, pola od 12-->
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating" >Email</ion-label>
+              <ion-input type="email" ngModel name="email" required email #email="ngModel"></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="email.invalid && email.touched">
+              <ion-label color="danger">Email adresa mora biti validna!</ion-label>
+            </ion-item>
 
-<ion-content>
-
+            <ion-item>
+              <ion-label position="floating">Sifra</ion-label>
+              <ion-input type="password" ngModel name="password" required minlength="8" #password="ngModel"></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="password.invalid && password.touched">
+              <ion-label color="danger">Sifra mora biti duzine minimun 8 karaktera!</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-sm="6" >
+<!--          <p>Prvi put si ovde?</p>-->
+          Prvi put si ovde? <a routerLink="/register" >Registruj se</a>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <!--    centrira se po x osi, pogledaj dokumentaciju css-utilities-->
+        <ion-col size-sm="6" >
+          <ion-button type="submit" expand="block" shape="round" [disabled]="LogInForm.invalid" color="filmlo" >Prijava</ion-button>
+          <!--size="large"-->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>

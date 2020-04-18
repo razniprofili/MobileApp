@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'movies', pathMatch: 'full' },  //nasa pocetna strana
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },  //nasa pocetna strana
   { path: 'movies', loadChildren: () => import('./movies/movies.module').then( m => m.MoviesPageModule)},
   {
     path: 'log-in',
@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'movies',
     loadChildren: () => import('./movies/movies.module').then( m => m.MoviesPageModule)
+  },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./welcome/welcome.module').then( m => m.WelcomePageModule)
   }
 ];
 

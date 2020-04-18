@@ -1,9 +1,27 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>movies</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!--Ovde cemo staviti tabove u donjem delu erana-->
 
-<ion-content>
+<ion-tabs>
+  <ion-tab-bar slot="bottom" color="dark">
 
-</ion-content>
+    <ion-tab-button tab="home-page">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Pocetna</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="add-movie">
+      <ion-icon name="create"></ion-icon>
+      <ion-label>Dodaj film</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="search-movie">
+      <ion-icon name="search"></ion-icon>
+      <ion-label>Pretrazi</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="activity">
+      <ion-icon name="trophy"></ion-icon>
+      <ion-label>Aktivnost</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>
