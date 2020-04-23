@@ -1,9 +1,28 @@
+<app-menu></app-menu>
 <ion-header>
+  <ion-toolbar color="filmlo">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Pretraži moje filmove</ion-title>
+  </ion-toolbar>
+
   <ion-toolbar>
-    <ion-title>search-movie</ion-title>
+    <ion-searchbar animated="true" placeholder="Naziv filma" [(ngModel)]="queryText" (ionInput)="updateMovies($event)" ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list>
+    <!--    <app-quote-element *ngFor="Let quote of quotes" [quote]="quotes" [routerLink]="quote.id"></app-quote-element>-->
+    <app-movie-element *ngFor="let movie of movies" [movie]="movie" [routerLink]="movie.id"></app-movie-element>
+    <!--    kad se klikne na citat u ruti ce se pojaviti njegov id, svjdn je sta pise q ili quote-->
+  </ion-list>
+<!--  KAd se klikne na ovo dugme otvara se forma za dodavanje filma  -->
+  <ion-fab  vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="filmlo">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+

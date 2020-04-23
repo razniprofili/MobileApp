@@ -31,20 +31,26 @@ const routes: Routes = [
       }
     ]
 
-  },
+  }
+  ,
   {
     path: '', //ako je bez icea napisano opet ovde prosledjuje
     redirectTo:'/movies/tabs/home-page',
     pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
-    path: 'activity',
-    loadChildren: () => import('./activity/activity.module').then( m => m.ActivityPageModule)
   }
+  // {
+  //   path: 'home',
+  //   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  // },
+  // {
+  //   path: 'activity',
+  //   loadChildren: () => import('./activity/activity.module').then(m => m.ActivityPageModule)
+  // }
+  // },
+  // {
+  //   path: 'movie-details',
+  //   loadChildren: () => import('./search-movie/movie-details/movie-details.module').then(m => m.MovieDetailsPageModule)
+  // }
 ];
 
 @NgModule({

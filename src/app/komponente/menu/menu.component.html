@@ -1,0 +1,31 @@
+
+<ion-menu side="start" contentId="main-content">
+  <!-- <ion-menu side="start" menuId="menu1" contentId="main-content"> -->
+  <ion-header>
+    <ion-toolbar color="filmlo">
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list >
+
+      <ion-menu-toggle>
+      <ion-item routerLink="/myprofile">
+        <ion-icon name="person-circle" slot="start" color="filmlo"></ion-icon>
+        <ion-label>Moj profil</ion-label>
+      </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle>
+      <ion-item (click)="odjaviSe()">
+        <ion-icon name="log-out" slot="start" color="filmlo" ></ion-icon>
+        <ion-label>Odjavi se</ion-label>
+      </ion-item>
+      </ion-menu-toggle>
+
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-router-outlet id="main-content"></ion-router-outlet>
+
+

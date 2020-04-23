@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="filmlo">
+    <ion-buttons slot="start">
+      <!--    da mozemo da se vratimo nayad na sve filmove-->
+      <ion-back-button defaultHref="/movies/tabs/search-movie">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalji filma</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <h1>{{movie.naziv}}</h1>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <h2>{{movie.zanr}}</h2>
+    </ion-card-content>
+    <ion-card-content>
+      <h2>{{movie.glumci}}</h2>
+    </ion-card-content>
+    <ion-card-content>
+      <h2>{{movie.ocena}}</h2>
+    </ion-card-content>
+    <ion-card-content>
+      <h2>{{movie.datum}}</h2>
+    </ion-card-content>
+    <ion-card-content>
+      <h2>{{movie.komentar}}</h2>
+    </ion-card-content>
+<!--    Dugme za izmenu filma, otvara se forma za dodvanje filma-->
+    <ion-button color="filmlo" >
+      <ion-icon name="pencil-outline"></ion-icon>
+      Izmeni film
+    </ion-button>
+<!--    Brisanje filma, pre tog alert!-->
+    <ion-button color="filmlo" (click)="openAlert()" >
+      <ion-icon name="trash-outline"></ion-icon>
+      Obrisi film
+    </ion-button>
+  </ion-card>
+
+
+
+
+</ion-content>
