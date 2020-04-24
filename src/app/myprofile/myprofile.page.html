@@ -1,9 +1,22 @@
+<app-menufull></app-menufull>
 <ion-header>
-  <ion-toolbar>
-    <ion-title>myprofile</ion-title>
+  <ion-toolbar class="center" color="filmlo">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Moj profil</ion-title>
+<!--    <ion-button slot="end">-->
+<!--      <ion-icon name="pencil-outline" slot="end"></ion-icon>-->
+<!--    </ion-button>-->
+    <ion-label slot="end">Izmeni</ion-label>
+    <ion-fab-button slot="end" size="small" color="filmlo" (click)="otvoriStranuZaIzmenu()">
+
+      <ion-icon name="pencil-outline"></ion-icon>
+
+    </ion-fab-button>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
 
 </ion-content>

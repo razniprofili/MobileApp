@@ -9,6 +9,8 @@ import { SearchMoviePageRoutingModule } from './search-movie-routing.module';
 import { SearchMoviePage } from './search-movie.page';
 import {MovieElementComponent} from "../movie-element/movie-element.component";
 import {MenuComponent} from "../../komponente/menu/menu.component";
+import {MenufullComponent} from "../../komponente/menufull/menufull.component";
+
 
 
 @NgModule({

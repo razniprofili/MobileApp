@@ -1,0 +1,49 @@
+<ion-menu side="start" contentId="main-content1">
+  <!-- <ion-menu side="start" menuId="menu1" contentId="main-content"> -->
+  <ion-header>
+    <ion-toolbar color="filmlo">
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list >
+
+      <ion-menu-toggle>
+        <ion-item routerLink="/movies">
+          <ion-icon name="home-outline" slot="start" color="filmlo"></ion-icon>
+          <ion-label>Pocetna</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle>
+        <ion-item routerLink="/movies/tabs/add-movie">
+          <ion-icon name="add-circle-outline" slot="start" color="filmlo"></ion-icon>
+          <ion-label>Dodavanje filma</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle>
+        <ion-item routerLink="/movies/tabs/search-movie">
+          <ion-icon name="search-outline" slot="start" color="filmlo"></ion-icon>
+          <ion-label>Pretraga filma</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle>
+        <ion-item routerLink="/movies/tabs/activity">
+          <ion-icon name="bar-chart-outline" slot="start" color="filmlo"></ion-icon>
+          <ion-label>Aktivnost</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle>
+        <ion-item (click)="odjaviSe()">
+          <ion-icon name="log-out" slot="start" color="filmlo" ></ion-icon>
+          <ion-label>Odjavi se</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-router-outlet id="main-content1"></ion-router-outlet>

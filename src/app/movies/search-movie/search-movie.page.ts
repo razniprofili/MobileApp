@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {filter} from "rxjs/operators";
 import {Movie} from "../movie.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search-movie',
@@ -13,7 +14,7 @@ export class SearchMoviePage implements OnInit {
   movies: Movie[];
 
 
-  constructor() {
+  constructor(private router: Router) {
     this.inicijalizuj();
   }
 
@@ -46,7 +47,81 @@ export class SearchMoviePage implements OnInit {
         ocena:3,
         datum:"13.01.2019.",
         komentar:"Neki tamo komentar"
-      } ]
+      },
+      {
+        id:'3',
+        naziv: 'Treci film',
+        zanr:"komedija",
+        glumci:"neki tamo glumci",
+        ocena:3,
+        datum:"13.01.2019.",
+        komentar:"Neki tamo komentar"
+      },{
+        id:'3',
+        naziv: 'Treci film',
+        zanr:"komedija",
+        glumci:"neki tamo glumci",
+        ocena:3,
+        datum:"13.01.2019.",
+        komentar:"Neki tamo komentar"
+      },{
+        id:'3',
+        naziv: 'Treci film',
+        zanr:"komedija",
+        glumci:"neki tamo glumci",
+        ocena:3,
+        datum:"13.01.2019.",
+        komentar:"Neki tamo komentar"
+      },{
+        id:'3',
+        naziv: 'Treci film',
+        zanr:"komedija",
+        glumci:"neki tamo glumci",
+        ocena:3,
+        datum:"13.01.2019.",
+        komentar:"Neki tamo komentar"
+      },{
+        id:'3',
+        naziv: 'Treci film',
+        zanr:"komedija",
+        glumci:"neki tamo glumci",
+        ocena:3,
+        datum:"13.01.2019.",
+        komentar:"Neki tamo komentar"
+      },{
+        id:'3',
+        naziv: 'Treci film',
+        zanr:"komedija",
+        glumci:"neki tamo glumci",
+        ocena:3,
+        datum:"13.01.2019.",
+        komentar:"Neki tamo komentar"
+      },{
+        id:'3',
+        naziv: 'Treci film',
+        zanr:"komedija",
+        glumci:"neki tamo glumci",
+        ocena:3,
+        datum:"13.01.2019.",
+        komentar:"Neki tamo komentar"
+      },{
+        id:'3',
+        naziv: 'Treci film',
+        zanr:"komedija",
+        glumci:"neki tamo glumci",
+        ocena:3,
+        datum:"13.01.2019.",
+        komentar:"Neki tamo komentar"
+      },{
+        id:'3',
+        naziv: 'Treci film',
+        zanr:"komedija",
+        glumci:"neki tamo glumci",
+        ocena:3,
+        datum:"13.01.2019.",
+        komentar:"Neki tamo komentar"
+      }
+      ]
   }
 
   ngOnInit() {
@@ -61,5 +136,9 @@ export class SearchMoviePage implements OnInit {
       })
     }
 }
+
+  otvoriStranuZaDodavanje(){
+    this.router.navigateByUrl('/movies/tabs/add-movie');
+  }
 
 }

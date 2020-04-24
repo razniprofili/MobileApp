@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar class="center" color="filmlo">
+    <ion-buttons slot="start">
+    <ion-back-button defaultHref="/myprofile">
+    </ion-back-button>
+  </ion-buttons>
+    <ion-title>Izmeni profil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)" >
+  <div>
+    <ion-avatar>
+        <ion-img src="https://image.shutterstock.com/image-photo/silhouette-man-sitting-relaxing-under-600w-519411058.jpg" (click)="updateProfilPic()"></ion-img>
+    </ion-avatar>
+  </div>
+
+
+</ion-content>
