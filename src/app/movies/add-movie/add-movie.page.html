@@ -1,29 +1,35 @@
+
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="filmlo">
     <ion-title>Dodaj film</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form>
+  <form >
     <ion-grid>
       <!--sirina u gridu je ogranicena na 12-->
       <ion-row>
         <ion-col size-sm="6" offset-sm="3">
           <!--      ofset govori kolika je udualjenost el od leve strane, size je 6, pola od 12-->
           <ion-list>
+              <ion-item>
+                  <ion-label position="floating" >Naziv</ion-label>
+                  <ion-input type="text" ngModel name="text" required minlength="1" #text="ngModel"></ion-input>
+              </ion-item>
+              <ion-item lines="none" *ngIf="text.invalid && text.touched">
+                  <ion-label color="danger">Naziv filma je obavezno polje!</ion-label>
+              </ion-item>
+
             <ion-item>
-              <ion-label position="floating">Naziv</ion-label>
-              <ion-input type="text"></ion-input>
+                <ion-label position="floating">Glumac</ion-label>
+                <ion-input type="text"></ion-input>
             </ion-item>
-            <ion-item>
-              <ion-label position="floating">Glumac</ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Godina</ion-label>
-              <ion-input type="number" ></ion-input>
-            </ion-item>
+              <ion-item>
+                  <ion-label position="floating">Režiser</ion-label>
+                  <ion-input type="text"></ion-input>
+              </ion-item>
+
             <ion-item>
               <ion-label position="floating">Žanr</ion-label>
               <ion-select value="" okText="Potvrdi" cancelText="Odustani">
@@ -52,41 +58,72 @@
                 <ion-select-option value="horor">Horor</ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-item >
-              <ion-label >Ocena</ion-label>
-              <div class="my-checkbox">
-                <ion-checkbox color="filmlo"></ion-checkbox>
-                <ion-label>1</ion-label>
-              </div>
-              <div class="my-checkbox">
-                <ion-checkbox color="filmlo"></ion-checkbox>
-                <ion-label>2</ion-label>
-              </div>
-              <div class="my-checkbox">
-                <ion-checkbox color="filmlo"></ion-checkbox>
-                <ion-label>3</ion-label>
-              </div>
-              <div class="my-checkbox">
-                <ion-checkbox color="filmlo"></ion-checkbox>
-                <ion-label>4</ion-label>
-              </div>
-              <div class="my-checkbox">
-                <ion-checkbox color="filmlo"></ion-checkbox>
-                <ion-label>5</ion-label>
-              </div>
+              <ion-item>
+                  <ion-label position="floating">Godina</ion-label>
+                  <ion-input type="number" ></ion-input>
+              </ion-item>
+              <ion-item>
+                  <ion-label position="floating">Trajanje (min)</ion-label>
+                  <ion-input type="number" ></ion-input>
+              </ion-item>
+              <ion-item>
+                  <ion-label position="floating">Zemlja</ion-label>
+                  <ion-input type="text" ></ion-input>
+              </ion-item>
 
-            </ion-item>
+              <ion-radio-group  [(ngModel)]="something">
+                  <ion-row>
+                      <ion-col>
+                          <ion-item>
+                              <ion-label > Ocena</ion-label>
+                          </ion-item>
+                      </ion-col>
+                      <ion-col>
+                          <ion-item>
+                              <ion-label>1</ion-label>
+                              <ion-radio mode="md" item-left value="1"></ion-radio>
+                          </ion-item>
+                      </ion-col>
+
+                      <ion-col>
+                          <ion-item>
+                              <ion-label>2</ion-label>
+                              <ion-radio mode="md" item-left value="2"></ion-radio>
+                          </ion-item>
+                      </ion-col>
+
+                      <ion-col>
+                          <ion-item>
+                              <ion-label>3</ion-label>
+                              <ion-radio mode="md" item-left value="3"></ion-radio>
+                          </ion-item>
+                      </ion-col>
+                      <ion-col>
+                          <ion-item>
+                              <ion-label>4</ion-label>
+                              <ion-radio mode="md" item-left value="4"></ion-radio>
+                          </ion-item>
+                      </ion-col> <ion-col>
+                      <ion-item>
+                          <ion-label>5</ion-label>
+                          <ion-radio mode="md" item-left value="5"></ion-radio>
+                      </ion-item>
+                  </ion-col>
+                  </ion-row>
+              </ion-radio-group>
+
             <ion-item>
-              <ion-label position="floating">Komentar</ion-label>
-              <ion-input type="text"></ion-input>
+                <ion-label position="floating">Komentar</ion-label>
+                <ion-textarea></ion-textarea>
             </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
+
       <ion-row class="ion-justify-content-center">
         <!--    centrira se po x osi, pogledaj dokumentaciju css-utilities-->
         <ion-col size-sm="6" >
-          <ion-button type="submit" expand="block" X color="filmlo" >Potvrdi</ion-button>
+          <ion-button type="submit" expand="block"  color="filmlo" >Sačuvaj</ion-button>
           <!--size="large"-->
         </ion-col>
       </ion-row>
