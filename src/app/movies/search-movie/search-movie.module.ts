@@ -7,19 +7,22 @@ import { IonicModule } from '@ionic/angular';
 import { SearchMoviePageRoutingModule } from './search-movie-routing.module';
 
 import { SearchMoviePage } from './search-movie.page';
-import {MovieElementComponent} from "../movie-element/movie-element.component";
-import {MenuComponent} from "../../komponente/menu/menu.component";
-import {MenufullComponent} from "../../komponente/menufull/menufull.component";
+import {MovieElementComponent} from '../movie-element/movie-element.component';
+import {MenuComponent} from '../../komponente/menu/menu.component';
+import {MenufullComponent} from '../../komponente/menufull/menufull.component';
 
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    SearchMoviePageRoutingModule
-  ],
-  declarations: [SearchMoviePage, MovieElementComponent, MenuComponent]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        SearchMoviePageRoutingModule
+    ],
+    exports: [
+        MenuComponent
+    ],
+    declarations: [SearchMoviePage, MovieElementComponent, MenuComponent]
 })
 export class SearchMoviePageModule {}

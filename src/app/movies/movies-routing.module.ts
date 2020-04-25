@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: 'tabs',
     component: MoviesPage,
-    children:[  //moraju da se gadjaju rute sa tabovima, pazi
+    children: [  // moraju da se gadjaju rute sa tabovima, pazi
       {
         path: 'add-movie',
         loadChildren: () => import('./add-movie/add-movie.module').then( m => m.AddMoviePageModule)
@@ -38,6 +38,7 @@ const routes: Routes = [
     redirectTo:'/movies/tabs/home-page',
     pathMatch: 'full'
   }
+
   // {
   //   path: 'home',
   //   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
