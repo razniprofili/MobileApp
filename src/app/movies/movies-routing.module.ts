@@ -25,6 +25,10 @@ const routes: Routes = [
         loadChildren: () => import('./activity/activity.module').then( m => m.ActivityPageModule)
       },
       {
+        path: 'myprofile',
+        loadChildren: () => import('../myprofile/myprofile.module').then( m => m.MyprofilePageModule)
+      },
+      {
         path: '',  //ako se stavi /tabs pa nista dalje ovo je stranica na koju se prosledjuje
         redirectTo:'/movies/tabs/home-page',
         pathMatch: 'full'

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AlertController} from "@ionic/angular";
+import {AuthService} from "../../auth/auth.service";
+import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-menu',
@@ -8,7 +11,7 @@ import {AlertController} from "@ionic/angular";
 })
 export class MenuComponent implements OnInit {
 
-  constructor(public alertController: AlertController) { }
+  constructor(public alertController: AlertController, public authService: AuthService, public router: Router) { }
 
   ngOnInit() {}
 
@@ -22,6 +25,9 @@ export class MenuComponent implements OnInit {
 
           handler: () => {
             console.log('Odjavljen'); //napravi da se odjavi korisnik
+            //odjava
+            this.authService.logout();
+            this.router.navigateByUrl("/log-in")
           }
         },
         {
@@ -29,6 +35,7 @@ export class MenuComponent implements OnInit {
           role: 'cancel',
           handler: () => {
             console.log('odustao od odjave');
+            //ovde zapravo nista ne treba da se desi...
           }
         }
       ]

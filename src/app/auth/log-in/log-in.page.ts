@@ -16,8 +16,10 @@ export class LogInPage implements OnInit {
   }
   onLogIn(form: NgForm){
     //console.log(form);
-    this.authService.login(); //da se upamti da smo ulogovani
-    this.router.navigateByUrl('/movies'); // kada se ulogujemo idemo na ovu stranicu
+    if(form.valid){
+      this.authService.login(); //da se upamti da smo ulogovani
+      this.router.navigateByUrl('/movies'); // kada se ulogujemo idemo na ovu stranicu
+    }
   }
 
 }

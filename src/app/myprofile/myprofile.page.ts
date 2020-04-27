@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 
+
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.page.html',
@@ -16,5 +17,6 @@ export class MyprofilePage implements OnInit {
   otvoriStranuZaIzmenu(){
     this.router.navigateByUrl('/myprofile/editprofile');
   }
+
 
 }
