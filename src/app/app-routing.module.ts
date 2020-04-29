@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'welcome', pathMatch: 'full' },  //nasa pocetna strana
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },  // nasa pocetna strana
   { path: 'movies', loadChildren: () => import('./movies/movies.module').then( m => m.MoviesPageModule)},
   {
     path: 'log-in',
@@ -23,7 +23,9 @@ const routes: Routes = [
   {
     path: 'myprofile',
     loadChildren: () => import('./myprofile/myprofile.module').then( m => m.MyprofilePageModule)
-  }
+  },
+
+
 ];
 
 @NgModule({

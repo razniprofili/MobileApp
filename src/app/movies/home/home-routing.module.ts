@@ -7,7 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: HomePage
+  },
+  {
+    path: ':imdbID',
+    loadChildren: () => import('./movie-api-details/movie-api-details.module').then( m => m.MovieAPIDetailsPageModule)
   }
+
 ];
 
 @NgModule({
