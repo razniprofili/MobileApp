@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { ActivityPageRoutingModule } from './activity-routing.module';
 
 import { ActivityPage } from './activity.page';
+import {SearchMoviePageModule} from "../search-movie/search-movie.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ActivityPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ActivityPageRoutingModule,
+        SearchMoviePageModule
+    ],
   declarations: [ActivityPage]
 })
 export class ActivityPageModule {}

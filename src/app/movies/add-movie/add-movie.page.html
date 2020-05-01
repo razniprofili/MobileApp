@@ -1,4 +1,5 @@
-<app-menu></app-menu>
+<!--<app-menu></app-menu>-->
+
 <ion-header>
   <ion-toolbar color="filmlo">
       <ion-buttons slot="start">
@@ -128,12 +129,12 @@
                           <ion-radio mode="md" item-left value="5"></ion-radio>
                       </ion-item>
                   </ion-col>
-                  </ion-row>
+                </ion-row>
               </ion-radio-group>
 
             <ion-item>
                 <ion-label position="floating">Komentar</ion-label>
-                <ion-textarea></ion-textarea>
+                <ion-textarea rows="5"></ion-textarea>
             </ion-item>
           </ion-list>
         </ion-col>
@@ -141,9 +142,9 @@
 
       <ion-row >
         <ion-col offset-sm="3" >
-            <ion-button  type="reset"  class="btn" color="filmlo" >Poništi</ion-button>
+            <ion-button  type="reset" expand="block"  color="filmlo" >Poništi</ion-button>
         </ion-col><ion-col offset-sm="-3">
-            <ion-button type="submit"  class="btn" color="filmlo" >Sačuvaj</ion-button>
+            <ion-button type="submit" expand="block"   color="filmlo" >Sačuvaj</ion-button>
           </ion-col>
       </ion-row>
     </ion-grid>

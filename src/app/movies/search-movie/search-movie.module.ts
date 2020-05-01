@@ -20,9 +20,10 @@ import {MovieElementComponent} from "../movie-element/movie-element.component";
     IonicModule,
     SearchMoviePageRoutingModule
   ],
-  exports: [
+    exports: [
+        MovieElementComponent
 
-  ],
+    ],
   declarations: [SearchMoviePage, MovieElementComponent]
 })
 export class SearchMoviePageModule {}
