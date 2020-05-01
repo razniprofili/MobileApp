@@ -26,7 +26,7 @@
     </ion-thumbnail>
       <ion-label> {{movie.Title}}</ion-label>
 <!--    <ion-label slot="primary">{{movie.Year}}</ion-label>-->
-    <ion-icon name="bookmark-outline" slot="end" color="filmlo" (click)="sacuvaj()"></ion-icon>
+    <ion-icon name="star-sharp" slot="end"  size="large" (click)="sacuvaj()" [ngStyle]="{'color': bojaIkonice}" ></ion-icon>
   </ion-item>
 </ion-list>
 </ion-content>

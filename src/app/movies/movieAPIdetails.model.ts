@@ -1,5 +1,9 @@
-import {StrukturaModel} from './struktura.model';
+// import {StrukturaModel} from './struktura.model';
 
+export interface StrukturaModel {
+    Source: string;
+    Value: string;
+}
 export interface MovieAPIdetails {
     Title: string;
     Year: string;
@@ -17,8 +21,8 @@ export interface MovieAPIdetails {
     Country: string;
     Awards: string;
     Poster: string;
-    // Ratings: [StrukturaModel];
-    Ratings: [{Source: string, Value: string}];
+    Ratings: StrukturaModel[];
+    // Ratings: [{Source: string, Value: string}];
 
     Metascore: string;
     imdbRating: string;

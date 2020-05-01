@@ -10,7 +10,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-movies: MovieAPI[];
+  movies: MovieAPI[];
+  bojaIkonice: string;
   public imeFilma: string;
 
   constructor(public alert: AlertController, public router: Router) { }
@@ -31,20 +32,28 @@ movies: MovieAPI[];
     if (this.imeFilma != null && this.imeFilma != ' ') {
       fetch('http://www.omdbapi.com/?s=' + this.imeFilma.trim().toLowerCase() + '&type=movie&apikey=4a249f8d')
           .then(response => response.json())
-          .then(res => this.movies = res.Search);
+          .then(res => {
+                this.movies = res.Search;
+                console.log(res);
+                if (res.Error === 'Movie not found!') {
+                  this.presentAlert('', 'Nema rezultata pretrage za ' + this.imeFilma);
+                }
+                if (res.Error === 'Too many results.') {
+                  this.presentAlert('', 'Previse poklapanja, poboljsajte kriterijum pretrage!');
+                }
+          }
 
-      // if (this.movies.length === 0 || this.movies === null) {
-      //   this.presentAlert('Greska', 'Ne postoji film sa unetim nazivom!')
-      // }
+          );
     } else {
 
       this.presentAlert('Greska', 'Morate uneti naziv filma za pretragu!');
     }
-
   }
 
   sacuvaj() {
-    console.log('sacuvan');
+      // this.bojaIkonice = '#F7900A';
+      console.log('sacuvan');
+
   }
 
   // da iskoci upozorenje tj obavestenje o logovanju, greski...
