@@ -10,6 +10,9 @@
     <h1>Prijava</h1>
   </div>
   <form #LogInForm="ngForm" (ngSubmit)="onLogIn(LogInForm)" >
+    <ion-item lines="none" *ngIf="greska===true">
+      <ion-label color="danger">Pogresno korisnicko ime ili sifra!</ion-label>
+    </ion-item>
     <ion-grid>
       <!--sirina u gridu je ogranicena na 12-->
       <ion-row>
@@ -18,7 +21,7 @@
           <ion-list>
             <ion-item>
               <ion-label position="floating" >Email</ion-label>
-              <ion-input type="email" ngModel name="email" required email #email="ngModel"></ion-input>
+              <ion-input type="email" ngModel name="email" required email #email="ngModel" [(ngModel)]="mejl"></ion-input>
             </ion-item>
             <ion-item lines="none" *ngIf="email.invalid && email.touched">
               <ion-label color="danger">Email adresa mora biti validna!</ion-label>
@@ -26,7 +29,7 @@
 
             <ion-item>
               <ion-label position="floating">Sifra</ion-label>
-              <ion-input type="password" ngModel name="password" required minlength="8" #password="ngModel"></ion-input>
+              <ion-input type="password" ngModel name="password" required minlength="8" #password="ngModel" [(ngModel)]="sifra"></ion-input>
             </ion-item>
             <ion-item lines="none" *ngIf="password.invalid && password.touched">
               <ion-label color="danger">Sifra mora biti duzine minimun 8 karaktera!</ion-label>

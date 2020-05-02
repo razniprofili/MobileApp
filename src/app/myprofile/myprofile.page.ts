@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {UserService} from '../user.service';
 
 
 @Component({
@@ -8,13 +9,14 @@ import {Router} from "@angular/router";
   styleUrls: ['./myprofile.page.scss'],
 })
 export class MyprofilePage implements OnInit {
-
-  constructor(private router: Router) { }
+imePrezime: string;
+  constructor(private router: Router, public service: UserService) { }
 
   ngOnInit() {
+    this.imePrezime = this.service.getUserMail();
   }
 
-  otvoriStranuZaIzmenu(){
+  otvoriStranuZaIzmenu() {
     this.router.navigateByUrl('/myprofile/editprofile');
   }
 

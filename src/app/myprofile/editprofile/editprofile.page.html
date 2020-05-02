@@ -9,10 +9,11 @@
 </ion-header>
 
 <ion-content padding>
+  <input type="file" (change)="fileChanged($event)">
   <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)" >
   <div>
     <ion-avatar>
-        <ion-img src="https://image.shutterstock.com/image-photo/silhouette-man-sitting-relaxing-under-600w-519411058.jpg" (click)="updateProfilPic()"></ion-img>
+        <ion-img src="{{imageURL}}" (click)="updateProfilPic()" ></ion-img>
     </ion-avatar>
   </div>
 

@@ -9,6 +9,9 @@
     <h1>Kreiranje naloga</h1>
   </div>
   <form [formGroup]="registerForm" (ngSubmit)="onRegister()" >
+    <ion-item lines="none" *ngIf="greska===true">
+      <ion-label color="danger">Nalog sa ovim e-mailom vec postoji!</ion-label>
+    </ion-item>
     <ion-grid>
       <ion-row>
         <ion-col size-sm="3" offset-sm="3">
@@ -16,7 +19,7 @@
             <ion-label position="floating">
               Ime
             </ion-label>
-            <ion-input type="text" formControlName="name"></ion-input>
+            <ion-input type="text" formControlName="name" [(ngModel)]="name"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size-sm="3" >
@@ -24,7 +27,7 @@
             <ion-label position="floating">
               Prezime
             </ion-label>
-            <ion-input type="text" formControlName="surname"></ion-input>
+            <ion-input type="text" formControlName="surname" [(ngModel)]="surname"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -35,7 +38,7 @@
             <ion-label position="floating">
               Email
             </ion-label>
-            <ion-input type="email" formControlName="email"></ion-input>
+            <ion-input type="email" formControlName="email" [(ngModel)]="mejl"></ion-input>
           </ion-item>
 
         </ion-col>
@@ -52,7 +55,7 @@
             <ion-label position="floating">
               Sifra
             </ion-label>
-            <ion-input type="password" formControlName="password"></ion-input>
+            <ion-input type="password" formControlName="password" [(ngModel)]="sifra"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -60,6 +63,17 @@
       <ion-row *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched">
         <ion-col size-sm="6" offset-sm="3">
           <p>Sifra mora biti duzine minimum 8 karaktera</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">
+              Ponovi sifru
+            </ion-label>
+            <ion-input type="password" formControlName="cpassword" [(ngModel)]="sifra2"></ion-input>
+          </ion-item>
         </ion-col>
       </ion-row>
 

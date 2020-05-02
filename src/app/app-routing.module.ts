@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {AuthGuard} from './auth/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'welcome', pathMatch: 'full' },  // nasa pocetna strana
-  { path: 'movies', loadChildren: () => import('./movies/movies.module').then( m => m.MoviesPageModule)},
+  { path: '', redirectTo: 'welcome', pathMatch: 'full'
+  },  // nasa pocetna strana
   {
     path: 'log-in',
     loadChildren: () => import('./auth/log-in/log-in.module').then( m => m.LogInPageModule)
@@ -14,7 +15,8 @@ const routes: Routes = [
   },
   {
     path: 'movies',
-    loadChildren: () => import('./movies/movies.module').then( m => m.MoviesPageModule)
+    loadChildren: () => import('./movies/movies.module').then( m => m.MoviesPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'welcome',
@@ -22,7 +24,8 @@ const routes: Routes = [
   },
   {
     path: 'myprofile',
-    loadChildren: () => import('./myprofile/myprofile.module').then( m => m.MyprofilePageModule)
+    loadChildren: () => import('./myprofile/myprofile.module').then( m => m.MyprofilePageModule),
+    canLoad: [AuthGuard]
   },
 
 

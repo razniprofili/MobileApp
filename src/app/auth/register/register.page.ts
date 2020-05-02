@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AlertController} from '@ionic/angular';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+import {Router} from '@angular/router';
+import {UserService} from '../../user.service';
+import {AuthService} from '../auth.service';
+import {AngularFirestore} from '@angular/fire/firestore';
+
 
 @Component({
   selector: 'app-register',
@@ -9,17 +17,73 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class RegisterPage implements OnInit {
 
   registerForm: FormGroup;
-  constructor() { }
+  name: string;
+  surname: string;
+  mejl: string;
+  sifra: string;
+  sifra2: string;
+  slika = 'https://forum.mikrotik.com/styles/canvas/theme/images/no_avatar.jpg';
+  greska = false;
+
+
+  constructor(public alert: AlertController, public afAuth: AngularFireAuth,
+              public router: Router, public user: UserService,
+              public authService: AuthService, public afStore: AngularFirestore) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup( {
-      name: new FormControl(null, Validators.required), //drugi arg su vaidatori
+      name: new FormControl(null, Validators.required),
       surname: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(8)])
+      password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+      cpassword: new FormControl(null, [Validators.required, Validators.minLength(8)])
     });
   }
-  onRegister(){
-    console.log(this.registerForm);
+ async onRegister() {
+   const{mejl, sifra, sifra2, name, surname, slika } = this;
+   if (this.registerForm.valid) {
+      if (this.sifra !== this.sifra2) {
+        this.presentAlert('Greska', 'Sifre se ne poklapaju, pokusajte opet.');
+      } else {
+        try {
+          const res = await this.afAuth.createUserWithEmailAndPassword(mejl, sifra);
+          this.greska = false;
+          console.log(res);
+          this.authService.login();
+          this.user.setUser({ mejl, sifra, userID: res.user.uid});
+          this.afStore.doc(`users/` + res.user.uid).set({
+              mejl,
+              sifra,
+              name,
+              surname,
+              slika
+          });
+          this.presentAlert('', 'Uspesna registracija!');
+          this.router.navigateByUrl('/movies');
+        } catch (e) {
+          console.dir(e);
+          if (e.code === 'auth/email-already-in-use') {
+              this.greska = true;
+          }
+        }
+        console.log(this.registerForm);
+      }
+
+    } else {
+      this.presentAlert('', 'Popunite polja koja nedostaju!');
+      if (this.greska === true) {
+          this.greska = false;
+      }
+    }
+  }
+
+  async presentAlert(title: string, content: string) {
+    const alert = await this.alert.create({
+      header: title,
+      message: content,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }
