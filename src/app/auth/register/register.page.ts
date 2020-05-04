@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {UserService} from '../../user.service';
 import {AuthService} from '../auth.service';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {firestore} from 'firebase/app';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class RegisterPage implements OnInit {
   sifra: string;
   sifra2: string;
   slika = 'https://forum.mikrotik.com/styles/canvas/theme/images/no_avatar.jpg';
+  // sacuvaniFilmovi: string[];
   greska = false;
 
 
@@ -57,6 +59,9 @@ export class RegisterPage implements OnInit {
               name,
               surname,
               slika
+              // sacuvaniFilmovi: firestore.FieldValue.arrayUnion({
+              //    // kreirace ovaj niz filmova sa  defValue: '', pa yato u prebrojavanju filmova imamo -1
+              // })
           });
           this.presentAlert('', 'Uspesna registracija!');
           this.router.navigateByUrl('/movies');

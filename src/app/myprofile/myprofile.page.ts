@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from '../user.service';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 
 @Component({
@@ -9,11 +10,50 @@ import {UserService} from '../user.service';
   styleUrls: ['./myprofile.page.scss'],
 })
 export class MyprofilePage implements OnInit {
-imePrezime: string;
-  constructor(private router: Router, public service: UserService) { }
+  imePrezime: string;
+  mejlAdresa: string;
+  brojSacuvanih = 0;
+  slikaKorisnika: string;
+  filmovi;
+  sacuvaniFilmovi;
+  userBase;
+  sub;
+  constructor(private router: Router, public afStore: AngularFirestore, private currentUser: UserService) {
+  }
 
   ngOnInit() {
-    this.imePrezime = this.service.getUserMail();
+    this.mejlAdresa = this.currentUser.getUserMail();
+    // this.afStore.collection('users').get().subscribe(res => {
+    //   console.log(res.docs);
+    // });
+    // this.afStore.collection('users', ref => ref.where('user', '==', this.currentUser.getUserID())).get().subscribe(res => {
+    //   res.docs.forEach(doc => {
+    //     console.log(doc.data().name); // prikazace samo imena svih korisnika
+    //   });
+    // });
+    // this.afStore.collection('users').doc(this.currentUser.getUserID()).get().subscribe(res => {
+    //   // console.log(res.data().name);
+    //   this.imePrezime = res.data().name + ' ' + res.data().surname;
+    //   this.slikaKorisnika = res.data().slika;
+    //   try {
+    //     this.brojSacuvanih = res.data().sacuvaniFilmovi.length;
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    //
+    //  // console.log(res.data().sacuvaniFilmovi.length);
+    // });
+    this.userBase = this.afStore.collection('users').doc(this.currentUser.getUserID());
+    this.sub = this.userBase.valueChanges().subscribe(event => {
+
+        this.imePrezime = event.name + ' ' + event.surname;
+        this.slikaKorisnika = event.slika;
+        try {
+          this.brojSacuvanih = event.sacuvaniFilmovi.length;
+        } catch (e) {
+          console.log(e);
+        }
+    });
   }
 
   otvoriStranuZaIzmenu() {

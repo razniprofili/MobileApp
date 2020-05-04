@@ -3,30 +3,28 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="center">Ideja za film</ion-title>
+    <ion-title class="center">Sacuvani filmovi</ion-title>
 
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<!--  <ion-label> </ion-label>-->
-<!--  <ion-label >Pronadji sta sledece da gledas:</ion-label>-->
-  <ion-searchbar animated="true" placeholder="Naziv filma" [(ngModel)]="imeFilma" ></ion-searchbar>
-
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-sm="6">
-        <ion-button color="filmlo" shape="round" (click)="pronadjiFilmove()">Pronadji filmove</ion-button>
-      </ion-col>
-    </ion-row>
-<!-- Srediti da kad se klikne na icon sacuvaj da se ne otvori str o detaljima-->
+  <ion-searchbar animated="true" placeholder="Pretrazi sacuvane filmove" [(ngModel)]="queryText" (ionInput)="updateMovies($event)" ></ion-searchbar>
+    <ion-item class="center" *ngIf="prazno">
+      <ion-label>Nema sacuvanih filmova</ion-label>
+    </ion-item>
 <ion-list>
-  <ion-item *ngFor="let movie of movies" [routerLink]="['/','movies', 'tabs', 'home-page', movie.imdbID]" >
+  <ion-item *ngFor="let movie of movies" [routerLink]="['/','movies', 'tabs', 'home-page', movie.IDFilma]" >
     <ion-thumbnail slot="start">
-      <ion-img [src]="movie.Poster"></ion-img>
+      <ion-img [src]="movie.poster"></ion-img>
     </ion-thumbnail>
-      <ion-label> {{movie.Title}}</ion-label>
-<!--    <ion-label slot="primary">{{movie.Year}}</ion-label>-->
-    <ion-icon name="star-sharp" slot="end"  size="large" (click)="sacuvaj()" [ngStyle]="{'color': bojaIkonice}" ></ion-icon>
+      <ion-label> {{movie.imeFilma}}</ion-label>
+    <ion-icon name="star-sharp" slot="end"  size="large" color="filmlo"></ion-icon>
   </ion-item>
 </ion-list>
+  <ion-fab  vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="filmlo" (click)="otvoriPretragu()">
+      <ion-icon name="search-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

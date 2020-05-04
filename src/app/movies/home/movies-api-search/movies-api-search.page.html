@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="filmlo">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="center">Ideja za film</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--  <ion-label> </ion-label>-->
+  <!--  <ion-label >Pronadji sta sledece da gledas:</ion-label>-->
+  <ion-searchbar animated="true" placeholder="Naziv filma" [(ngModel)]="imeFilma" ></ion-searchbar>
+
+  <ion-row class="ion-justify-content-center">
+    <ion-col size-sm="6">
+      <ion-button color="filmlo" shape="round" (click)="pronadjiFilmove()">Pronadji filmove</ion-button>
+    </ion-col>
+  </ion-row>
+  <!-- Srediti da kad se klikne na icon sacuvaj da se ne otvori str o detaljima-->
+  <ion-list>
+    <ion-item *ngFor="let movie of movies" [routerLink]="['/','movies', 'tabs', 'home-page', 'movies-api-search', movie.imdbID]" >
+      <ion-thumbnail slot="start">
+        <ion-img [src]="movie.Poster"></ion-img>
+      </ion-thumbnail>
+      <ion-label> {{movie.Title}}</ion-label>
+      <!--    <ion-label slot="primary">{{movie.Year}}</ion-label>-->
+      <ion-icon name="star-sharp" slot="end"  size="large" color="filmlo" *ngIf="sacuvan"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

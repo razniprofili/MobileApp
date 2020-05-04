@@ -9,9 +9,14 @@ const routes: Routes = [
     component: HomePage
   },
   {
+    path: 'movies-api-search',
+    loadChildren: () => import('./movies-api-search/movies-api-search.module').then( m => m.MoviesApiSearchPageModule)
+  },
+  {
     path: ':imdbID',
     loadChildren: () => import('./movie-api-details/movie-api-details.module').then( m => m.MovieAPIDetailsPageModule)
-  }
+  },
+
 
 ];
 
