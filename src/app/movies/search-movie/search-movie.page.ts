@@ -128,37 +128,24 @@ export class SearchMoviePage implements OnInit {
   }
   userID: string= this.currentUser.getUserID();
   ngOnInit() {
-    this.moviesService.getMovies(this.userID).subscribe(quotesData=>{
-      console.log(quotesData);
-      const movies : Movie[] = [];
-      for(const key in quotesData){
-        if(quotesData.hasOwnProperty(key)){
-          movies.push({
-            id: key,
-            naziv: quotesData[key].naziv,
-            zanr: quotesData[key].zanr,
-            ocena: quotesData[key].ocena,
-            zemlja: quotesData[key].zemlja,
-            komentar: quotesData[key].komentar,
-            glumci: quotesData[key].glumci,
-            reziser: quotesData[key].reziser,
-            datum: quotesData[key].datum,
-            trajanje: quotesData[key].trajanje
-          })
-        }
-
-
-      }
-      console.log(movies);
+    console.log('ngOnInit');
+    this.moviesService.movies.subscribe((movies) => {
       this.movies = movies;
+    });
+    // this.moviesService.addMovie(this.userID).subscribe(res =>{
+    //   console.log(res);
+    // })
+  }
+
+  ionViewWillEnter(){
+    console.log('izvrsen ion will enter')
+    this.moviesService.getMovies(this.userID).subscribe(movieData =>{
+      console.log(movieData);
+    //  this.movies = movies;
       if(this.movies.length === 0){
         this.prazan = true;
       }
     });
-
-    // this.moviesService.addMovie(this.userID).subscribe(res =>{
-    //   console.log(res);
-    // })
   }
 
   updateMovies(ev: any) {
