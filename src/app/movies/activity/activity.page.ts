@@ -22,7 +22,10 @@ export class ActivityPage implements OnInit {
         glumci: 'MIlos Bikovic,...',
         ocena: 5,
         datum: '22.11.2019.',
-        komentar: 'Odlican film pogledaj drugi deo obavezno!!'
+        komentar: 'Odlican film pogledaj drugi deo obavezno!!',
+        trajanje: 120,
+        reziser: "nek",
+        zemlja: "srb"
       }]}
   ngOnInit() {
   }

@@ -6,6 +6,9 @@ export interface Movie {
     ocena: number;
     datum: string;
     komentar: string;
+    reziser: string;
+    trajanje: number;
+    zemlja: string;
 }
 // reziser:string;
 // trajanje:number;

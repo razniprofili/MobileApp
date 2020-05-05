@@ -13,6 +13,7 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {UserService} from './user.service';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,8 @@ import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore'
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+      HttpClientModule
   ],
   providers: [
     StatusBar,

@@ -11,6 +11,9 @@
     <ion-searchbar animated="true" placeholder="Naziv filma" [(ngModel)]="queryText" (ionInput)="updateMovies($event)" ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
+<ion-item *ngIf="prazan">
+  <ion-label>Nema odgledanih filmova!</ion-label>
+</ion-item>
 
 <ion-content color="filmlo">
 <!--  <ion-list>-->
