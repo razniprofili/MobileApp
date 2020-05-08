@@ -12,7 +12,7 @@
 <ion-content color="filmlo">
     <ion-card >
 
-  <form >
+  <form #f="ngForm" (ngSubmit)="onAddMovie()" >
     <ion-grid>
       <!--sirina u gridu je ogranicena na 12-->
       <ion-row>
@@ -21,25 +21,24 @@
           <ion-list>
               <ion-item>
                   <ion-label position="floating" >Naziv</ion-label>
-                  <ion-input type="text" ngModel name="text" required minlength="1" #text="ngModel"></ion-input>
+                  <ion-input type="text" ngModel name="naziv" required ></ion-input>
               </ion-item>
-              <ion-item lines="none" *ngIf="text.invalid && text.touched">
-                  <ion-label color="danger">Naziv filma je obavezno polje!</ion-label>
-              </ion-item>
+
 
             <ion-item>
                 <ion-label position="floating">Glumci</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" ngModel name="glumci"></ion-input>
             </ion-item>
               <ion-item>
                   <ion-label position="floating">Režiser</ion-label>
-                  <ion-input type="text"></ion-input>
+                  <ion-input type="text" ngModel name="reziser"></ion-input>
               </ion-item>
+
               <ion-row>
               <ion-col>
             <ion-item>
               <ion-label position="floating">Žanr</ion-label>
-              <ion-select value="" okText="Potvrdi" cancelText="Odustani">
+              <ion-select value="" okText="Potvrdi" cancelText="Odustani" ngModel name="zanr" (ionChange)="onChangeSelect($event)">
                 <ion-select-option value="avantura">Avantura</ion-select-option>
                 <ion-select-option value="animacija">Animacija</ion-select-option>
                 <ion-select-option value="akcioni">Akcioni</ion-select-option>
@@ -74,7 +73,7 @@
                   <ion-col>
               <ion-item>
                   <ion-label position="floating">Jezik</ion-label>
-                  <ion-input type="text" ></ion-input>
+                  <ion-input type="text" ngModel name="jezik"></ion-input>
               </ion-item>
                   </ion-col>
               </ion-row>
@@ -82,16 +81,18 @@
                   <ion-col><ion-item>
 
                   <ion-label position="floating">Godina</ion-label>
-                  <ion-input type="number" ></ion-input>
+                  <ion-input type="number" ngModel name="godina"></ion-input>
               </ion-item></ion-col>
                   <ion-col><ion-item>
                   <ion-label position="floating">Trajanje (min)</ion-label>
-                  <ion-input type="number" ></ion-input>
+                  <ion-input type="number" ngModel name="trajanje" ></ion-input>
               </ion-item></ion-col>
               </ion-row>
 
 
-              <ion-radio-group  >
+              <ion-radio-group  allow-empty-selection = “true”
+                                name=“ocena”
+                                (ionChange)="radioGroupChange($event)">
                   <ion-row>
                       <ion-col>
                           <ion-item>
@@ -134,7 +135,7 @@
 
             <ion-item>
                 <ion-label position="floating">Komentar</ion-label>
-                <ion-textarea rows="5"></ion-textarea>
+                <ion-textarea rows="5" ngModel name="komentar"></ion-textarea>
             </ion-item>
           </ion-list>
         </ion-col>
@@ -144,7 +145,7 @@
         <ion-col offset-sm="3" >
             <ion-button  type="reset" expand="block"  color="filmlo" >Poništi</ion-button>
         </ion-col><ion-col offset-sm="-3">
-            <ion-button type="submit" expand="block"   color="filmlo" >Sačuvaj</ion-button>
+            <ion-button type="submit" expand="block"   color="filmlo" [disabled]="f.invalid" >Sačuvaj</ion-button>
           </ion-col>
       </ion-row>
     </ion-grid>

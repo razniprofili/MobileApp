@@ -13,14 +13,14 @@ export class MovieDetailsPage implements OnInit {
       {
         id: '111',
         naziv: 'Treci film',
-        zanr: 'komedija',
         glumci: 'neki tamo glumci',
-        ocena: 3,
-        datum: '13.01.2019.',
-        komentar: 'Neki tamo komentar',
-          zemlja: 'neka',
           reziser: 'reziser 1',
-          trajanje: 120
+          zanr: 'komedija',
+          jezik: 'neka',
+          godina: 2018,
+          trajanje: 120,
+          ocena: 3,
+        komentar: 'Neki tamo komentar'
       };
 
   constructor(public alertController: AlertController) { }

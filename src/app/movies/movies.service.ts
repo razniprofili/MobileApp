@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Movie} from './movie.model';
-import {BehaviorSubject} from "rxjs";
-import {map} from "rxjs/operators";
-interface MovieData{
+import {BehaviorSubject} from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
+
+
+interface MovieData {
   id: string;
   naziv: string;
   zanr: string;
   glumci: string;
   ocena: number;
-  datum: string;
+  godina: number;
   komentar: string;
   reziser: string;
   trajanje: number;
-  zemlja: string;
+  jezik: string;
 }
 @Injectable({
   providedIn: 'root'
@@ -23,29 +25,30 @@ export class MoviesService {
   movieData: Movie;
   constructor(private http: HttpClient) { }
 
-  get movies(){
+  get movies() {
     return this._movies.asObservable();
   }
 
-  getMovies( userID: string){
+
+  getMovies( userID: string) {
     return this.http
         .get<{ [key: string]: MovieData }>(
             `https://moviemobileapp-b3eae.firebaseio.com/users/` + userID + `/mojiFilmovi.json`
-        ).pipe(map(movieData =>{
+        ).pipe(map(movieData => {
           console.log(movieData);
-          const movies : Movie[] = [];
-          for(const key in movieData){
-            if(movieData.hasOwnProperty(key)){
+          const movies: Movie[] = [];
+          for ( const key in movieData) {
+            if ( movieData.hasOwnProperty(key)) {
               movies.push({
                 id: key,
                 naziv: movieData[key].naziv,
                 zanr: movieData[key].zanr,
                 ocena: movieData[key].ocena,
-                zemlja: movieData[key].zemlja,
+                jezik: movieData[key].jezik,
                 komentar: movieData[key].komentar,
                 glumci: movieData[key].glumci,
                 reziser: movieData[key].reziser,
-                datum: movieData[key].datum,
+                godina: movieData[key].godina,
                 trajanje: movieData[key].trajanje
               });
             }
@@ -76,7 +79,7 @@ export class MoviesService {
   // primer koriscenja REST API-ja cloud database-a :)
 // https://firestore.googleapis.com/v1/projects/YOUR_PROJECT_ID/databases/(default)/documents/cities/LA
 
-  //test rute POST zahteva sa nekiim bzvz podacima
+  // test rute POST zahteva sa nekiim bzvz podacima
   // addMovie(userID: string){
   //   return this.http
   //       .post<{ name: string }>(
@@ -84,4 +87,15 @@ export class MoviesService {
   //           { author: "test", text: "test text" }
   //       );
   // }
+
+   addMovie( naziv: string, glumci: string, reziser: string, zanr: string, jezik: string, godina: number, trajanje: number, ocena: number, komentar: string) {
+    return this.http
+        .post<{ name: string }>(
+            `https://moviemobileapp-b3eae.firebaseio.com/filmovi.json`,
+            { naziv, glumci, reziser, zanr, jezik, godina, trajanje, ocena, komentar }
+
+        );
+
+  }
+
 }

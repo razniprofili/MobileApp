@@ -18,15 +18,17 @@ export class ActivityPage implements OnInit {
       {
         id: '11',
         naziv: 'Juzni vetar',
+        glumci: 'Milos Bikovic,...',
+        reziser: 'Milos Avramovic',
         zanr: 'akcija',
-        glumci: 'MIlos Bikovic,...',
+        jezik: 'srpski',
+        godina: 2018,
+        trajanje: 130,
         ocena: 5,
-        datum: '22.11.2019.',
-        komentar: 'Odlican film pogledaj drugi deo obavezno!!',
-        trajanje: 120,
-        reziser: "nek",
-        zemlja: "srb"
-      }]}
+        komentar: 'Odlican film pogledaj drugi deo obavezno!!'
+
+      }];
+  }
   ngOnInit() {
   }
 

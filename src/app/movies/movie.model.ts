@@ -1,15 +1,13 @@
 export interface Movie {
     id: string;
     naziv: string;
-    zanr: string;
     glumci: string;
-    ocena: number;
-    datum: string;
-    komentar: string;
     reziser: string;
-    trajanje: number;
-    zemlja: string;
+    zanr: string;
+    jezik: string;
+    godina: any;
+    trajanje: any;
+    ocena: any;
+    komentar: string;
 }
-// reziser:string;
-// trajanje:number;
-// zemlja:string;
+
