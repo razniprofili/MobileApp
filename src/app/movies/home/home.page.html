@@ -10,10 +10,14 @@
 
 <ion-content>
   <ion-searchbar animated="true" placeholder="Pretrazi sacuvane filmove" [(ngModel)]="queryText" (ionInput)="updateMovies($event)" ></ion-searchbar>
-    <ion-item class="center" *ngIf="prazno">
-      <ion-label>Nema sacuvanih filmova</ion-label>
-    </ion-item>
-<ion-list>
+
+  <div class="ion-text-center" *ngIf="isLoading">
+    <ion-spinner color="filmlo" name="bubbles"></ion-spinner>
+  </div>
+<ion-list *ngIf="!isLoading">
+  <ion-item class="center" *ngIf="prazno" >
+    <ion-label>Nema sacuvanih filmova</ion-label>
+  </ion-item>
   <ion-item *ngFor="let movie of movies" [routerLink]="['/','movies', 'tabs', 'home-page', movie.IDFilma]" >
     <ion-thumbnail slot="start">
       <ion-img [src]="movie.poster"></ion-img>

@@ -21,11 +21,12 @@ export class ActivityPage implements OnInit {
         glumci: 'Milos Bikovic,...',
         reziser: 'Milos Avramovic',
         zanr: 'akcija',
-        jezik: 'srpski',
+        zemlja: 'srpski',
         godina: 2018,
         trajanje: 130,
         ocena: 5,
-        komentar: 'Odlican film pogledaj drugi deo obavezno!!'
+        komentar: 'Odlican film pogledaj drugi deo obavezno!!',
+        datum: "2020"
 
       }];
   }

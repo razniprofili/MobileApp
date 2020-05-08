@@ -1,0 +1,127 @@
+<ion-header>
+  <ion-toolbar color="filmlo">
+    <ion-title class="ion-text-center">{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="filmlo">
+  <ion-card >
+
+    <form #f="ngForm" (ngSubmit)="potvrdiIzmene()">
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="6" offset-sm="3">
+            <ion-list>
+
+              <ion-item>
+                <ion-label position="floating" >Naziv</ion-label>
+                <ion-input type="text" [ngModel]="nazivFilma" name="text" required minlength="1" #text="ngModel"></ion-input>
+              </ion-item>
+              <ion-item lines="none" *ngIf="text.invalid && text.touched">
+                <ion-label color="danger">Naziv filma je obavezno polje!</ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Glumci</ion-label>
+                <ion-input type="text" [ngModel]="glumci" name="glumci"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Režiser</ion-label>
+                <ion-input type="text" [ngModel]="reziser" name="reziser"></ion-input>
+              </ion-item>
+
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Žanr</ion-label>
+                    <ion-select value="" okText="Potvrdi" cancelText="Odustani" name="zanr" (ionChange)="onChangeSelectZanr($event)">
+                      <ion-select-option value="avantura">Avantura</ion-select-option>
+                      <ion-select-option value="animacija">Animacija</ion-select-option>
+                      <ion-select-option value="akcioni">Akcioni</ion-select-option>
+                      <ion-select-option value="biografski">Biografski</ion-select-option>
+                      <ion-select-option value="vestern">Vestern</ion-select-option>
+                      <ion-select-option value="deciji">Dečiji</ion-select-option>
+                      <ion-select-option value="dokumentarni">Dokumentarni</ion-select-option>
+                      <ion-select-option value="drama">Drama</ion-select-option>
+                      <ion-select-option value="istorijski">Istorijski</ion-select-option>
+                      <ion-select-option value="komedija">Komedija</ion-select-option>
+                      <ion-select-option value="kratki">Kratki</ion-select-option>
+                      <ion-select-option value="kriminalisticki">Kiminalistički</ion-select-option>
+                      <ion-select-option value="ljubavni">Ljubavni</ion-select-option>
+                      <ion-select-option value="misterija">Misterija</ion-select-option>
+                      <ion-select-option value="mjuzikl">Mjuzikl</ion-select-option>
+                      <ion-select-option value="muzicki">Muzički</ion-select-option>
+                      <ion-select-option value="naucnofantasticki">Naučno-fantastični</ion-select-option>
+                      <ion-select-option value="porodicni">Porodični</ion-select-option>
+                      <ion-select-option value="ratni">Ratni</ion-select-option>
+                      <ion-select-option value="sportski">Sportski</ion-select-option>
+                      <ion-select-option value="triler">Triler</ion-select-option>
+                      <ion-select-option value="fantastika">Fantastika</ion-select-option>
+                      <ion-select-option value="horor">Horor</ion-select-option>
+                    </ion-select>
+
+                  </ion-item>
+<!--                  <ion-row class="ion-justify-content-center">-->
+<!--                    <ion-col offset-sm="0"> <a (click)="presentAlertPrompt()" >Dodaj žanr</a>-->
+<!--                    </ion-col>-->
+<!--                  </ion-row>-->
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Zemlja</ion-label>
+                    <ion-input type="text" [ngModel]="zemlja" name="zemlja"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col><ion-item>
+
+                  <ion-label position="floating">Godina</ion-label>
+                  <ion-input type="number" [ngModel]="godina" name="godina"></ion-input>
+                </ion-item></ion-col>
+                <ion-col><ion-item>
+                  <ion-label position="floating">Trajanje (min)</ion-label>
+                  <ion-input type="number" [ngModel]="trajanje"  name="trajanje"></ion-input>
+                </ion-item></ion-col>
+              </ion-row>
+
+
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label > Ocena</ion-label>
+                      <ion-select value="" okText="Potvrdi" cancelText="Odustani" name="ocena" (ionChange)="onChangeSelectOcena($event)" >
+                        <ion-select-option value="1">1</ion-select-option>
+                        <ion-select-option value="2">2</ion-select-option>
+                        <ion-select-option value="3">3</ion-select-option>
+                        <ion-select-option value="4">4</ion-select-option>
+                        <ion-select-option value="5">5</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+              <ion-item>
+                <ion-label position="floating">Datum gedanja filma:</ion-label>
+                <ion-input type="text" [ngModel]="datum" name="datum"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Komentar</ion-label>
+                <ion-textarea rows="5" [ngModel]="komentar" name="komentar"></ion-textarea>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+
+        <ion-row >
+          <ion-col offset-sm="-3">
+          <ion-button type="submit" expand="block"   color="filmlo" >Sačuvaj izmene</ion-button>
+        </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-card>
+</ion-content>

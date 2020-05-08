@@ -5,7 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {UserService} from '../../../user.service';
 import {firestore} from 'firebase/app';
-import {AlertController} from '@ionic/angular';
+import {AlertController, LoadingController, NavController} from '@ionic/angular';
+import {map} from "rxjs/operators";
 
 
 @Component({
@@ -15,6 +16,7 @@ import {AlertController} from '@ionic/angular';
 })
 export class MovieAPIDetailsPage implements OnInit {
   private imdbID: string;
+  isLoading=false;
   pronadjenFilm: MovieAPIdetails
       = {
 
@@ -55,17 +57,22 @@ export class MovieAPIDetailsPage implements OnInit {
   sacuvan = false;
 
   constructor(public ruta: ActivatedRoute, public afsStore: AngularFirestore, public user: UserService,
-              public alert: AlertController, public router: Router) {
+              public alert: AlertController, public router: Router, private loadingCtrl: LoadingController,
+              private alertController: AlertController, private navCtrl: NavController) {
   }
 
   ngOnInit() {
     this.imdbID = this.ruta.snapshot.paramMap.get('imdbID');
-
+    this.isLoading = true;
     // ucitavamo detalje za onaj film koji smo kliknuli! http://www.omdbapi.com/?i=tt1570728&apikey=4a249f8d
     try {
       fetch('http://www.omdbapi.com/?i=' + this.imdbID + '&apikey=4a249f8d')
           .then(response => response.json())
-          .then(data => this.pronadjenFilm = data);
+          .then(data => {
+            this.pronadjenFilm = data;
+            this.isLoading=false;
+          });
+
     } catch (e) {
       console.log(e);
     }
@@ -90,27 +97,82 @@ export class MovieAPIDetailsPage implements OnInit {
   }
   sacuvajFilm() {
 
-    const IDFilma = this.imdbID;
-    const imeFilma = this.pronadjenFilm.Title;
-    const poster = this.pronadjenFilm.Poster;
+    this.loadingCtrl.create({message: 'Cuvanje...'}).then(el => {
+      el.present();
 
-    if (!this.sacuvan) {
-      try {
-        this.afsStore.doc(`users/` + this.user.getUserID()).update({
-          sacuvaniFilmovi: firestore.FieldValue.arrayUnion({
-            IDFilma,
-            imeFilma,
-            poster
-          })
-        });
-        console.log('Sacuvan film');
-        this.presentAlert('Done!', 'Film' + ' ' + this.pronadjenFilm.Title + ' je uspesno sacuvan!');
-      } catch (e) {
-        console.log(e);
+      const IDFilma = this.imdbID;
+      const imeFilma = this.pronadjenFilm.Title;
+      const poster = this.pronadjenFilm.Poster;
+
+      if (!this.sacuvan) {
+        try {
+          this.afsStore.doc(`users/` + this.user.getUserID()).update({
+            sacuvaniFilmovi: firestore.FieldValue.arrayUnion({
+              IDFilma,
+              imeFilma,
+              poster
+            })
+          });
+          el.dismiss();
+          console.log('Sacuvan film');
+          this.presentAlert('Done!', 'Film' + ' ' + this.pronadjenFilm.Title + ' je uspesno sacuvan!');
+        } catch (e) {
+          console.log(e);
+        }
+      } else {
+        this.presentAlert(' ', 'Ovaj film je vec sacuvan!');
       }
-    } else {
-      this.presentAlert(' ', 'Ovaj film je vec sacuvan!');
-    }
+    });
+
+
+  }
+
+  otvoriModalzaDodavanje(){
+  // uzima sve podatke od sacuvanog filma, a kom i ocenu dopisuje sam
+  }
+
+  obrisiIzListe(){
+    this.alertController.create({
+      header: 'Ukloni film iz liste sacuvanih',
+      message: 'Da li ste sigurni da zelite da uklonite film?',
+      buttons: [
+        {
+          text: 'Ukloni',
+
+          handler: () => {
+
+
+            this.loadingCtrl.create({message: 'Brisanje...'}).then(loadingEl => {
+
+              loadingEl.present();
+
+              this.afsStore.doc(`users/` + this.user.getUserID()).update({
+               sacuvaniFilmovi:  firestore.FieldValue.arrayRemove({
+                 IDFilma: this.imdbID,
+                 imeFilma: this.pronadjenFilm.Title,
+                 poster: this.pronadjenFilm.Poster
+               })
+              })
+              console.log('Uklonjen film');
+              loadingEl.dismiss();
+              this.navCtrl.navigateBack('/movies/tabs/home-page');
+            });
+
+
+          }
+        },
+        {
+          text: 'Odustani',
+          role: 'cancel',
+          handler: () => {
+            console.log('odustao od brisanja');
+
+          }
+        }
+      ]
+    }).then((alert) => {
+      alert.present();
+    });
   }
 
   async presentAlert(title: string, content: string) {

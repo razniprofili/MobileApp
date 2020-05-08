@@ -14,6 +14,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {UserService} from './user.service';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
 import {HttpClientModule} from "@angular/common/http";
+import {MovieModalComponent} from "./movies/movie-modal/movie-modal.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,13 +26,15 @@ import {HttpClientModule} from "@angular/common/http";
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-      HttpClientModule
+      HttpClientModule,
+
   ],
   providers: [
     StatusBar,
       UserService,
       AngularFirestore,
     SplashScreen,
+    MovieModalComponent,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
   public queryText: string;
   userBase: AngularFirestoreDocument;
   prazno = true;
+  isLoading = false;
 
   constructor(public alert: AlertController, public router: Router, public afStore: AngularFirestore, public user: UserService) {
     // this.userBase = this.afStore.collection('users').doc(this.user.getUserID());
@@ -50,9 +51,10 @@ otvoriPretragu() {
   }
 
   inicijalizuj() {
+    this.isLoading = true;
     this.userBase = this.afStore.collection('users').doc(this.user.getUserID());
     this.sub = this.userBase.valueChanges().subscribe(event => {
-
+      this.isLoading = false;
         this.movies = event.sacuvaniFilmovi;
         console.log(event.sacuvaniFilmovi);
         if (event.sacuvaniFilmovi === undefined) {

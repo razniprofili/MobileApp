@@ -5,11 +5,17 @@
       </ion-back-button>
     </ion-buttons>
     <ion-title>Detalji filma</ion-title>
+    <ion-fab-button slot="end" size="small" color="filmlo" *ngIf="sacuvan" (click)="obrisiIzListe()">
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
+  <div class="ion-text-center" *ngIf="isLoading">
+    <ion-spinner color="filmlo" name="bubbles"></ion-spinner>
+  </div>
+  <ion-card *ngIf="!isLoading">
     <ion-grid>
       <ion-icon name="star-sharp" slot="end"  size="large" color="filmlo" *ngIf="sacuvan"></ion-icon>
       <ion-card-header>
@@ -77,7 +83,11 @@
         <ion-icon name="bookmark-outline"></ion-icon>
         Sacuvaj film
       </ion-button>
-      <ion-label *ngIf="sacuvan">Ovaj film je vec sacuvan!</ion-label>
+      <ion-button color="filmlo" (click)="otvoriModalzaDodavanje()" *ngIf="sacuvan">
+        <ion-icon name="add-outline"></ion-icon>
+        Dodaj u moju listu odgledanih
+      </ion-button>
+      <ion-label *ngIf="sacuvan">*Sacuvan film</ion-label>
     </ion-grid>
 
   </ion-card>

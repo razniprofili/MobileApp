@@ -1,41 +1,157 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {filter} from 'rxjs/operators';
 import {Movie} from '../movie.model';
 import {Router} from '@angular/router';
+import {MoviesService} from "../movies.service";
+import {UserService} from "../../user.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-search-movie',
   templateUrl: './search-movie.page.html',
   styleUrls: ['./search-movie.page.scss'],
 })
-export class SearchMoviePage implements OnInit {
+export class SearchMoviePage implements OnInit, OnDestroy {
 
   public queryText: string;
   movies: Movie[];
-
-
-  constructor(private router: Router) {
+  prazan = false;
+  private moviesSub: Subscription;
+  isLoading = false;
+  constructor(private router: Router, private moviesService: MoviesService, private currentUser: UserService) {
     this.inicijalizuj();
   }
 
   // ovo su test podaci, radice se sa bazom posle
   inicijalizuj() {
-    this.movies  = [
-      {
-        id: '11',
-        naziv: 'Juzni vetar',
-        glumci: 'Milos Bikovic,...',
-        reziser: 'Milos Avramovic',
-        zanr: 'akcija',
-        jezik: 'srpski',
-        godina: 2018,
-        trajanje: 130,
-        ocena: 5,
-        komentar: 'Odlican film pogledaj drugi deo obavezno!!'
-      }];
+    // this.movies  = [
+    //   {
+    //     id: '11',
+    //     naziv: 'Juzni vetar',
+    //     zanr: 'akcija',
+    //     glumci: 'MIlos Bikovic,...',
+    //     ocena: 5,
+    //     datum: '22.11.2019.',
+    //     komentar: 'Odlican film pogledaj drugi deo obavezno!!'
+    //   },
+    //   {
+    //     id: '22',
+    //     naziv: 'Neki film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 2,
+    //     datum: '12.05.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   },
+    //   {
+    //     id: '3',
+    //     naziv: 'Treci film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 3,
+    //     datum: '13.01.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   },
+    //   {
+    //     id: '3',
+    //     naziv: 'Treci film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 3,
+    //     datum: '13.01.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   }, {
+    //     id: '3',
+    //     naziv: 'Treci film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 3,
+    //     datum: '13.01.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   }, {
+    //     id: '3',
+    //     naziv: 'Treci film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 3,
+    //     datum: '13.01.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   }, {
+    //     id: '3',
+    //     naziv: 'Treci film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 3,
+    //     datum: '13.01.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   }, {
+    //     id: '3',
+    //     naziv: 'Treci film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 3,
+    //     datum: '13.01.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   }, {
+    //     id: '3',
+    //     naziv: 'Treci film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 3,
+    //     datum: '13.01.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   }, {
+    //     id: '3',
+    //     naziv: 'Treci film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 3,
+    //     datum: '13.01.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   }, {
+    //     id: '3',
+    //     naziv: 'Treci film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 3,
+    //     datum: '13.01.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   }, {
+    //     id: '3',
+    //     naziv: 'Treci film',
+    //     zanr: 'komedija',
+    //     glumci: 'neki tamo glumci',
+    //     ocena: 3,
+    //     datum: '13.01.2019.',
+    //     komentar: 'Neki tamo komentar'
+    //   }
+    //   ];
+  }
+  userID: string= this.currentUser.getUserID();
+  ngOnInit() {
+    console.log('ngOnInit');
+    this.isLoading = true;
+    this.moviesSub = this.moviesService.movies.subscribe((movies) => {
+      this.isLoading = false;
+      this.movies = movies;
+    });
+    // this.moviesService.addMovie(this.userID).subscribe(res =>{
+    //   console.log(res);
+    // })
   }
 
-  ngOnInit() {
+  ionViewWillEnter(){
+    console.log('izvrsen ion will enter')
+    this.isLoading = true;
+    this.moviesService.getMovies(this.userID).subscribe(movieData =>{
+      this.isLoading = false;
+      console.log(movieData);
+
+    //  this.movies = movies;
+      if(this.movies.length === 0){
+        this.prazan = true;
+      }
+    });
   }
 
   updateMovies(ev: any) {
@@ -51,6 +167,15 @@ export class SearchMoviePage implements OnInit {
 
   otvoriStranuZaDodavanje() {
     this.router.navigateByUrl('/movies/tabs/add-movie');
+  }
+
+  //kad se unisti stranica unisti se i subscribcija
+  // sa svih subrscribe se odjavljujemo
+  ngOnDestroy(): void {
+    if(this.moviesSub){
+      this.moviesSub.unsubscribe();
+    }
+
   }
 
 }

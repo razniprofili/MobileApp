@@ -8,6 +8,7 @@ import { SearchMoviePageRoutingModule } from './search-movie-routing.module';
 
 import { SearchMoviePage } from './search-movie.page';
 import {MovieElementComponent} from "../movie-element/movie-element.component";
+import {MovieModalComponent} from "../movie-modal/movie-modal.component";
 // import {MenuComponent} from "../../komponente/menu/menu.component";
 
 
@@ -22,6 +23,7 @@ import {MovieElementComponent} from "../movie-element/movie-element.component";
   ],
     exports: [
         MovieElementComponent
+
 
     ],
   declarations: [SearchMoviePage, MovieElementComponent]

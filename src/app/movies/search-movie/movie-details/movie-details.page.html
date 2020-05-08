@@ -10,29 +10,44 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
+  <div class="ion-text-center" *ngIf="isLoading">
+   <ion-spinner color="filmlo" name="bubbles"></ion-spinner>
+  </div>
+  <ion-card *ngIf="!isLoading">
     <ion-card-header>
       <ion-card-title>
         <h1>{{movie.naziv}}</h1>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <h2>{{movie.zanr}}</h2>
+      <h2>Trajanje: {{movie.trajanje}} min</h2>
     </ion-card-content>
     <ion-card-content>
-      <h2>{{movie.glumci}}</h2>
+      <h2>Zanr: {{movie.zanr}}</h2>
     </ion-card-content>
     <ion-card-content>
-      <h2>{{movie.ocena}}</h2>
+      <h2>Glumci: {{movie.glumci}}</h2>
     </ion-card-content>
     <ion-card-content>
-      <h2>{{movie.datum}}</h2>
+      <h2>Reziser: {{movie.reziser}}</h2>
     </ion-card-content>
     <ion-card-content>
-      <h2>{{movie.komentar}}</h2>
+      <h2>Zemlja: {{movie.zemlja}}</h2>
+    </ion-card-content>
+    <ion-card-content>
+      <h2>Godina: {{movie.godina}}</h2>
+    </ion-card-content>
+    <ion-card-content>
+      <h2>Ocena: {{movie.ocena}}/5</h2>
+    </ion-card-content>
+    <ion-card-content>
+      <h2>Datum gledanja: {{movie.datum}}</h2>
+    </ion-card-content>
+    <ion-card-content>
+      <h2>Moj komentar: {{movie.komentar}}</h2>
     </ion-card-content>
 <!--    Dugme za izmenu filma, otvara se forma za dodvanje filma-->
-    <ion-button color="filmlo" >
+    <ion-button color="filmlo" (click)="izmeni()">
       <ion-icon name="pencil-outline"></ion-icon>
       Izmeni film
     </ion-button>

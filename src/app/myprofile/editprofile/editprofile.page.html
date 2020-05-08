@@ -9,13 +9,32 @@
 </ion-header>
 
 <ion-content padding>
-  <input type="file" (change)="fileChanged($event)">
-  <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)" >
-  <div>
-    <ion-avatar>
-        <ion-img src="{{imageURL}}" (click)="updateProfilPic()" ></ion-img>
-    </ion-avatar>
-  </div>
+  <ion-card>
+    <ion-grid>
+      <ion-card-header>
+        <ion-card-title class="center">
+<!--          <h1>{{imePrezime}}</h1>-->
+<ion-input type="text" [ngModel]="imePrezime" ></ion-input>
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content >
+          <input type="file" (change)="fileChanged($event)">
+          <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)" >
+          <div>
+            <ion-avatar>
+                <ion-img src="{{imageURL}}" (click)="updateProfilPic()" ></ion-img>
+            </ion-avatar>
+          </div>
+      </ion-card-content>
 
 
+      <ion-card-content>
+        <ion-label>E-mail adresa: </ion-label>
+        <ion-input type="text" [ngModel]="mejlAdresa"></ion-input>
+      </ion-card-content>
+
+      <ion-button color="filmlo"  shape="round">Sacuvaj promene</ion-button>
+    </ion-grid>
+  </ion-card>
 </ion-content>
