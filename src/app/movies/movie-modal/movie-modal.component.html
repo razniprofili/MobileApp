@@ -35,7 +35,7 @@
                 <ion-col>
                   <ion-item>
                     <ion-label position="floating">Žanr</ion-label>
-                    <ion-select value="" okText="Potvrdi" cancelText="Odustani" name="zanr" (ionChange)="onChangeSelectZanr($event)">
+                    <ion-select value="" okText="Potvrdi" cancelText="Odustani" name="zanr" [ngModel]="zanr" (ionChange)="onChangeSelectZanr($event)">
                       <ion-select-option value="avantura">Avantura</ion-select-option>
                       <ion-select-option value="animacija">Animacija</ion-select-option>
                       <ion-select-option value="akcioni">Akcioni</ion-select-option>
@@ -92,7 +92,7 @@
                   <ion-col>
                     <ion-item>
                       <ion-label > Ocena</ion-label>
-                      <ion-select value="" okText="Potvrdi" cancelText="Odustani" name="ocena" (ionChange)="onChangeSelectOcena($event)" >
+                      <ion-select value="" okText="Potvrdi" cancelText="Odustani" name="ocena" [ngModel]="ocena" (ionChange)="onChangeSelectOcena($event)" >
                         <ion-select-option value="1">1</ion-select-option>
                         <ion-select-option value="2">2</ion-select-option>
                         <ion-select-option value="3">3</ion-select-option>

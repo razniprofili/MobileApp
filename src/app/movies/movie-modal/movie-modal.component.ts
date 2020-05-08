@@ -19,6 +19,7 @@ export class MovieModalComponent implements OnInit {
   @Input() godina : string;
   @Input() trajanje : string;
   @Input() datum : string;
+  @Input() ocena : string;
 
   @ViewChild('f', {static: true}) form: NgForm;
 
