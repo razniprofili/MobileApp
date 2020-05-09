@@ -5,8 +5,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {UserService} from '../../../user.service';
 import {firestore} from 'firebase/app';
-import {AlertController, LoadingController, NavController} from '@ionic/angular';
+import {AlertController, LoadingController, ModalController, NavController} from '@ionic/angular';
 import {map} from "rxjs/operators";
+import {MovieModalComponent} from "../../movie-modal/movie-modal.component";
+import {MoviesService} from "../../movies.service";
 
 
 @Component({
@@ -58,7 +60,8 @@ export class MovieAPIDetailsPage implements OnInit {
 
   constructor(public ruta: ActivatedRoute, public afsStore: AngularFirestore, public user: UserService,
               public alert: AlertController, public router: Router, private loadingCtrl: LoadingController,
-              private alertController: AlertController, private navCtrl: NavController) {
+              private alertController: AlertController, private navCtrl: NavController,
+              private modalCtrl: ModalController, private moviesService: MoviesService) {
   }
 
   ngOnInit() {
@@ -129,6 +132,39 @@ export class MovieAPIDetailsPage implements OnInit {
 
   otvoriModalzaDodavanje(){
   // uzima sve podatke od sacuvanog filma, a kom i ocenu dopisuje sam
+
+    this.modalCtrl.create({
+      component: MovieModalComponent,
+      componentProps: {
+        title: 'Dodaj film u moju listu odgledanih',
+        trajanje: Number(`${this.pronadjenFilm.Runtime}`),
+        zanr: this.pronadjenFilm.Genre,
+        glumci: this.pronadjenFilm.Actors,
+        reziser: this.pronadjenFilm.Director,
+        nazivFilma: this.pronadjenFilm.Title,
+        //datum: this.movie.datum,
+        godina: this.pronadjenFilm.Year,
+       // komentar: this.movie.komentar,
+        //ocena: this.movie.ocena,
+        zemlja: this.pronadjenFilm.Country
+
+      }
+    }).then((modal) => {
+      modal.present();
+      return modal.onDidDismiss();
+    }).then(resultData =>{
+      if(resultData.role === 'confirm'){
+        console.log(resultData);
+        this.moviesService
+            .addMovieV2(resultData.data.movieData.nazivFilma, resultData.data.movieData.trajanje,
+                resultData.data.movieData.zanr, resultData.data.movieData.zemlja, resultData.data.movieData.glumci, resultData.data.movieData.ocena,
+                resultData.data.movieData.datum, resultData.data.movieData.komentar,
+                resultData.data.movieData.reziser, resultData.data.movieData.godina)
+            .subscribe(movies => {
+              console.log(movies);
+            });
+      }
+    })
   }
 
   obrisiIzListe(){

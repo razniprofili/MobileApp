@@ -17,7 +17,7 @@ export class MovieModalComponent implements OnInit {
   @Input() reziser : string;
   @Input() zemlja : string;
   @Input() godina : string;
-  @Input() trajanje : string;
+  @Input() trajanje : number;
   @Input() datum : string;
   @Input() ocena : string;
 
