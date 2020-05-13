@@ -7,7 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { ActivityPageRoutingModule } from './activity-routing.module';
 
 import { ActivityPage } from './activity.page';
-import {SearchMoviePageModule} from "../search-movie/search-movie.module";
+import {SearchMoviePageModule} from '../search-movie/search-movie.module';
+
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
     imports: [
@@ -15,8 +17,9 @@ import {SearchMoviePageModule} from "../search-movie/search-movie.module";
         FormsModule,
         IonicModule,
         ActivityPageRoutingModule,
-        SearchMoviePageModule
+        SearchMoviePageModule,
+        ChartsModule
     ],
-  declarations: [ActivityPage]
+    declarations: [ActivityPage]
 })
 export class ActivityPageModule {}

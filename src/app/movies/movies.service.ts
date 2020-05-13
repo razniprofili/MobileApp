@@ -4,13 +4,13 @@ import {Movie} from './movie.model';
 import {BehaviorSubject} from "rxjs";
 import {map, switchMap, take, tap} from "rxjs/operators";
 import {UserService} from "../user.service";
-interface MovieData{
+interface MovieData {
   id: string;
   naziv: string;
   zanr: string;
   glumci: string;
   ocena: number;
-  datum: string;
+  datum: any;
   komentar: string;
   reziser: string;
   trajanje: number;
@@ -61,7 +61,7 @@ export class MoviesService {
   getMovie(id: string, userID: string){
    return this.http
        .get<MovieData>(`https://moviemobileapp-b3eae.firebaseio.com/users/` + userID + `/mojiFilmovi/${id}.json`)
-       .pipe(map((resData: MovieData)=>{
+       .pipe(map((resData: MovieData)=> {
          console.log(resData);
          return {
              id,
@@ -79,45 +79,36 @@ export class MoviesService {
          }}
        ));
   }
-    addMovie( naziv: string, glumci: string, reziser: string, zanr: string, jezik: string, godina: number, trajanje: number, ocena: number, komentar: string) {
+    addMovie( naziv: string, glumci: string, reziser: string, zanr: string, jezik: string, godina: number, trajanje: number, datum: any, ocena: number, komentar: string) {
         return this.http
             .post<{ name: string }>(
                 `https://moviemobileapp-b3eae.firebaseio.com/users/`+ this.user.getUserID() + `/mojiFilmovi.json`,
-                { naziv, glumci, reziser, zanr, jezik, godina, trajanje, ocena, komentar }
+                { naziv, glumci, reziser, zanr, jezik, godina, trajanje, datum, ocena, komentar }
 
             );
 
     }
   deleteMovie(movieID: string, userID: string) {
    return this.http.delete(`https://moviemobileapp-b3eae.firebaseio.com/users/` + userID + `/mojiFilmovi/${movieID}.json`)
-        .pipe(switchMap(()=>{
+        .pipe(switchMap(()=> {
           return this.movies
         }),
             take(1),
-            tap((movies) =>{
-             this._movies.next(movies.filter(film => film.id!== movieID));
+            tap((movies) => {
+             this._movies.next(movies.filter(film => film.id! == movieID));
             })
         );
   }
-    addMovieV2( naziv: string, trajanje: number, zanr: string, zemlja: string,
-               glumci: string, ocena: number, datum: string, komentar: string, reziser: string, godina: number){
-        return this.http
-            .post<{ name: string }>(
-                `https://moviemobileapp-b3eae.firebaseio.com/users/`+ this.user.getUserID() + `/mojiFilmovi.json`,
-                { naziv, glumci, reziser, zanr, zemlja, godina, trajanje, ocena, komentar, datum }
-
-            );
-    }
 
   editMovie(movieID: string, userID: string, naziv: string, trajanje: number, zanr: string, zemlja: string,
             glumci: string, ocena: number, datum: string, komentar: string, reziser: string, godina: number) {
     return this.http.put(`https://moviemobileapp-b3eae.firebaseio.com/users/` + userID + `/mojiFilmovi/${movieID}.json`, {
-      naziv, trajanje, zanr,zemlja, glumci, ocena, datum, komentar, reziser, godina
-    }).pipe(switchMap(()=>{
+      naziv, trajanje, zanr, zemlja, glumci, ocena, datum, komentar, reziser, godina
+    }).pipe(switchMap(()=> {
       return this.movies
     }),
         take(1),
-        tap((movies)=>{
+        tap((movies)=> {
           const updatedMovieIndex = movies.findIndex((m)=> m.id === movieID);
           const updatedMovies = [...movies]; // kloniranje niza
           updatedMovies[updatedMovieIndex] = {

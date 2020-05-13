@@ -1,1 +1,10 @@
-
+.klasa1{
+  display: inline-block;
+  border: solid 1px #ccc;
+  width:43%;
+  height: 70px;
+}
+.scroll{
+  overflow-x: scroll;
+  overflow-y: hidden;
+}

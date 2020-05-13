@@ -32,6 +32,7 @@ export class LogInPage implements OnInit {
         this.user.setUser({ mejl, sifra, userID: res.user.uid});
         this.router.navigateByUrl('/movies'); // kada se ulogujemo idemo na ovu stranicu
 
+
       } catch (e) {
         console.dir(e);
         if (e.code === 'auth/user-not-found' || e.code === 'auth/wrong-password' ) {

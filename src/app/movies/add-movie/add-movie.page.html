@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="filmlo">
+<ion-content >
     <ion-card >
 
   <form #f="ngForm" (ngSubmit)="onAddMovie()" >
@@ -38,30 +38,9 @@
               <ion-col>
             <ion-item>
               <ion-label position="floating">Žanr</ion-label>
-              <ion-select value="" okText="Potvrdi" cancelText="Odustani" ngModel name="zanr" (ionChange)="onChangeSelect($event)">
-                <ion-select-option value="avantura">Avantura</ion-select-option>
-                <ion-select-option value="animacija">Animacija</ion-select-option>
-                <ion-select-option value="akcioni">Akcioni</ion-select-option>
-                <ion-select-option value="biografski">Biografski</ion-select-option>
-                <ion-select-option value="vestern">Vestern</ion-select-option>
-                <ion-select-option value="deciji">Dečiji</ion-select-option>
-                <ion-select-option value="dokumentarni">Dokumentarni</ion-select-option>
-                <ion-select-option value="drama">Drama</ion-select-option>
-                <ion-select-option value="istorijski">Istorijski</ion-select-option>
-                <ion-select-option value="komedija">Komedija</ion-select-option>
-                <ion-select-option value="kratki">Kratki</ion-select-option>
-                <ion-select-option value="kriminalisticki">Kiminalistički</ion-select-option>
-                <ion-select-option value="ljubavni">Ljubavni</ion-select-option>
-                <ion-select-option value="misterija">Misterija</ion-select-option>
-                <ion-select-option value="mjuzikl">Mjuzikl</ion-select-option>
-                <ion-select-option value="muzicki">Muzički</ion-select-option>
-                <ion-select-option value="naucnofantasticki">Naučno-fantastični</ion-select-option>
-                <ion-select-option value="porodicni">Porodični</ion-select-option>
-                <ion-select-option value="ratni">Ratni</ion-select-option>
-                <ion-select-option value="sportski">Sportski</ion-select-option>
-                <ion-select-option value="triler">Triler</ion-select-option>
-                <ion-select-option value="fantastika">Fantastika</ion-select-option>
-                <ion-select-option value="horor">Horor</ion-select-option>
+              <ion-select value="" okText="Potvrdi" cancelText="Odustani" ngModel name="zanr"
+                          (ionChange)="onChangeSelect($event)">
+                  <ion-select-option *ngFor="let i of zanrovi"> {{i.name}}</ion-select-option>
               </ion-select>
 
             </ion-item>
@@ -72,13 +51,14 @@
               </ion-col>
                   <ion-col>
               <ion-item>
-                  <ion-label position="floating">Jezik</ion-label>
-                  <ion-input type="text" ngModel name="jezik"></ion-input>
+                  <ion-label position="floating">Zemlja</ion-label>
+                  <ion-input type="text" ngModel name="zemlja"></ion-input>
               </ion-item>
                   </ion-col>
               </ion-row>
               <ion-row>
-                  <ion-col><ion-item>
+                  <ion-col>
+                      <ion-item>
 
                   <ion-label position="floating">Godina</ion-label>
                   <ion-input type="number" ngModel name="godina"></ion-input>
@@ -89,53 +69,51 @@
               </ion-item></ion-col>
               </ion-row>
 
-
+              <ion-row>
+                  <ion-col>
+                      <ion-item>
+                          <ion-label position="floating">Datum gledanja filma</ion-label>
+                          <ion-datetime displayFormat="DD MM YY" doneText="Potvrdi" cancelText="Odustani"
+                                        ngModel name="datum"
+                                        (ionChange)="dateTimeChange($event) "></ion-datetime>
+                      </ion-item></ion-col>
+              </ion-row>
               <ion-radio-group  allow-empty-selection = “true”
                                 name=“ocena”
                                 (ionChange)="radioGroupChange($event)">
                   <ion-row>
-                      <ion-col>
-                          <ion-item>
-                              <ion-label > Ocena</ion-label>
-                          </ion-item>
-                      </ion-col>
-                      <ion-col>
-                          <ion-item>
-                              <ion-label>1</ion-label>
-                              <ion-radio mode="md" item-left value="1"></ion-radio>
-                          </ion-item>
-                      </ion-col>
-
-                      <ion-col>
-                          <ion-item>
-                              <ion-label>2</ion-label>
-                              <ion-radio mode="md" item-left value="2"></ion-radio>
-                          </ion-item>
-                      </ion-col>
-
-                      <ion-col>
-                          <ion-item>
-                              <ion-label>3</ion-label>
-                              <ion-radio mode="md" item-left value="3"></ion-radio>
-                          </ion-item>
-                      </ion-col>
-                      <ion-col>
-                          <ion-item>
-                              <ion-label>4</ion-label>
-                              <ion-radio mode="md" item-left value="4"></ion-radio>
-                          </ion-item>
-                      </ion-col> <ion-col>
                       <ion-item>
-                          <ion-label>5</ion-label>
+                      <ion-col [size]="3">
+                              <ion-label  > Ocena</ion-label>
+                      </ion-col>
+                      <ion-col >
+                              <ion-label >1</ion-label>
+                              <ion-radio mode="md" item-left value="1"></ion-radio>
+                      </ion-col>
+
+                      <ion-col >
+                          <ion-label >2</ion-label>
+                          <ion-radio mode="md" item-left value="2"></ion-radio>
+                      </ion-col>
+
+                      <ion-col >
+                          <ion-label >3</ion-label>
+                          <ion-radio mode="md" item-left value="3"></ion-radio>
+                      </ion-col>
+                      <ion-col >
+                          <ion-label >4</ion-label>
+                          <ion-radio mode="md" item-left value="4"></ion-radio>
+                      </ion-col> <ion-col >
+                          <ion-label >5</ion-label>
                           <ion-radio mode="md" item-left value="5"></ion-radio>
-                      </ion-item>
                   </ion-col>
+                      </ion-item>
                 </ion-row>
               </ion-radio-group>
 
             <ion-item>
                 <ion-label position="floating">Komentar</ion-label>
-                <ion-textarea rows="5" ngModel name="komentar"></ion-textarea>
+                <ion-textarea rows="4" ngModel name="komentar"></ion-textarea>
             </ion-item>
           </ion-list>
         </ion-col>

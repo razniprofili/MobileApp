@@ -13,8 +13,9 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {UserService} from './user.service';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
-import {HttpClientModule} from "@angular/common/http";
-import {MovieModalComponent} from "./movies/movie-modal/movie-modal.component";
+import {HttpClientModule} from '@angular/common/http';
+import {MovieModalComponent} from './movies/movie-modal/movie-modal.component';
+import 'chartjs-plugin-zoom';
 
 @NgModule({
   declarations: [AppComponent],

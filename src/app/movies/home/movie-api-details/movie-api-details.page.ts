@@ -156,9 +156,9 @@ export class MovieAPIDetailsPage implements OnInit {
       if(resultData.role === 'confirm'){
         console.log(resultData);
         this.moviesService
-            .addMovieV2(resultData.data.movieData.nazivFilma, resultData.data.movieData.trajanje,
+            .addMovie(resultData.data.movieData.nazivFilma, resultData.data.movieData.trajanje,
                 resultData.data.movieData.zanr, resultData.data.movieData.zemlja, resultData.data.movieData.glumci, resultData.data.movieData.ocena,
-                resultData.data.movieData.datum, resultData.data.movieData.komentar,
+                 resultData.data.movieData.komentar,   resultData.data.movieData.datum,
                 resultData.data.movieData.reziser, resultData.data.movieData.godina)
             .subscribe(movies => {
               console.log(movies);

@@ -3,14 +3,11 @@ export interface Movie {
     naziv: string;
     zanr: string;
     glumci: string;
-    ocena: number;
-    datum: string;
+    ocena: any;
+    datum: any;
     komentar: string;
     reziser: string;
-    trajanje: number;
+    trajanje: any;
     zemlja: string;
-    godina: number
+    godina: any;
 }
-// reziser:string;
-// trajanje:number;
-// zemlja:string;
