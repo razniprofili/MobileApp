@@ -79,11 +79,11 @@ export class MoviesService {
          }}
        ));
   }
-    addMovie( naziv: string, glumci: string, reziser: string, zanr: string, jezik: string, godina: number, trajanje: number, datum: any, ocena: number, komentar: string) {
+    addMovie( naziv: string, glumci: string, reziser: string, zanr: string, godina: number, trajanje: number, datum: any, ocena: number, komentar: string, zemlja: string) {
         return this.http
             .post<{ name: string }>(
                 `https://moviemobileapp-b3eae.firebaseio.com/users/`+ this.user.getUserID() + `/mojiFilmovi.json`,
-                { naziv, glumci, reziser, zanr, jezik, godina, trajanje, datum, ocena, komentar }
+                { naziv, glumci, reziser, zanr,  godina, trajanje, datum, ocena, komentar,zemlja }
 
             );
 

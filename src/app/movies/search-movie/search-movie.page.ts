@@ -14,6 +14,7 @@ import {Subscription} from "rxjs";
 export class SearchMoviePage implements OnInit, OnDestroy {
 
   public queryText: string;
+  index = 0;
   movies: Movie[];
   prazan = false;
   private moviesSub: Subscription;

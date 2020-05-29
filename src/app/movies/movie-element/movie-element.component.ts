@@ -23,6 +23,7 @@ export class MovieElementComponent implements OnInit {
 
   };
 
+
   constructor() { }
 
   ngOnInit() {}

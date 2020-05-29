@@ -6,6 +6,9 @@
       </ion-back-button>
     </ion-buttons>
     <ion-title>Detalji filma</ion-title>
+    <ion-fab-button slot="end" size="small" color="filmlo"  (click)="izmeni()">
+      <ion-icon name="pencil-outline"></ion-icon>
+    </ion-fab-button>
   </ion-toolbar>
 </ion-header>
 
@@ -17,25 +20,28 @@
     <ion-card-header>
       <ion-card-title>
         <h1>{{movie.naziv}}</h1>
+        <ion-label>{{movie.godina}} {{movie.zemlja}}</ion-label>
       </ion-card-title>
     </ion-card-header>
-    <ion-card-content>
-      <h2>Trajanje: {{movie.trajanje}} min</h2>
-    </ion-card-content>
-    <ion-card-content>
-      <h2>Zanr: {{movie.zanr}}</h2>
-    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <ion-card-content>
+          <h2>Trajanje: {{movie.trajanje}} min</h2>
+        </ion-card-content>
+      </ion-col>
+      <ion-col>
+        <ion-card-content>
+          <h2>Zanr: {{movie.zanr}}</h2>
+        </ion-card-content>
+      </ion-col>
+    </ion-row>
+
+
     <ion-card-content>
       <h2>Glumci: {{movie.glumci}}</h2>
     </ion-card-content>
     <ion-card-content>
       <h2>Reziser: {{movie.reziser}}</h2>
-    </ion-card-content>
-    <ion-card-content>
-      <h2>Zemlja: {{movie.zemlja}}</h2>
-    </ion-card-content>
-    <ion-card-content>
-      <h2>Godina: {{movie.godina}}</h2>
     </ion-card-content>
     <ion-card-content>
       <h2>Ocena: {{movie.ocena}}/5</h2>
@@ -47,10 +53,10 @@
       <h2>Moj komentar: {{movie.komentar}}</h2>
     </ion-card-content>
 <!--    Dugme za izmenu filma, otvara se forma za dodvanje filma-->
-    <ion-button color="filmlo" (click)="izmeni()">
-      <ion-icon name="pencil-outline"></ion-icon>
-      Izmeni film
-    </ion-button>
+<!--    <ion-button color="filmlo" (click)="izmeni()">-->
+<!--      <ion-icon name="pencil-outline"></ion-icon>-->
+<!--      Izmeni film-->
+<!--    </ion-button>-->
 <!--    Brisanje filma, pre tog alert!-->
     <ion-button color="filmlo" (click)="openAlert()" >
       <ion-icon name="trash-outline"></ion-icon>

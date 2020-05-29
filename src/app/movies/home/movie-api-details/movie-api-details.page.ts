@@ -132,12 +132,12 @@ export class MovieAPIDetailsPage implements OnInit {
 
   otvoriModalzaDodavanje(){
   // uzima sve podatke od sacuvanog filma, a kom i ocenu dopisuje sam
-
+    var slicedRuntime = this.pronadjenFilm.Runtime.slice(0, 3);
     this.modalCtrl.create({
       component: MovieModalComponent,
       componentProps: {
         title: 'Dodaj film u moju listu odgledanih',
-        trajanje: Number(`${this.pronadjenFilm.Runtime}`),
+        trajanje: slicedRuntime,
         zanr: this.pronadjenFilm.Genre,
         glumci: this.pronadjenFilm.Actors,
         reziser: this.pronadjenFilm.Director,
@@ -154,16 +154,32 @@ export class MovieAPIDetailsPage implements OnInit {
       return modal.onDidDismiss();
     }).then(resultData =>{
       if(resultData.role === 'confirm'){
-        console.log(resultData);
-        this.moviesService
-            .addMovie(resultData.data.movieData.nazivFilma, resultData.data.movieData.trajanje,
-                resultData.data.movieData.zanr, resultData.data.movieData.zemlja, resultData.data.movieData.glumci, resultData.data.movieData.ocena,
-                 resultData.data.movieData.komentar,   resultData.data.movieData.datum,
-                resultData.data.movieData.reziser, resultData.data.movieData.godina)
-            .subscribe(movies => {
-              console.log(movies);
-            });
+        this.loadingCtrl.create({message: 'Dodavanje...'}).then(el=>{
+          el.present();
+          console.log(resultData);
+          this.moviesService
+              .addMovie(resultData.data.movieData.nazivFilma,resultData.data.movieData.glumci, resultData.data.movieData.reziser,
+                  resultData.data.movieData.zanr, resultData.data.movieData.godina,resultData.data.movieData.trajanje,
+                  resultData.data.movieData.datum, resultData.data.movieData.ocena,
+                  resultData.data.movieData.komentar,
+                  resultData.data.movieData.zemlja)
+              .subscribe(movies => {
+                console.log(movies);
+              });
+          el.dismiss();
+        })
+        this.presentAlert1('Done!', 'Film' + ' ' + this.pronadjenFilm.Title + ' je uspešno dodat u listu odgledanih filmova!');
+        // nakon dodavanja on se brise iz liste sacuvanih i vracamo se na prethodnu stranu
+        this.afsStore.doc(`users/` + this.user.getUserID()).update({
+          sacuvaniFilmovi:  firestore.FieldValue.arrayRemove({
+            IDFilma: this.imdbID,
+            imeFilma: this.pronadjenFilm.Title,
+            poster: this.pronadjenFilm.Poster
+          })
+        })
+        this.navCtrl.navigateBack('/movies/tabs/home-page');
       }
+
     })
   }
 
@@ -224,6 +240,22 @@ export class MovieAPIDetailsPage implements OnInit {
         }
       }]
   });
+    await alert.present();
+  }
+
+  async presentAlert1(title: string, content: string) {
+    const alert = await this.alert.create({
+      header: title,
+      message: content,
+      buttons: [{
+        text: 'OK',
+
+        handler: () => {
+
+          this.router.navigateByUrl('/movies/tabs/home-page');
+        }
+      }]
+    });
     await alert.present();
   }
 }

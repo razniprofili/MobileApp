@@ -17,7 +17,7 @@ export class MovieModalComponent implements OnInit {
   @Input() reziser : string;
   @Input() zemlja : string;
   @Input() godina : string;
-  @Input() trajanje : number;
+  @Input() trajanje : string;
   @Input() datum : string;
   @Input() ocena : string;
 
@@ -58,7 +58,7 @@ export class MovieModalComponent implements OnInit {
     this.modalCtrl.dismiss({
       movieData:{
         trajanje: this.form.value['trajanje'],
-        zanr: this.selectedOptionZanr,
+        zanr: this.form.value['zanr'],
         glumci: this.form.value['glumci'],
         reziser: this.form.value['reziser'],
         nazivFilma: this.form.value['text'],

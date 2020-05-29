@@ -120,7 +120,7 @@ export class AddMoviePage implements OnInit {
       console.log(this.selectedDate);
 
       this.moviesService
-          .addMovie(this.form.value['naziv'], this.form.value['glumci'], this.form.value['reziser'], this.selectedOption, this.form.value['jezik'] , this.form.value['godina'], this.form.value['trajanje'], this.selectedDate, this.selectedRadio, this.form.value['komentar'] )
+          .addMovie(this.form.value['naziv'], this.form.value['glumci'], this.form.value['reziser'], this.selectedOption, this.form.value['godina'],  this.form.value['trajanje'], this.selectedDate, this.selectedRadio, this.form.value['komentar'],this.form.value['zemlja'])
           .subscribe(movies => {
             console.log(movies);
           });

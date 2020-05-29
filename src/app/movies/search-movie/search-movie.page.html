@@ -15,7 +15,7 @@
   <ion-label>Nema odgledanih filmova!</ion-label>
 </ion-item>
 
-<ion-content color="filmlo">
+<ion-content>
 <!--  <ion-list>-->
 <!--    &lt;!&ndash;    <app-quote-element *ngFor="Let quote of quotes" [quote]="quotes" [routerLink]="quote.id"></app-quote-element>&ndash;&gt;-->
 <!--    <app-movie-element *ngFor="let movie of movies" [movie]="movie" [routerLink]="movie.id"></app-movie-element>-->
@@ -28,13 +28,18 @@
   <ion-grid *ngIf="!isLoading">
     <ion-row>
       <ion-col col-6>
-        <ion-card text-center padding>
+<!--        <ion-col col-6>&ndash;&gt;-->
+          <!--        <ion-card text-center padding>-->
           <app-movie-element *ngFor="let movie of movies" [movie]="movie" [routerLink]="movie.id"></app-movie-element>
-        </ion-card>
+          <!--        </ion-card>-->
+          <!--      </ion-col>-->
       </ion-col>
+
+
     </ion-row>
+
   </ion-grid>
-<!--  KAd se klikne na ovo dugme otvara se forma za dodavanje filma  -->
+
   <ion-fab  vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="filmlo" (click)="otvoriStranuZaDodavanje()">
       <ion-icon name="add"></ion-icon>

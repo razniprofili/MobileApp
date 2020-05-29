@@ -41,32 +41,32 @@
                 <ion-col>
                   <ion-item>
                     <ion-label position="floating">Žanr</ion-label>
-                    <ion-select value="" okText="Potvrdi" cancelText="Odustani" name="zanr" [ngModel]="zanr" (ionChange)="onChangeSelectZanr($event)">
-                      <ion-select-option value="avantura">Avantura</ion-select-option>
-                      <ion-select-option value="animacija">Animacija</ion-select-option>
-                      <ion-select-option value="akcioni">Akcioni</ion-select-option>
-                      <ion-select-option value="biografski">Biografski</ion-select-option>
-                      <ion-select-option value="vestern">Vestern</ion-select-option>
-                      <ion-select-option value="deciji">Dečiji</ion-select-option>
-                      <ion-select-option value="dokumentarni">Dokumentarni</ion-select-option>
-                      <ion-select-option value="drama">Drama</ion-select-option>
-                      <ion-select-option value="istorijski">Istorijski</ion-select-option>
-                      <ion-select-option value="komedija">Komedija</ion-select-option>
-                      <ion-select-option value="kratki">Kratki</ion-select-option>
-                      <ion-select-option value="kriminalisticki">Kiminalistički</ion-select-option>
-                      <ion-select-option value="ljubavni">Ljubavni</ion-select-option>
-                      <ion-select-option value="misterija">Misterija</ion-select-option>
-                      <ion-select-option value="mjuzikl">Mjuzikl</ion-select-option>
-                      <ion-select-option value="muzicki">Muzički</ion-select-option>
-                      <ion-select-option value="naucnofantasticki">Naučno-fantastični</ion-select-option>
-                      <ion-select-option value="porodicni">Porodični</ion-select-option>
-                      <ion-select-option value="ratni">Ratni</ion-select-option>
-                      <ion-select-option value="sportski">Sportski</ion-select-option>
-                      <ion-select-option value="triler">Triler</ion-select-option>
-                      <ion-select-option value="fantastika">Fantastika</ion-select-option>
-                      <ion-select-option value="horor">Horor</ion-select-option>
-                    </ion-select>
-
+<!--                    <ion-select value="" okText="Potvrdi" cancelText="Odustani" name="zanr" [ngModel]="zanr" (ionChange)="onChangeSelectZanr($event)">-->
+<!--                      <ion-select-option value="avantura">Avantura</ion-select-option>-->
+<!--                      <ion-select-option value="animacija">Animacija</ion-select-option>-->
+<!--                      <ion-select-option value="akcioni">Akcioni</ion-select-option>-->
+<!--                      <ion-select-option value="biografski">Biografski</ion-select-option>-->
+<!--                      <ion-select-option value="vestern">Vestern</ion-select-option>-->
+<!--                      <ion-select-option value="deciji">Dečiji</ion-select-option>-->
+<!--                      <ion-select-option value="dokumentarni">Dokumentarni</ion-select-option>-->
+<!--                      <ion-select-option value="drama">Drama</ion-select-option>-->
+<!--                      <ion-select-option value="istorijski">Istorijski</ion-select-option>-->
+<!--                      <ion-select-option value="komedija">Komedija</ion-select-option>-->
+<!--                      <ion-select-option value="kratki">Kratki</ion-select-option>-->
+<!--                      <ion-select-option value="kriminalisticki">Kiminalistički</ion-select-option>-->
+<!--                      <ion-select-option value="ljubavni">Ljubavni</ion-select-option>-->
+<!--                      <ion-select-option value="misterija">Misterija</ion-select-option>-->
+<!--                      <ion-select-option value="mjuzikl">Mjuzikl</ion-select-option>-->
+<!--                      <ion-select-option value="muzicki">Muzički</ion-select-option>-->
+<!--                      <ion-select-option value="naucnofantasticki">Naučno-fantastični</ion-select-option>-->
+<!--                      <ion-select-option value="porodicni">Porodični</ion-select-option>-->
+<!--                      <ion-select-option value="ratni">Ratni</ion-select-option>-->
+<!--                      <ion-select-option value="sportski">Sportski</ion-select-option>-->
+<!--                      <ion-select-option value="triler">Triler</ion-select-option>-->
+<!--                      <ion-select-option value="fantastika">Fantastika</ion-select-option>-->
+<!--                      <ion-select-option value="horor">Horor</ion-select-option>-->
+<!--                    </ion-select>-->
+                    <ion-input type="text" name="zanr" [ngModel]="zanr"></ion-input>
                   </ion-item>
 <!--                  <ion-row class="ion-justify-content-center">-->
 <!--                    <ion-col offset-sm="0"> <a (click)="presentAlertPrompt()" >Dodaj žanr</a>-->
@@ -124,7 +124,7 @@
 
         <ion-row >
           <ion-col offset-sm="-3">
-          <ion-button type="submit" expand="block"   color="filmlo" >Sačuvaj izmene</ion-button>
+          <ion-button type="submit" expand="block"   color="filmlo" >Sačuvaj</ion-button>
         </ion-col>
         </ion-row>
       </ion-grid>
