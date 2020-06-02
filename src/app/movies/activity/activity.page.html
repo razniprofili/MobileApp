@@ -9,8 +9,12 @@
 
 
 <ion-content >
-  <div class="scroll" style="width: 100%">
-    <ion-card class="klasa1" *ngFor="let i of items">
+  <div class="ion-text-center" *ngIf="isLoading">
+    <ion-spinner  name="bubbles" ></ion-spinner>
+  </div>
+  <ion-grid *ngIf="!isLoading">
+  <div class="scroll" style="width: 100%" >
+    <ion-card class="klasa1" *ngFor="let i of statistics">
       <ion-card-subtitle style="text-align: center; font-size: large " >
         {{i.name}}
       </ion-card-subtitle>
@@ -75,22 +79,37 @@
   </div>
 
   <div>
-    <ion-card style="border: solid 1px  #ccc; height: 70px;" >
+    <ion-card style="border: solid 1px  #ccc; " >
       <ion-item>
-        <ion-select placeholder="Zanr">
-          <ion-select-option value="komedija">Komedija</ion-select-option>
-          <ion-select-option value="horor">Horor</ion-select-option>
+
+        <ion-col col-md-4  >
+        <ion-select  placeholder="Zanr" okText="Potvrdi" cancelText="Odustani"
+                     value="zanr" (ionChange)="onChangeZanr($event)" >
+          <ion-select-option *ngFor="let i of zanrovi">{{i.name}}</ion-select-option>
         </ion-select>
-        <ion-select placeholder="Sortiraj">
+         </ion-col>
+        <ion-col col-md-4 >
+        <ion-select placeholder="Sortiraj"  okText="Potvrdi" cancelText="Odustani" value="sortiraj" (ionChange)="onChangeSort($event)">
           <ion-select-option value="asc">Ocene rastuce</ion-select-option>
           <ion-select-option value="desc">Ocene opadajuce</ion-select-option>
         </ion-select>
-        <ion-fab vertical="center" horizontal="end" style="zoom:0.8;" >
-          <ion-fab-button color="filmlo">
-            <ion-icon name="search"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
+        </ion-col>
+        <ion-col col-md-4 >
+          <ion-fab vertical="center" horizontal="end" style="zoom:0.8;" (click)="filtriraj()">
+            <ion-fab-button color="filmlo" >
+              <ion-icon name="search"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </ion-col>
       </ion-item>
+      <ion-row *ngFor="let movie of filterData">
+        <ion-item style="width: 100%" >
+          <ion-col col-md-4 style="text-align: center">{{movie.naziv}}</ion-col>
+          <ion-col col-md-4 style="text-align: center">{{movie.zanr}}</ion-col>
+          <ion-col col-md-4 style="text-align: center">{{movie.ocena}}</ion-col>
+        </ion-item>
+      </ion-row>
     </ion-card>
   </div>
+  </ion-grid>
 </ion-content>

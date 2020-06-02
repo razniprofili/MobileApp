@@ -129,6 +129,7 @@ export class SearchMoviePage implements OnInit, OnDestroy {
     //   ];
   }
   userID: string= this.currentUser.getUserID();
+
   ngOnInit() {
     console.log('ngOnInit');
     this.isLoading = true;

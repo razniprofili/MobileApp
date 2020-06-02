@@ -82,7 +82,9 @@ export class AddMoviePage implements OnInit {
 
     await alert.present();
     const result = await alert.onDidDismiss();
-    console.log(result);
+    console.log(result.data.values['name1']);
+    this.zanrovi.push({ id: 23, name: result.data.values['name1'], value: result.data.values['name1']});
+
   }
 
   radioGroupChange(event) {
@@ -124,7 +126,7 @@ export class AddMoviePage implements OnInit {
           .subscribe(movies => {
             console.log(movies);
           });
-
+      console.log("sacuvan");
     }
 
   }
