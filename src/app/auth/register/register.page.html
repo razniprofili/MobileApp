@@ -8,7 +8,7 @@
     <app-logo></app-logo>
     <h1>Kreiranje naloga</h1>
   </div>
-  <form [formGroup]="registerForm" (ngSubmit)="onRegister()" >
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister2()" >
     <ion-item lines="none" *ngIf="greska===true">
       <ion-label color="danger">Nalog sa ovim e-mailom vec postoji!</ion-label>
     </ion-item>

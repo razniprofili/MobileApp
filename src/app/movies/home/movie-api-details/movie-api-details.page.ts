@@ -132,12 +132,13 @@ export class MovieAPIDetailsPage implements OnInit {
 
   otvoriModalzaDodavanje(){
   // uzima sve podatke od sacuvanog filma, a kom i ocenu dopisuje sam
-    var slicedRuntime = this.pronadjenFilm.Runtime.slice(0, 3);
+   // var slicedRuntime = this.pronadjenFilm.Runtime.slice(0, 3);
+    var str = this.pronadjenFilm.Runtime.substring(0, this.pronadjenFilm.Runtime.length-4); // od apija dobijamo trajanje u formatu 111 min, a mi uzimamo samo 111
     this.modalCtrl.create({
       component: MovieModalComponent,
       componentProps: {
         title: 'Dodaj film u moju listu odgledanih',
-        trajanje: slicedRuntime,
+        trajanje: str,
         zanr: this.pronadjenFilm.Genre,
         glumci: this.pronadjenFilm.Actors,
         reziser: this.pronadjenFilm.Director,

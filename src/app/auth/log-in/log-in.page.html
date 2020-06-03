@@ -9,7 +9,7 @@
     <app-logo></app-logo>
     <h1>Prijava</h1>
   </div>
-  <form #LogInForm="ngForm" (ngSubmit)="onLogIn(LogInForm)" >
+  <form #LogInForm="ngForm" (ngSubmit)="onLogIn2(LogInForm)" >
     <ion-item lines="none" *ngIf="greska===true">
       <ion-label color="danger">Pogresno korisnicko ime ili sifra!</ion-label>
     </ion-item>

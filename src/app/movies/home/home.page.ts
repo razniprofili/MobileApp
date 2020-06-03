@@ -15,6 +15,7 @@ import {UserService} from '../../user.service';
 export class HomePage implements OnInit {
   movies;
   sub;
+  moviesPretraga;
  // public imeFilma: string;
   public queryText: string;
   userBase: AngularFirestoreDocument;
@@ -56,21 +57,25 @@ otvoriPretragu() {
     this.sub = this.userBase.valueChanges().subscribe(event => {
       this.isLoading = false;
         this.movies = event.sacuvaniFilmovi;
+       // this.moviesPretraga = event.sacuvaniFilmovi;
         console.log(event.sacuvaniFilmovi);
-        if (event.sacuvaniFilmovi === undefined) {
+        if (event.sacuvaniFilmovi.length ===0) {
           this.prazno = true;
         } else {
           this.prazno = false;
         }
     });
   }
-
+ ucitaj1(){
+   this.moviesPretraga = this.movies;
+ }
   updateMovies(ev: any) {
-   // this.inicijalizuj();
+   // this.moviesPretraga = this.movies;
+    console.log(this.moviesPretraga)
     const val = ev.target.value;
-    // tslint:disable-next-line:triple-equals
-    if (val && val.trim() != '') {
-      this.movies = this.movies.filter((item) => {
+
+    if (val && val.trim() !== '') {
+      this.moviesPretraga = this.moviesPretraga.filter((item) => {
         return (item.imeFilma.toLocaleLowerCase().indexOf(val.toLowerCase()) > -1);
       });
     }

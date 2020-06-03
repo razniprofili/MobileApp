@@ -8,10 +8,10 @@
   </ion-toolbar>
 
   <ion-toolbar>
-    <ion-searchbar animated="true" placeholder="Naziv filma" [(ngModel)]="queryText" (ionInput)="updateMovies($event)" ></ion-searchbar>
+    <ion-searchbar animated="true" placeholder="Naziv filma" [(ngModel)]="queryText" (ionInput)="pretraga($event)" ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
-<ion-item *ngIf="prazan">
+<ion-item class="center" *ngIf="prazan">
   <ion-label>Nema odgledanih filmova!</ion-label>
 </ion-item>
 

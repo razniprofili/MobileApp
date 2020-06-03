@@ -96,7 +96,7 @@ export class ActivityPage implements OnInit {
   ionViewWillEnter() {
     console.log('izvrsen ion will enter');
     this.isLoading = true;
-    this.moviesService.getMovies(this.userID).subscribe(movieData => {
+    this.moviesService.getMovies().subscribe(movieData => { //ovde sam uklonila userID jer nam nije potreban u potpisu metode
       this.isLoading = false;
       console.log(movieData);
      // this.movies = movieData;
@@ -252,17 +252,17 @@ export class ActivityPage implements OnInit {
                     brojac++;
                 }
             }
-            novi.push({id:i, name:this.zanrovi[i].name, value:brojac});
-           // console.log({id:i, name:this.zanrovi[i].name, value:brojac});
+          // novi.push({id:i, name:this.zanrovi[i].name, value:brojac});
+          // console.log({id:i, name:this.zanrovi[i].name, value:brojac});
         }
         var max=0;
         var vrednost="";
-        for(let i=0; i<novi.length;i++){
-            if(novi[i].value>max){
-                max=novi[i].value;
-                vrednost=novi[i].name;
-            }
-        }
+      //   for(let i=0; i<novi.length;i++){
+      //     if(novi[i].value>max){
+      //         max=novi[i].value;
+      //         vrednost=novi[i].name;
+      //     }
+      // }
         this.statistics.push({id:3, name:"Najgledaniji zanr", value:vrednost});
 
        // for(let i=0; i<this.statistics.length;i++){
@@ -274,15 +274,15 @@ export class ActivityPage implements OnInit {
     getData() {
     this.http.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${this.stock}?from=2018-03-12&to=2019-03-12`).subscribe(res => {
       //const history = res;
-        const history = res.historical;
+      //  const history = res.historical;
 
       this.chartLabels = [];
       this.chartData[0].data = [];
 
-      for (const entry of history) {
-        this.chartLabels.push(entry.date);
-        this.chartData[0].data.push(entry.close);
-      }
+      // for (const entry of history) {
+      //   this.chartLabels.push(entry.date);
+      //   this.chartData[0].data.push(entry.close);
+      // }
     });
   }
 

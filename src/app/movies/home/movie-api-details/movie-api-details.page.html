@@ -18,6 +18,7 @@
   <ion-card *ngIf="!isLoading">
     <ion-grid>
       <ion-icon name="star-sharp" slot="end"  size="large" color="filmlo" *ngIf="sacuvan"></ion-icon>
+      <ion-label *ngIf="sacuvan">*Ovaj film je na listi sacuvanih filmova</ion-label>
       <ion-card-header>
         <ion-card-title>
           <h1>{{pronadjenFilm.Title}}</h1>
@@ -87,7 +88,7 @@
         <ion-icon name="add-outline"></ion-icon>
         Dodaj u moju listu odgledanih
       </ion-button>
-      <ion-label *ngIf="sacuvan">*Sacuvan film</ion-label>
+<!--      <ion-label *ngIf="sacuvan">*Sacuvan film</ion-label>-->
     </ion-grid>
 
   </ion-card>

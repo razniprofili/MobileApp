@@ -8,21 +8,21 @@ import {Movie} from "../movie.model";
 })
 export class MovieElementComponent implements OnInit {
 
-  @Input() movie: Movie = {
-    id: '11',
-    naziv: 'Juzni vetar',
-    glumci: 'Milos Bikovic,...',
-    reziser: 'Milos Avramovic',
-    zanr: 'akcija',
-    zemlja: 'srpski',
-    godina: 2018,
-    trajanje: 130,
-    ocena: 5,
-    komentar: 'Odlican film pogledaj drugi deo obavezno!!',
-    datum: "2020"
-
-  };
-
+  // @Input() movie: Movie = {
+  //   id: '11',
+  //   naziv: 'Juzni vetar',
+  //   glumci: 'Milos Bikovic,...',
+  //   reziser: 'Milos Avramovic',
+  //   zanr: 'akcija',
+  //   zemlja: 'srpski',
+  //   godina: 2018,
+  //   trajanje: 130,
+  //   ocena: 5,
+  //   komentar: 'Odlican film pogledaj drugi deo obavezno!!',
+  //   datum: "2020"
+  //
+  // };
+  @Input() movie: Movie;
 
   constructor() { }
 

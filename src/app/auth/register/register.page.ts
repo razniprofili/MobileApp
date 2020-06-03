@@ -51,7 +51,7 @@ export class RegisterPage implements OnInit {
           const res = await this.afAuth.createUserWithEmailAndPassword(mejl, sifra);
           this.greska = false;
           console.log(res);
-          this.authService.login();
+         // this.authService.login();
           this.user.setUser({ mejl, sifra, userID: res.user.uid});
           this.afStore.doc(`users/` + res.user.uid).set({
               mejl,
@@ -81,6 +81,44 @@ export class RegisterPage implements OnInit {
       }
     }
   }
+
+  async  onRegister2() {
+      const{mejl, sifra, sifra2, name, surname, slika } = this;
+      if (this.registerForm.valid) {
+          if (this.sifra !== this.sifra2) {
+              this.presentAlert('Greska', 'Sifre se ne poklapaju, pokusajte opet.');
+          } else {
+                  console.log(this.registerForm);
+                  this.authService.register(this.registerForm.value).subscribe(resData => {
+                      //console.log('Registracija uspesna');
+                      console.log(resData);
+                      this.greska = false;
+                      this.user.setUser({ mejl, sifra, userID: resData.localId});
+                      this.afStore.doc(`users/` + resData.localId).set({
+                          mejl,
+                          sifra,
+                          name,
+                          surname,
+                          slika
+                      });
+                      this.presentAlert('', 'Uspesna registracija!');
+                      this.router.navigateByUrl('/movies');
+                  },
+                      errRes=>{
+                          const textGreske= errRes.error.error.message;
+                          console.log(errRes)
+                          this.greska = true;
+                      });
+
+          }
+      } else {
+          this.presentAlert('', 'Popunite polja koja nedostaju!');
+          if (this.greska === true) {
+              this.greska = false;
+          }
+      }
+
+    }
 
   async presentAlert(title: string, content: string) {
     const alert = await this.alert.create({

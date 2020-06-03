@@ -25,7 +25,8 @@ export class MovieDetailsPage implements OnInit {
           zemlja: 'neka',
           reziser: 'reziser 1',
           trajanje: 120,
-          godina: 2020
+          godina: 2020,
+          userID: '1'
       };
    isLoading = false;
 
@@ -115,7 +116,7 @@ export class MovieDetailsPage implements OnInit {
 
                           loadingEl.present();
 
-                          this.moviesService.deleteMovie(this.movie.id, this.userID).subscribe(()=>{
+                          this.moviesService.deleteMovie(this.movie.id).subscribe(()=>{
                               loadingEl.dismiss();
                               this.navCtrl.navigateBack('/movies/tabs/search-movie');
                           });

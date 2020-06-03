@@ -27,7 +27,8 @@ export class MovieModalComponent implements OnInit {
   itemO: any;
   selectedOptionZanr: any;
   selectedOptionOcena: any;
-
+  itemD: any;
+  selectedDate: any;
   constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {}
@@ -40,6 +41,11 @@ export class MovieModalComponent implements OnInit {
     this.itemO = JSON.parse(JSON.stringify(event.detail));
     this.selectedOptionZanr = this.itemO['value'];
     console.log(this.selectedOptionZanr);
+  }
+  dateTimeChange(event) {
+    this.itemD = JSON.parse(JSON.stringify(event.detail));
+    this.selectedDate = this.itemD['value'];
+    console.log(this.selectedDate);
   }
 
   onChangeSelectOcena(event) {

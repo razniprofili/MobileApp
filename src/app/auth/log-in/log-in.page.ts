@@ -28,7 +28,7 @@ export class LogInPage implements OnInit {
         const res = await this.afAuth.signInWithEmailAndPassword(mejl, sifra);
         console.log(res);
         this.greska = false;
-        this.authService.login(); // da se upamti da smo ulogovani
+       // this.authService.login(); // da se upamti da smo ulogovani
         this.user.setUser({ mejl, sifra, userID: res.user.uid});
         this.router.navigateByUrl('/movies'); // kada se ulogujemo idemo na ovu stranicu
 
@@ -41,5 +41,24 @@ export class LogInPage implements OnInit {
       }
     }
   }
+
+    async onLogIn2(form: NgForm) {
+        const{mejl, sifra} = this;
+        if (form.valid) {
+            this.authService.login(form.value).subscribe((resData)=>{
+                console.log(resData);
+                console.log('uspesna prijava');
+                this.greska = false;
+                this.user.setUser({ mejl, sifra, userID: resData.localId});
+                console.log(this.user.getUserID())
+                this.router.navigateByUrl('/movies'); // kada se ulogujemo idemo na ovu stranicu
+            },
+                errRes=>{
+                console.log(errRes)
+                    this.greska = true;
+                });
+        }
+    }
+
 
 }
