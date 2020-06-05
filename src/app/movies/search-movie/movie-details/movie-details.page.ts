@@ -26,7 +26,7 @@ export class MovieDetailsPage implements OnInit {
           reziser: 'reziser 1',
           trajanje: 120,
           godina: 2020,
-          userID: '1'
+          userId: '1'
       };
    isLoading = false;
 

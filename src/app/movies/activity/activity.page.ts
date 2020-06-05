@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Movie} from '../movie.model';
 import {Router} from '@angular/router';
-import { ChartDataSets } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
 import { HttpClient } from '@angular/common/http';
 
 import {MoviesService} from '../movies.service';
 import {UserService} from '../../user.service';
 import {Subscription} from 'rxjs';
+
+import { Chart } from 'chart.js';
+
 
 @Component({
   selector: 'app-activity',
@@ -15,6 +16,11 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./activity.page.scss'],
 })
 export class ActivityPage implements OnInit {
+    @ViewChild('barChart', {static: true}) barChart;
+
+    bars: any;
+    colorArray: any;
+
   movies: Movie[];
   prazan = false;
   private moviesSub: Subscription;
@@ -30,7 +36,7 @@ export class ActivityPage implements OnInit {
   statistics: any[];
   recently:any[];
 
-    zanrovi = [] = [
+  zanrovi = [] = [
         { id: 0, name: 'Avantura', value: 'Avantura' },
         { id: 1, name: 'Akcioni', value: 'Akcioni'},
         { id: 2, name: 'Animacija', value: 'Animacija'},
@@ -57,37 +63,8 @@ export class ActivityPage implements OnInit {
         {id:  23, name:'Svi žanrovi', value:'Svi žanrovi'}
     ];
 
-  chartData: ChartDataSets[] = [{ data: [], label: 'Stock price' }];
-  chartLabels: Label[];
-
-  // Options
-  chartOptions = {
-    responsive: true,
-    title: {
-      display: true,
-      text: 'Historic Stock price'
-    },
-    pan: {
-      enabled: true,
-      mode: 'xy'
-    },
-    zoom: {
-      enabled: true,
-      mode: 'xy'
-    }
-  };
-  chartColors: Color[] = [
-    {
-      borderColor: '#000000',
-      backgroundColor: '#ff00ff'
-    }
-  ];
-  chartType = 'line';
-  showLegend = false;
-
-  // For search
-  stock = '';
-
+  //chartdata=[]= [7,10,14,12,20,22,32,35,43,15];
+    chartdata:any[];
 
   constructor(private router: Router, private moviesService: MoviesService,
               private currentUser: UserService, private http: HttpClient) {}
@@ -98,14 +75,14 @@ export class ActivityPage implements OnInit {
     this.isLoading = true;
     this.moviesService.getMovies().subscribe(movieData => { //ovde sam uklonila userID jer nam nije potreban u potpisu metode
       this.isLoading = false;
+      this.createBarChart();
       console.log(movieData);
-     // this.movies = movieData;
       if ( this.movies.length === 0) {
           this.prazan=true;
       }
     });
-  }
 
+  }
 
   ngOnInit() {
     console.log('ngOnInit');
@@ -116,6 +93,7 @@ export class ActivityPage implements OnInit {
       this.filterData = movies;
       this.recently=this.izracunajPoslednje(movies);
       this.statistics=this.izracunajStatistike(movies);
+      this.chartdata=this.izracunajPodatke(movies);
     });
   }
 
@@ -166,19 +144,22 @@ export class ActivityPage implements OnInit {
       //poslednji pogledani
       //izdvajam ove koji imaju datum i od njih trazim max
       for(let i=0; i<movies.length; i++){
-          if(movies[i].datum && movies[i].datum !='' ){
+          if(movies[i].datum && movies[i].datum.trim() !='' ){
                 last.push(movies[i]);
+                console.log(movies[i]);
           }
       }
       var naziv='';
       if(last.length==1) naziv=last[0].naziv;
       if(last.length >1){
           //datum je string,mora da se promeni u Date
-          var max=new Date(Date.parse(last[0].datum)).getUTCMilliseconds();
+          var max=Date.parse(last[0].datum.trim());
+          console.log(max);
           var index=0;
           var elem;
           for(let i=1; i<last.length; i++){
-               elem= new Date(Date.parse(last[i].datum)).getUTCMilliseconds();
+               elem= Date.parse(last[i].datum.trim());
+               console.log(elem);
               if(max<elem){
                   max=elem;
                   index=i;
@@ -241,54 +222,83 @@ export class ActivityPage implements OnInit {
         this.statistics.push({id:2, name:'Prosek ocena', value:sred.toFixed(2)});
 
         //najgledaniji zanr
-        var novi:[]=[];
-        var brojac=0;
-        for(let i=0; i<this.zanrovi.length; i++){
-            brojac=0;
+      //za svaki zanr broji koliko puta se pojavljuje u movies
+      var novi: any[]=[];
+      var brojac=0;
+      for(let i=0; i<this.zanrovi.length;i++){
+          brojac=0;
+          for(let j=0; j<movies.length; j++) {
+              if(movies[j].zanr!=undefined && movies[j].zanr.trim()!='' &&
+              movies[j].zanr.trim().toLowerCase()== this.zanrovi[i].name.trim().toLowerCase()){
+                  brojac++;
+              }
+          }
+          novi.push({name:this.zanrovi[i].name.trim(), value:brojac});
+          //console.log(this.zanrovi[i].name.trim()+" "+brojac);
+      }
+      var max=0;
+      var naziv="";
+      for(let i=0; i<novi.length; i++){
+          if(novi[i].value> max){
+              max=novi[i].value;
+              naziv=novi[i].name;
+              //console.log(max+" "+naziv);
+          }
 
-            for(let j=0; j<movies.length; j++){
-                if(movies[j].zanr !=undefined &&
-                    movies[j].zanr.toLowerCase()==this.zanrovi[i].value.toLowerCase()){
-                    brojac++;
-                }
-            }
-          // novi.push({id:i, name:this.zanrovi[i].name, value:brojac});
-          // console.log({id:i, name:this.zanrovi[i].name, value:brojac});
-        }
-        var max=0;
-        var vrednost="";
-      //   for(let i=0; i<novi.length;i++){
-      //     if(novi[i].value>max){
-      //         max=novi[i].value;
-      //         vrednost=novi[i].name;
-      //     }
-      // }
-        this.statistics.push({id:3, name:"Najgledaniji zanr", value:vrednost});
+      }
 
-       // for(let i=0; i<this.statistics.length;i++){
-          //  console.log(this.statistics[i]);
+      this.statistics.push({id:3, name:'Najgledaniji zanr', value:naziv});
+
+      // for(let i=0; i<this.statistics.length;i++){
+        //    console.log(this.statistics[i]);
         //}
         return this.statistics;
     }
 
-    getData() {
-    this.http.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${this.stock}?from=2018-03-12&to=2019-03-12`).subscribe(res => {
-      //const history = res;
-      //  const history = res.historical;
+  izracunajPodatke(movies: Movie[]):any[]{
+      var godina= new Date().getFullYear();
+      var pomocna=0;
+       this.chartdata=[];
 
-      this.chartLabels = [];
-      this.chartData[0].data = [];
-
-      // for (const entry of history) {
-      //   this.chartLabels.push(entry.date);
-      //   this.chartData[0].data.push(entry.close);
-      // }
-    });
+      for(let i=godina-9; i<=godina; i++){
+        pomocna=0;
+        for(let  j=0; j<movies.length; j++){
+            if(movies[j].datum!=undefined && movies[j].datum.trim()!=''){
+                var dat=parseInt(movies[j].datum.trim().split('-')[0], 10);
+                if(dat==i) pomocna++;
+            }
+        }
+        this.chartdata.push(pomocna);
+    }
+      console.log(this.chartdata);
+      return this.chartdata;
   }
 
-  typeChanged(e) {
-    const on = e.detail.checked;
-    this.chartType = on ? 'line' : 'bar';
-  }
+  createBarChart() {
+      var godina= new Date().getFullYear();
+        this.bars = new Chart(this.barChart.nativeElement, {
+            type: 'bar',
+            data: {
+                labels: [godina-9, godina-8, godina-7, godina-6, godina-5, godina-4, godina-3, godina-2, godina-1, godina],
+                datasets: [{
+                    label: 'Broj filmova',
+                    data: this.chartdata,
+                    backgroundColor: 'rgb(247, 144, 10)',
+                    borderColor: 'rgb(247 , 144, 10)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
 
 }

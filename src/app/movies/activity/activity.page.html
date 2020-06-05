@@ -12,7 +12,7 @@
   <div class="ion-text-center" *ngIf="isLoading">
     <ion-spinner  name="bubbles" ></ion-spinner>
   </div>
-  <ion-grid *ngIf="!isLoading">
+  <ion-grid [hidden]="isLoading">
   <div class="scroll" style="width: 100%" >
     <ion-card class="klasa1" *ngFor="let i of statistics">
       <ion-card-subtitle style="text-align: center; font-size: large " >
@@ -24,47 +24,15 @@
     </ion-card>
   </div>
   <div>
-    <ion-card style="border: solid 1px  #ccc; ">
-      <ion-item>
-        <ion-button slot="start" expand="full" color="filmlo" (click)="getData()" [disabled]="stock == ''">
-          <ion-icon slot="start" name="search"></ion-icon>
-          UCITAJ GRAFIK
-        </ion-button>
-        <ion-input type="text" [(ngModel)]="stock" placeholder="AAPL, MSFT..."></ion-input>
-        <ion-fab vertical="center" horizontal="end" style="zoom:0.8;"  >
-          <ion-fab-button color="filmlo">
-            <ion-icon name="options-outline"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
-      </ion-item>
-
-      <canvas baseChart
-              [datasets]="chartData"
-              [labels]="chartLabels"
-              [options]="chartOptions"
-              [colors]="chartColors"
-              [legend]="showLegend"
-              [chartType]="chartType">
-      </canvas>
-    </ion-card>
-  </div>
-
-  <!--<ion-card style="width:300px; height:200px">
+    <ion-card class="welcome-card">
       <ion-card-header>
-          <ion-card-title>Settings</ion-card-title>
+        <ion-card-title style="text-align: center">Broj odgledanih filmova po godinama</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-          <ion-item>
-              <ion-label>Line chart?</ion-label>
-              <ion-toggle (ionChange)="typeChanged($event)" checked></ion-toggle>
-          </ion-item>
-          <ion-item>
-              <ion-label>Show legend?</ion-label>
-              <ion-toggle [(ngModel)]="showLegend"></ion-toggle>
-          </ion-item>
-
+        <canvas #barChart></canvas>
       </ion-card-content>
-  </ion-card>-->
+    </ion-card>
+  </div>
 
 
   <div class="scroll2" style="width: 100%">

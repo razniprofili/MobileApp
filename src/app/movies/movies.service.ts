@@ -153,7 +153,8 @@ export class MoviesService {
    //       }}
    //     ));
   }
-    addMovie( naziv: string, glumci: string, reziser: string, zanr: string, godina: number, trajanje: any, datum: any, ocena: number, komentar: string, zemlja: string) {
+    addMovie( naziv: string, glumci: string, reziser: string, zanr: string, godina: number, trajanje: number,
+              datum: string, ocena: number, komentar: string, zemlja: string) {
         let noviId;
         let noviFilm: Movie;
         let fetchedUserId: string;
