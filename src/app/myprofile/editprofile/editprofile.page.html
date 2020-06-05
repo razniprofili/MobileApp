@@ -8,33 +8,70 @@
   </ion-toolbar>
 </ion-header>
 
+<!--<ion-content padding>-->
+<!--  <ion-card>-->
+<!--    <ion-grid>-->
+<!--      <ion-card-header>-->
+<!--        <ion-card-title class="center">-->
+<!--&lt;!&ndash;          <h1>{{imePrezime}}</h1>&ndash;&gt;-->
+<!--<ion-input type="text" [(ngModel)]="imePrezime" ></ion-input>-->
+<!--        </ion-card-title>-->
+<!--      </ion-card-header>-->
+
+<!--      <ion-card-content >-->
+<!--          <input type="file" (change)="fileChanged($event)">-->
+<!--          <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)" >-->
+<!--          <div>-->
+<!--            <ion-avatar>-->
+<!--                <ion-img src="{{imageURL}}" (click)="updateProfilPic()" ></ion-img>-->
+<!--            </ion-avatar>-->
+<!--          </div>-->
+<!--      </ion-card-content>-->
+
+
+<!--      <ion-card-content>-->
+<!--        <ion-label>E-mail adresa: </ion-label>-->
+<!--        <ion-input type="text" [(ngModel)]="mejlAdresa"></ion-input>-->
+<!--      </ion-card-content>-->
+
+<!--      <ion-button color="filmlo"  shape="round" (click)="sacuvajPromene()">Sacuvaj promene</ion-button>-->
+<!--    </ion-grid>-->
+<!--  </ion-card>-->
+<!--</ion-content>-->
+
 <ion-content padding>
-  <ion-card>
-    <ion-grid>
-      <ion-card-header>
-        <ion-card-title class="center">
-<!--          <h1>{{imePrezime}}</h1>-->
-<ion-input type="text" [ngModel]="imePrezime" ></ion-input>
-        </ion-card-title>
-      </ion-card-header>
 
-      <ion-card-content >
-          <input type="file" (change)="fileChanged($event)">
-          <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)" >
-          <div>
-            <ion-avatar>
-                <ion-img src="{{imageURL}}" (click)="updateProfilPic()" ></ion-img>
-            </ion-avatar>
-          </div>
-      </ion-card-content>
+    <div>
+        <div class="profile-info">
 
+           <label position="floating">Ime </label>
+            <ion-item lines="none" class="poravnanje">
+                <input  type="text" [(ngModel)]="ime">
+            </ion-item>
 
-      <ion-card-content>
-        <ion-label>E-mail adresa: </ion-label>
-        <ion-input type="text" [ngModel]="mejlAdresa"></ion-input>
-      </ion-card-content>
+            <label position="floating">Prezime</label>
+            <ion-item lines="none" class="poravnanje">
+                <input type="text" [(ngModel)]="prezime">
+            </ion-item>
 
-      <ion-button color="filmlo"  shape="round">Sacuvaj promene</ion-button>
-    </ion-grid>
-  </ion-card>
+            <label position="floating">E-mail</label>
+            <ion-item lines="none" class="poravnanje">
+                <input type="email" [(ngModel)]="mejlAdresa">
+            </ion-item>
+
+            <label position="floating">Nova sifra?</label>
+            <ion-item lines="none" class="poravnanje">
+                <input type="password"  [(ngModel)]="newPassword">
+            </ion-item>
+            <ion-label *ngIf="kratkaSifra" color="danger" >Minimalna duzina sifre je 8!</ion-label>
+            <ion-item lines="none"  class="ion-no-padding">
+                <label position="floating">Trenutna sifra:</label>
+            </ion-item >
+            <ion-item lines="none" >
+                <input type="password"  [(ngModel)]="password">
+            </ion-item>
+
+            <ion-button fill="solid" expand="block" color="filmlo" shape="round" (click)="sacuvajPromene()">Sacuvaj promene</ion-button>
+        </div>
+    </div>
 </ion-content>

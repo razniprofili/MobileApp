@@ -70,7 +70,7 @@ otvoriPretragu() {
    this.moviesPretraga = this.movies;
  }
   updateMovies(ev: any) {
-   // this.moviesPretraga = this.movies;
+    this.moviesPretraga = this.movies;
     console.log(this.moviesPretraga)
     const val = ev.target.value;
 

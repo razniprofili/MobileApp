@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from '../user.service';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {AuthService} from "../auth/auth.service";
+import {AlertController} from "@ionic/angular";
 
 
 @Component({
@@ -18,7 +20,8 @@ export class MyprofilePage implements OnInit {
   sacuvaniFilmovi;
   userBase;
   sub;
-  constructor(private router: Router, public afStore: AngularFirestore, private currentUser: UserService) {
+  constructor(private router: Router, public afStore: AngularFirestore, private currentUser: UserService,
+              private authService: AuthService, private alert: AlertController) {
   }
 
   ngOnInit() {
@@ -48,6 +51,7 @@ export class MyprofilePage implements OnInit {
 
         this.imePrezime = event.name + ' ' + event.surname;
         this.slikaKorisnika = event.slika;
+        this.mejlAdresa = event.mejl;
         try {
           this.brojSacuvanih = event.sacuvaniFilmovi.length;
         } catch (e) {
@@ -59,6 +63,22 @@ export class MyprofilePage implements OnInit {
   otvoriStranuZaIzmenu() {
     this.router.navigateByUrl('/myprofile/editprofile');
   }
+ngOnDestroy(){
+    this.sub.unsubscribe();
+}
+    deaktivacijaNaloga(){
+         this.authService.deleteAccount();
+        this.presentAlert('', 'Uspesna registracija!');
+        this.router.navigateByUrl('/register');
+    }
+    async presentAlert(title: string, content: string) {
+        const alert = await this.alert.create({
+            header: title,
+            message: content,
+            buttons: ['OK']
+        });
 
+        await alert.present();
+    }
 
 }

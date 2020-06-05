@@ -24,8 +24,8 @@ const routes: Routes = [
   },
   {
     path: 'myprofile',
-    loadChildren: () => import('./myprofile/myprofile.module').then( m => m.MyprofilePageModule)
-    // canLoad: [AuthGuard]
+    loadChildren: () => import('./myprofile/myprofile.module').then( m => m.MyprofilePageModule),
+    canLoad: [AuthGuard]
   }
 
 

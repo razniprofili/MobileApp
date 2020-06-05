@@ -15,13 +15,13 @@ export class MovieDetailsPage implements OnInit {
 
   movie: Movie =
       {
-        id: '111',
-        naziv: 'Treci film',
-        zanr: 'komedija',
-        glumci: 'neki tamo glumci',
-        ocena: 3,
-        datum: '13.01.2019.',
-        komentar: 'Neki tamo komentar',
+          id: '111',
+          naziv: 'Treci film',
+          zanr: 'komedija',
+          glumci: 'neki tamo glumci',
+          ocena: 3,
+          datum: '13.01.2019.',
+          komentar: 'Neki tamo komentar',
           zemlja: 'neka',
           reziser: 'reziser 1',
           trajanje: 120,
@@ -110,7 +110,7 @@ export class MovieDetailsPage implements OnInit {
                   text: 'Obrisi',
 
                   handler: () => {
-                      console.log('Obrisan film'); // napravi da se brise  iz baze i iz liste filmova
+                     // console.log('Obrisan film');
 
                       this.loadingCtrl.create({message: 'Brisanje...'}).then(loadingEl => {
 

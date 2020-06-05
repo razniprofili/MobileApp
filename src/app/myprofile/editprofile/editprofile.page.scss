@@ -15,3 +15,66 @@ ion-avatar {
   //justify-content: center;
   margin: auto;
 }
+label{
+  margin:22px;
+  //padding:10px;
+}
+ion-label{
+  margin:22px;
+}
+//ion-item{
+//  margin: 8px;
+//}
+.poravnanje{
+  margin: 8px;
+  //font-size: small;
+}
+input[type=text]{
+  width:100%;
+  border:2px solid #aaa;
+  border-radius:4px;
+  margin:3px 0;
+  outline:none;
+  padding:8px;
+  box-sizing:border-box;
+  transition:.3s;
+}
+
+input{
+  width:100%;
+  border:2px solid #aaa;
+  border-radius:4px;
+  margin:3px 0;
+  outline:none;
+  padding:8px;
+  box-sizing:border-box;
+  transition:.3s;
+}
+
+input[type=text]:focus{
+  border-color: #f7900a;
+  box-shadow:0 0 8px 0 #010306;
+}
+
+input:focus{
+  border-color: #f7900a;
+  box-shadow:0 0 8px 0 #010306;
+}
+
+.profile-info{
+  margin: 8px;
+}
+
+.malaSlova{
+  font-size: small;
+}
+
+.bold{
+  font-weight: bold;
+}
+.ion-no-padding{
+  padding: 0;
+  --padding-start: 0px;
+  --inner-padding-end: 0px;
+  font-weight: bold;
+}

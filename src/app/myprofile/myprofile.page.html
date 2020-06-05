@@ -22,29 +22,30 @@
 
         </ion-card-title>
       </ion-card-header>
-
+        <ion-card-content class="center">
+<!--            <ion-label>E-mail adresa: </ion-label>-->
+            <ion-label>{{mejlAdresa}}</ion-label>
+        </ion-card-content>
       <ion-card-content >
         <ion-avatar >
 
-          <ion-img [src]="slikaKorisnika"></ion-img>
-
+<!--          <ion-img [src]="slikaKorisnika"></ion-img>-->
+          <img src="assets/img/user.png" alt="User logo">
         </ion-avatar>
       </ion-card-content>
 
 
-      <ion-card-content>
-        <ion-label>E-mail adresa: </ion-label>
-        <ion-label>{{mejlAdresa}}</ion-label>
-      </ion-card-content>
-      <ion-card-content>
-        <ion-label>Broj sacuvanih fimova: </ion-label>
-        <ion-label>{{brojSacuvanih}}</ion-label>
-      </ion-card-content>
+
+<!--      <ion-card-content>-->
+
+<!--        <ion-label>{{brojSacuvanih}}</ion-label>-->
+<!--          <ion-label> sacuvanih filmova za gledanje</ion-label>-->
+<!--      </ion-card-content>-->
 <!--        <ion-card-content *ngFor="let movie of filmovi">-->
 <!--            <ion-label>{{movie.imeFilma}}</ion-label>-->
 <!--        </ion-card-content>-->
 
-    <ion-button color="danger"  shape="round">Deaktiviraj nalog</ion-button>
+<!--    <ion-button color="danger"  shape="round" (click)="deaktivacijaNaloga()">Deaktiviraj nalog</ion-button>-->
     </ion-grid>
 
   </ion-card>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AlertController} from "@ionic/angular";
 import {AuthService} from "../../auth/auth.service";
 import {Router} from "@angular/router";
+import {AngularFireAuth} from "@angular/fire/auth";
 
 
 @Component({
@@ -11,7 +12,7 @@ import {Router} from "@angular/router";
 })
 export class MenuComponent implements OnInit {
 
-  constructor(public alertController: AlertController, public authService: AuthService, public router: Router) { }
+  constructor(public alertController: AlertController, public authService: AuthService, public router: Router, private afAuth: AngularFireAuth) { }
 
   ngOnInit() {}
 
@@ -27,7 +28,9 @@ export class MenuComponent implements OnInit {
             console.log('Odjavljen'); //napravi da se odjavi korisnik
             //odjava
             this.authService.logout();
+            this.afAuth.signOut();
             this.router.navigateByUrl("/log-in")
+
           }
         },
         {

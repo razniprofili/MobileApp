@@ -26,7 +26,7 @@ export class RegisterPage implements OnInit {
   slika = 'https://forum.mikrotik.com/styles/canvas/theme/images/no_avatar.jpg';
   // sacuvaniFilmovi: string[];
   greska = false;
-
+  tekstGreske: string
 
   constructor(public alert: AlertController, public afAuth: AngularFireAuth,
               public router: Router, public user: UserService,
@@ -68,7 +68,9 @@ export class RegisterPage implements OnInit {
         } catch (e) {
           console.dir(e);
           if (e.code === 'auth/email-already-in-use') {
+
               this.greska = true;
+
           }
         }
         console.log(this.registerForm);
@@ -101,13 +103,26 @@ export class RegisterPage implements OnInit {
                           surname,
                           slika
                       });
+
                       this.presentAlert('', 'Uspesna registracija!');
                       this.router.navigateByUrl('/movies');
                   },
                       errRes=>{
+                          this.greska = true;
                           const textGreske= errRes.error.error.message;
                           console.log(errRes)
-                          this.greska = true;
+                          console.log(textGreske)
+                          if(textGreske === 'INVALID_EMAIL') {
+                              this.tekstGreske ='E-mail adresa nije u odgovarajucem formatu!'
+                          } else {
+                              if(textGreske === 'EMAIL_EXISTS') {
+                                  this.tekstGreske ='Nalog sa ovim e-mailom vec postoji!'
+                              } else {
+                                  this.tekstGreske ='Desila se greska, pokusajte kasnije!'
+                              }
+                          }
+
+
                       });
 
           }

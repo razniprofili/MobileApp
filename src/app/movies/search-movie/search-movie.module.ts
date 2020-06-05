@@ -9,6 +9,7 @@ import { SearchMoviePageRoutingModule } from './search-movie-routing.module';
 import { SearchMoviePage } from './search-movie.page';
 import {MovieElementComponent} from "../movie-element/movie-element.component";
 import {MovieModalComponent} from "../movie-modal/movie-modal.component";
+import {UserLogoComponent} from "../../komponente/user-logo/user-logo.component";
 // import {MenuComponent} from "../../komponente/menu/menu.component";
 
 
@@ -20,12 +21,13 @@ import {MovieModalComponent} from "../movie-modal/movie-modal.component";
     FormsModule,
     IonicModule,
     SearchMoviePageRoutingModule
+
   ],
     exports: [
         MovieElementComponent
 
 
     ],
-  declarations: [SearchMoviePage, MovieElementComponent]
+  declarations: [SearchMoviePage, MovieElementComponent, UserLogoComponent]
 })
 export class SearchMoviePageModule {}

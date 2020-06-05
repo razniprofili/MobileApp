@@ -49,6 +49,7 @@ export class LogInPage implements OnInit {
                 console.log(resData);
                 console.log('uspesna prijava');
                 this.greska = false;
+
                 this.user.setUser({ mejl, sifra, userID: resData.localId});
                 console.log(this.user.getUserID())
                 this.router.navigateByUrl('/movies'); // kada se ulogujemo idemo na ovu stranicu
@@ -57,6 +58,8 @@ export class LogInPage implements OnInit {
                 console.log(errRes)
                     this.greska = true;
                 });
+            const res = await this.afAuth.signInWithEmailAndPassword(mejl, sifra);
+            console.log(res)
         }
     }
 

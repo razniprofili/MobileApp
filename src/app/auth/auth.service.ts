@@ -5,6 +5,7 @@ import {BehaviorSubject} from "rxjs";
 import {User} from "./user.model";
 import {environment} from "../../environments/environment";
 import { Observable, throwError } from 'rxjs';
+import {log} from "util";
 export interface UserData {
   name?: string;
   surname?: string;
@@ -28,6 +29,8 @@ export class AuthService {
 
   private ulogovan = false;
   private _user = new BehaviorSubject<User>(null);
+  tokenUser: string;
+  userLocalID: string;
   //gde god se pretplatimo na User-a imacemo na uvid svaku promenu!
   //dobijamo najnoviju prethodno emitovanu vrednost
 
@@ -79,6 +82,8 @@ export class AuthService {
         }).pipe(tap(userData => {
       const expirationDate = new Date(new Date().getTime() + +userData.expiresIn * 1000); //ovaj plusic je pretvaranje stringa u number, u milisek
       const newUser = new User(userData.localId, userData.email, userData.idToken, expirationDate);
+      this.tokenUser = userData.idToken;
+      this.userLocalID = userData.localId;
       this._user.next(newUser); // postavljamo ovog usera, i dalje mozemo da ga koristimo
     }));
   }
@@ -88,6 +93,18 @@ export class AuthService {
     this._user.next(null);
   }
 
+  deleteAccount(){
+      console.log("usao delete")
+      console.log(this.tokenUser)
+      //console.log(this.userId)
+
+      return this.http.post<AuthResponseData>(`https://identitytoolkit.googleapis.com/v1/accounts:delete?key=${environment.firebaseApiKey}`,
+          {
+              idToken: this.userLocalID
+
+          })
+
+  }
   register(user: UserData) {
     this.ulogovan = true;
     return this.http.post<AuthResponseData>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseApiKey}`, {
@@ -99,6 +116,8 @@ export class AuthService {
         tap(userData => {
       const expirationDate = new Date(new Date().getTime() + +userData.expiresIn * 1000);
       const newUser = new User(userData.localId, userData.email, userData.idToken, expirationDate);
+      this.tokenUser = userData.idToken;
+            this.userLocalID = userData.localId;
       this._user.next(newUser);
     }));
   }
