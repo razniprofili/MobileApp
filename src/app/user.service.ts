@@ -36,6 +36,9 @@ export class UserService {
         return this.user.mejl;
     }
 
+    getUserPass() {
+        return this.user.sifra;
+    }
 
 
     reAuth(email: string, password: string){

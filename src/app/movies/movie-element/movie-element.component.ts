@@ -24,6 +24,7 @@ export class MovieElementComponent implements OnInit {
   // };
   @Input() movie: Movie;
 
+  //datum= this.movie.datum.substring(0, 9)
   constructor() { }
 
   ngOnInit() {}

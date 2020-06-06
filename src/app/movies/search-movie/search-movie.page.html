@@ -6,26 +6,34 @@
     </ion-buttons>
     <ion-title>Pretraži moje filmove</ion-title>
   </ion-toolbar>
-
-  <ion-toolbar>
-    <ion-searchbar animated="true" placeholder="Naziv filma" [(ngModel)]="queryText" (ionInput)="pretraga($event)" ></ion-searchbar>
-  </ion-toolbar>
 </ion-header>
-<ion-item class="center" *ngIf="prazan">
-  <ion-label>Nema odgledanih filmova!</ion-label>
-</ion-item>
 
 <ion-content>
+  <div class="ion-text-center" *ngIf="isLoading">
+    <ion-spinner  name="bubbles"></ion-spinner>
+  </div>
+
 <!--  <ion-list>-->
 <!--    &lt;!&ndash;    <app-quote-element *ngFor="Let quote of quotes" [quote]="quotes" [routerLink]="quote.id"></app-quote-element>&ndash;&gt;-->
 <!--    <app-movie-element *ngFor="let movie of movies" [movie]="movie" [routerLink]="movie.id"></app-movie-element>-->
 <!--    &lt;!&ndash;    kad se klikne na citat u ruti ce se pojaviti njegov id, svjdn je sta pise q ili quote&ndash;&gt;-->
 <!--  </ion-list>-->
-  <div class="ion-text-center" *ngIf="isLoading">
-    <ion-spinner  name="bubbles"></ion-spinner>
-  </div>
+
 
   <ion-grid *ngIf="!isLoading">
+    <ion-item lines="none">
+      <ion-searchbar *ngIf="!prazan" animated="true" placeholder="Naziv filma" [(ngModel)]="queryText" (ionInput)="pretraga($event)" ></ion-searchbar>
+    </ion-item>
+    <ion-item class="center" *ngIf="prazan" lines="none">
+      <ion-label class="font">Nema odgledanih filmova!</ion-label>
+    </ion-item>
+    <ion-row class="ion-justify-content-center"  *ngIf="prazan">
+      <ion-item   *ngIf="prazan" lines="none">
+        <div >
+          <ion-button color="filmlo" shape="round" (click)="otvoriStranuZaDodavanje()">Dodaj film koji si pogledao/la!</ion-button>
+        </div>
+      </ion-item>
+    </ion-row>
     <ion-row>
       <ion-col col-6>
 <!--        <ion-col col-6>&ndash;&gt;-->
@@ -40,7 +48,7 @@
 
   </ion-grid>
 
-  <ion-fab  vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab *ngIf="!prazan" vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="filmlo" (click)="otvoriStranuZaDodavanje()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

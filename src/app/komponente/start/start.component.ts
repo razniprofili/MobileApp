@@ -13,7 +13,7 @@ export class StartComponent implements OnInit {
   ngOnInit() {}
 
   navigateToLogInPage(){
-    this.router.navigate(['log-in'])
+    this.router.navigate(['register'])
   }
 
 }
