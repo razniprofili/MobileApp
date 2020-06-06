@@ -15,7 +15,7 @@ export class MenufullComponent implements OnInit {
   odjaviSe(){
     this.alertController.create({
       header: 'Odjava',
-      message: 'Da li ste sigurni da zelite da se odjavite?',
+      message: 'Da li si siguran/a da zelis da se odjavite?',
       buttons: [
         {
           text: 'Odjava',

@@ -84,7 +84,7 @@ export class EditprofilePage implements OnInit {
 
         // moze da se izmeni samo ako unese sifru
         if(this.password === ''){
-             this.presentAlert('Greska','Morate uneti sifru!')
+             this.presentAlert('Greska','Sifra nije uneta!')
         } else {
             //... i samo ako je ispravna
             if(this.password === this.userPassword){
@@ -132,12 +132,12 @@ export class EditprofilePage implements OnInit {
                 if(this.kratkaSifra === false){
                     this.password = ""
                     this.newPassword = ""
-                    await this.presentAlert('Done!', 'Vas profil je uspesno azuriran!')
+                    await this.presentAlert('Done!', 'Profil je uspesno azuriran!')
                     this.router.navigateByUrl('/movies/tabs/myprofile');
                 }
 
             } else {
-                this.presentAlert('Greska','Uneli ste pogresnu sifru, pokusajte ponovo!')
+                this.presentAlert('Greska','Uneta je pogresna sifra, pokusaj ponovo!')
                 this.password = ''
             }
         }

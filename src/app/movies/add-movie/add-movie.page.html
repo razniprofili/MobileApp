@@ -10,9 +10,11 @@
 </ion-header>
 
 <ion-content >
-    <ion-card >
-
-  <form #f="ngForm" (ngSubmit)="onAddMovie()" >
+    <div class="ion-text-center" *ngIf="isLoading">
+        <ion-spinner  name="bubbles"></ion-spinner>
+    </div>
+    <ion-card [hidden]="isLoading">
+  <form #f="ngForm"  >
     <ion-grid>
       <!--sirina u gridu je ogranicena na 12-->
       <ion-row>
@@ -121,9 +123,16 @@
 
       <ion-row >
         <ion-col offset-sm="3" >
-            <ion-button  type="reset" expand="block"  color="filmlo" >Poništi</ion-button>
-        </ion-col><ion-col offset-sm="-3">
-            <ion-button type="submit" expand="block"   color="filmlo" [disabled]="f.invalid" >Sačuvaj</ion-button>
+            <ion-button  type="reset" expand="block"  color="filmlo" >
+                <ion-icon name="refresh-outline"></ion-icon>
+                Resetuj
+            </ion-button>
+        </ion-col>
+          <ion-col offset-sm="-3">
+            <ion-button type="submit" expand="block"   color="filmlo" [disabled]="f.invalid" (click)="openAlert()">
+                <ion-icon name="save-outline"></ion-icon>
+                Sačuvaj
+            </ion-button>
           </ion-col>
       </ion-row>
     </ion-grid>

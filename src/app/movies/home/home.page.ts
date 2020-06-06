@@ -59,7 +59,7 @@ otvoriPretragu() {
         this.movies = event.sacuvaniFilmovi;
        // this.moviesPretraga = event.sacuvaniFilmovi;
         console.log(event.sacuvaniFilmovi);
-        if (event.sacuvaniFilmovi.length ===0) {
+        if (event.sacuvaniFilmovi == undefined || event.sacuvaniFilmovi.length ===0) {
           this.prazno = true;
         } else {
           this.prazno = false;

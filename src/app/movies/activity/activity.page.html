@@ -50,19 +50,19 @@
     <ion-card style="border: solid 1px  #ccc; " >
       <ion-item>
 
-        <ion-col col-md-4  >
+        <ion-col col-md-4>
         <ion-select  placeholder="Zanr" okText="Potvrdi" cancelText="Odustani"
                      value="zanr" (ionChange)="onChangeZanr($event)" >
           <ion-select-option *ngFor="let i of zanrovi">{{i.name}}</ion-select-option>
         </ion-select>
          </ion-col>
-        <ion-col col-md-4 >
+        <ion-col col-md-4>
         <ion-select placeholder="Sortiraj"  okText="Potvrdi" cancelText="Odustani" value="sortiraj" (ionChange)="onChangeSort($event)">
           <ion-select-option value="asc">Ocene rastuce</ion-select-option>
           <ion-select-option value="desc">Ocene opadajuce</ion-select-option>
         </ion-select>
         </ion-col>
-        <ion-col col-md-4 >
+        <ion-col col-md-4>
           <ion-fab vertical="center" horizontal="end" style="zoom:0.8;" (click)="filtriraj()">
             <ion-fab-button color="filmlo" >
               <ion-icon name="search"></ion-icon>

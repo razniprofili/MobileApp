@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {filter} from 'rxjs/operators';
 import {Movie} from '../movie.model';
-import { ModalController } from '@ionic/angular';
+import {LoadingController, ModalController, NavController} from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {MoviesService} from '../movies.service';
+import {Subscription} from "rxjs";
+
 
 @Component({
   selector: 'app-add-movie',
@@ -22,6 +24,10 @@ export class AddMoviePage implements OnInit {
   itemO: any;
   itemD: any;
   selectedDate: any;
+  private moviesSub: Subscription;
+  sacuvan = false;
+  isLoading = false;
+
 
   zanrovi = [] = [
     { id: 0, name: 'Avantura', value: 'Avantura' },
@@ -49,10 +55,15 @@ export class AddMoviePage implements OnInit {
     { id: 22, name: 'Horor', value: 'Horor'}
   ];
 
-  constructor(public alertController: AlertController, private moviesService: MoviesService) {}
+
+  constructor(public alertController: AlertController, private moviesService: MoviesService,
+              public navCtrl: NavController, public loadingCtrl: LoadingController) {}
 
   ngOnInit() {
+    console.log('ngOnInit');
+
   }
+
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
       header: 'Dodaj žanr !',
@@ -87,6 +98,92 @@ export class AddMoviePage implements OnInit {
 
   }
 
+  openAlert() {
+    this.alertController.create({
+      header: 'Sacuvaj film',
+      message: 'Da li zelis da sacuvas film?',
+      buttons: [
+        {
+          text: 'Sacuvaj',
+
+          handler: () => {
+            console.log('Sacuvan film');
+
+            this.loadingCtrl.create({message: 'Cuvanje...'}).then(loadingEl => {
+
+              loadingEl.present();
+              //this.onAddMovie();
+              if (!this.form.valid) {
+                return;
+              } else {
+                console.log(this.form.value['naziv']);
+                console.log(this.form.value['glumci']);
+                console.log(this.form.value['reziser']);
+                console.log(this.selectedOption);
+                console.log(this.form.value['zemlja']);
+                console.log(this.form.value['godina']);
+                console.log(this.form.value['trajanje']);
+                console.log(this.selectedRadio);
+                console.log(this.form.value['komentar']);
+                console.log(this.selectedDate);
+              }
+
+                try{
+                  this.moviesSub=this.moviesService
+                      .addMovie(this.form.value['naziv'], this.form.value['glumci'], this.form.value['reziser'],
+                          this.selectedOption, this.form.value['godina'],  this.form.value['trajanje'],
+                          this.selectedDate, this.selectedRadio, this.form.value['komentar'],this.form.value['zemlja'])
+                      .subscribe(movies => {
+                        console.log(movies);
+                        this.sacuvan=true;
+                        loadingEl.dismiss();
+                        this.presentAlert(' ', 'Film je uspesno sacuvan!');
+                        this.form.reset();
+                        this.navCtrl.navigateBack('/movies/tabs/home-page');
+
+                      });
+                }catch (e) {
+                  this.presentAlert(' ', 'Greska prilikom cuvanja. Probaj opet!');
+                  console.log(e);
+                }
+
+            });
+
+
+          }
+        },
+        {
+          text: 'Odustani',
+          role: 'cancel',
+          handler: () => {
+            console.log('odustao od cuvanja');
+
+          }
+        }
+      ]
+    }).then((alert) => {
+      alert.present();
+    });
+
+
+  }
+
+  async presentAlert(title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [{
+        text: 'OK',
+
+        handler: () => {
+          console.log('Confirm Ok');
+        }
+      }]
+    });
+    await alert.present();
+  }
+
+
   radioGroupChange(event) {
     //console.log("radioGroupChange", event.detail);
     this.itemR = JSON.parse(JSON.stringify(event.detail));
@@ -106,31 +203,11 @@ export class AddMoviePage implements OnInit {
     console.log(this.selectedOption);
   }
 
-  onAddMovie() {
-    if (!this.form.valid) {
-      return;
-    } else {
-      console.log(this.form.value['naziv']);
-      console.log(this.form.value['glumci']);
-      console.log(this.form.value['reziser']);
-      console.log(this.selectedOption);
-      console.log(this.form.value['zemlja']);
-      console.log(this.form.value['godina']);
-      console.log(this.form.value['trajanje']);
-      console.log(this.selectedRadio);
-      console.log(this.form.value['komentar']);
-      console.log(this.selectedDate);
-
-      this.moviesService
-          .addMovie(this.form.value['naziv'], this.form.value['glumci'], this.form.value['reziser'],
-              this.selectedOption, this.form.value['godina'],  this.form.value['trajanje'],
-              this.selectedDate, this.selectedRadio, this.form.value['komentar'],this.form.value['zemlja'])
-          .subscribe(movies => {
-            console.log(movies);
-          });
-      console.log("sacuvan");
+  ngOnDestroy(){
+    console.log('ngOnDestroy');
+    if(this.moviesSub){
+      this.moviesSub.unsubscribe();
     }
-
   }
 
 }

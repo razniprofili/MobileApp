@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {Movie} from '../movie.model';
 import {Router} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -18,15 +18,12 @@ import { Chart } from 'chart.js';
 export class ActivityPage implements OnInit {
     @ViewChild('barChart', {static: true}) barChart;
 
-    bars: any;
-    colorArray: any;
-
   movies: Movie[];
   prazan = false;
   private moviesSub: Subscription;
   isLoading = false;
   userID: string = this.currentUser.getUserID();
-
+  bars: any;
   itemZanr: any;
   itemSort: any;
   selectedZanr: string="";
@@ -35,8 +32,10 @@ export class ActivityPage implements OnInit {
   filterData:any[];
   statistics: any[];
   recently:any[];
+  chartdata:any[];
 
-  zanrovi = [] = [
+
+    zanrovi = [] = [
         { id: 0, name: 'Avantura', value: 'Avantura' },
         { id: 1, name: 'Akcioni', value: 'Akcioni'},
         { id: 2, name: 'Animacija', value: 'Animacija'},
@@ -63,8 +62,6 @@ export class ActivityPage implements OnInit {
         {id:  23, name:'Svi žanrovi', value:'Svi žanrovi'}
     ];
 
-  //chartdata=[]= [7,10,14,12,20,22,32,35,43,15];
-    chartdata:any[];
 
   constructor(private router: Router, private moviesService: MoviesService,
               private currentUser: UserService, private http: HttpClient) {}
@@ -120,21 +117,19 @@ export class ActivityPage implements OnInit {
             this.filterData.sort((a,b)=> parseInt(a.ocena,10) - parseInt(b.ocena, 10));
         }
         console.log(this.selectedZanr);
-        if(this.selectedZanr && this.selectedZanr.trim()!='') {
-            if(this.selectedZanr=='Svi žanrovi'){
-                this.filterData=this.movies;
-            }else{
+        if(this.selectedZanr.trim()!='' && this.selectedZanr.trim() !='Svi žanrovi') {
+
                 var novi: any[] = [];
                 for (let i = 0; i < this.filterData.length; i++) {
                     if (this.filterData[i].zanr != undefined && this.filterData[i].zanr.trim() != ''
-                        && this.filterData[i].zanr == this.selectedZanr.toLowerCase()){
+                        && this.filterData[i].zanr.trim().toLowerCase() === this.selectedZanr.toLowerCase()){
                         novi.push(this.filterData[i]);
                         console.log(this.filterData[i]);
                     }
                 }
                 console.log(novi);
                 this.filterData = novi;
-            }
+
         }
   }
 
@@ -300,5 +295,12 @@ export class ActivityPage implements OnInit {
         });
     }
 
+    ngOnDestroy(): void {
+        console.log('ngOnDestroy');
+        if(this.moviesSub){
+            this.moviesSub.unsubscribe();
+        }
+
+    }
 
 }
