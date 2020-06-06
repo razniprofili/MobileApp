@@ -124,7 +124,8 @@ export class RegisterPage implements OnInit {
 
 
                       });
-
+              // const res = await this.afAuth.signInWithEmailAndPassword(mejl, sifra);
+              // console.log(res)
           }
       } else {
           this.presentAlert('', 'Popunite polja koja nedostaju!');

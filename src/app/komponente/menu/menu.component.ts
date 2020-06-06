@@ -3,6 +3,8 @@ import {AlertController} from "@ionic/angular";
 import {AuthService} from "../../auth/auth.service";
 import {Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/auth";
+import {AngularFirestore} from "@angular/fire/firestore";
+import {UserService} from "../../user.service";
 
 
 @Component({
@@ -11,10 +13,19 @@ import {AngularFireAuth} from "@angular/fire/auth";
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
+  imePrezimeKorisnik ;
+  userBase
+  sub
+  constructor(public alertController: AlertController, public authService: AuthService,
+              public router: Router, private afAuth: AngularFireAuth, public afStore: AngularFirestore,
+              private currentUser: UserService) { }
 
-  constructor(public alertController: AlertController, public authService: AuthService, public router: Router, private afAuth: AngularFireAuth) { }
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.userBase = this.afStore.collection('users').doc(this.currentUser.getUserID());
+    this.sub = this.userBase.valueChanges().subscribe(event => {
+      this.imePrezimeKorisnik = event.name + ' ' + event.surname;
+    });
+  }
 
   odjaviSe(){
     this.alertController.create({
