@@ -5,6 +5,7 @@ import {AuthService} from '../auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import {UserService} from '../../user.service';
+import {LoadingController} from "@ionic/angular";
 
 @Component({
   selector: 'app-log-in',
@@ -16,7 +17,8 @@ export class LogInPage implements OnInit {
   sifra: string;
   greska = false;
 
-  constructor(private authService: AuthService, private router: Router, public afAuth: AngularFireAuth, public user: UserService) { }
+  constructor(private authService: AuthService, private router: Router, public afAuth: AngularFireAuth,
+              public user: UserService, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
   }
@@ -45,21 +47,27 @@ export class LogInPage implements OnInit {
     async onLogIn2(form: NgForm) {
         const{mejl, sifra} = this;
         if (form.valid) {
-            this.authService.login(form.value).subscribe((resData)=>{
-                console.log(resData);
-                console.log('uspesna prijava');
-                this.greska = false;
+            this.loadingCtrl.create({message: 'Prijava...'}).then(el=>{
+                el.present();
+                this.authService.login(form.value).subscribe((resData)=>{
+                        console.log(resData);
+                        console.log('uspesna prijava');
+                        this.greska = false;
 
-                this.user.setUser({ mejl, sifra, userID: resData.localId});
-                console.log(this.user.getUserID())
-                this.router.navigateByUrl('/movies'); // kada se ulogujemo idemo na ovu stranicu
-            },
-                errRes=>{
-                console.log(errRes)
-                    this.greska = true;
-                });
-            const res = await this.afAuth.signInWithEmailAndPassword(mejl, sifra);
-            console.log(res)
+                        this.user.setUser({ mejl, sifra, userID: resData.localId});
+                        console.log(this.user.getUserID())
+                        el.dismiss()
+                        this.router.navigateByUrl('/movies'); // kada se ulogujemo idemo na ovu stranicu
+                    },
+                    errRes=>{
+                        el.dismiss()
+                        console.log(errRes)
+                        this.greska = true;
+                    });
+                const res =  this.afAuth.signInWithEmailAndPassword(mejl, sifra);
+                console.log(res)
+            })
+
         }
     }
 

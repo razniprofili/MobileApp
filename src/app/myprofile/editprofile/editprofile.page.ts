@@ -2,7 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
 import {UserService} from "../../user.service";
 import * as firebase from "firebase";
-import {AlertController} from "@ionic/angular";
+import {AlertController, LoadingController} from "@ionic/angular";
 import {Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/auth";
 
@@ -34,7 +34,9 @@ export class EditprofilePage implements OnInit {
     userPrezime: string
     kratkaSifra : boolean = false
 
-    constructor(private afs: AngularFirestore, private currentUser: UserService, private alContr: AlertController, private router: Router, public afAuth: AngularFireAuth) {
+    constructor(private afs: AngularFirestore, private currentUser: UserService,
+                private alContr: AlertController, private router: Router,
+                public afAuth: AngularFireAuth, private loadingCtrl: LoadingController) {
       this.mainuser = afs.doc(`users/${currentUser.getUserID()}`)
         this.sub = this.mainuser.valueChanges().subscribe(event=>{
               this.ime = event.name
@@ -84,60 +86,64 @@ export class EditprofilePage implements OnInit {
 
         // moze da se izmeni samo ako unese sifru
         if(this.password === ''){
-             this.presentAlert('Greska','Sifra nije uneta!')
+             this.presentAlert('Greska','Moras uneti sifru!')
         } else {
             //... i samo ako je ispravna
             if(this.password === this.userPassword){
+                //this.loadingCtrl.create({message: 'Cuvanje izmena...'}).then(el=>{
+                  //  el.present();
+                    if(this.newPassword){
+                        if(this.newPassword.length < 8){
+                            this.kratkaSifra = true;
+                        } else{
+                            this.kratkaSifra = false;
+                            // prilikom izmene sifre u pozadini mora ponovo da se prijavi korisnik ...
+                            const res = await this.afAuth.signInWithEmailAndPassword(this.currentUser.getUserMail(), this.userPassword);
 
-                if(this.newPassword){
-                    if(this.newPassword.length < 8){
-                        this.kratkaSifra = true;
-                    } else{
-                        this.kratkaSifra = false;
-                        // prilikom izmene sifre u pozadini mora ponovo da se prijavi korisnik ...
-                        const res = await this.afAuth.signInWithEmailAndPassword(this.currentUser.getUserMail(), this.userPassword);
+                           await  this.currentUser.updatePassword(this.newPassword)
+                            //menjamo sifru i u cloud store-u:
+                           await this.mainuser.update({
+                                sifra: this.newPassword
+                            })
+                        }
 
-                        await this.currentUser.updatePassword(this.newPassword)
-                        //menjamo sifru i u cloud store-u:
-                        this.mainuser.update({
-                            sifra: this.newPassword
+                    }
+
+                    //ako je mejl razlicit od prethodnog, znaci da je i njega promenio:
+                    if(this.mejlAdresa !== this.currentUser.getUserMail()){
+                       await  this.currentUser.updateEmail(this.mejlAdresa)
+                        //menjamo adresu i u cloud store-u:
+                       await this.mainuser.update({
+                            mejl: this.mejlAdresa
                         })
                     }
 
-                }
+                    if(this.ime !== this.userIme){
 
-                //ako je mejl razlicit od prethodnog, znaci da je i njega promenio:
-                if(this.mejlAdresa !== this.currentUser.getUserMail()){
-                    await this.currentUser.updateEmail(this.mejlAdresa)
-                    //menjamo adresu i u cloud store-u:
-                    this.mainuser.update({
-                        mejl: this.mejlAdresa
-                    })
-                }
+                      await  this.mainuser.update({
+                            name: this.ime
+                        })
+                    }
 
-                if(this.ime !== this.userIme){
+                    if(this.prezime !== this.userPrezime){
 
-                    this.mainuser.update({
-                        name: this.ime
-                    })
-                }
+                      await  this.mainuser.update({
+                            surname: this.prezime
+                        })
+                    }
 
-                if(this.prezime !== this.userPrezime){
+                    if(this.kratkaSifra === false){
+                       // el.dismiss()
+                        this.password = ""
+                        this.newPassword = ""
+                        this.presentAlert('Done!', 'Profil je uspesno azuriran!')
+                        this.router.navigateByUrl('/movies/tabs/myprofile');
+                    }
+               // })
 
-                    this.mainuser.update({
-                        surname: this.prezime
-                    })
-                }
-
-                if(this.kratkaSifra === false){
-                    this.password = ""
-                    this.newPassword = ""
-                    await this.presentAlert('Done!', 'Profil je uspesno azuriran!')
-                    this.router.navigateByUrl('/movies/tabs/myprofile');
-                }
 
             } else {
-                this.presentAlert('Greska','Uneta je pogresna sifra, pokusaj ponovo!')
+                this.presentAlert('Greska','Pogresna sifru, pokusaj ponovo!')
                 this.password = ''
             }
         }

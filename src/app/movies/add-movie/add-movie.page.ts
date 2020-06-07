@@ -139,7 +139,7 @@ export class AddMoviePage implements OnInit {
                         loadingEl.dismiss();
                         this.presentAlert(' ', 'Film je uspesno sacuvan!');
                         this.form.reset();
-                        this.navCtrl.navigateBack('/movies/tabs/home-page');
+                        this.navCtrl.navigateBack('/movies/tabs/search-movie');
 
                       });
                 }catch (e) {

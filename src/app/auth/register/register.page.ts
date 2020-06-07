@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AlertController} from '@ionic/angular';
+import {AlertController, LoadingController} from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import {Router} from '@angular/router';
@@ -30,7 +30,8 @@ export class RegisterPage implements OnInit {
 
   constructor(public alert: AlertController, public afAuth: AngularFireAuth,
               public router: Router, public user: UserService,
-              public authService: AuthService, public afStore: AngularFirestore) { }
+              public authService: AuthService, public afStore: AngularFirestore,
+              private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup( {
@@ -88,47 +89,52 @@ export class RegisterPage implements OnInit {
       const{mejl, sifra, sifra2, name, surname, slika } = this;
       if (this.registerForm.valid) {
           if (this.sifra !== this.sifra2) {
-              this.presentAlert('Greska', 'Sifre se ne poklapaju, pokusajte opet.');
+              this.presentAlert('Greska', 'Sifre se ne poklapaju, pokusaj opet.');
           } else {
+              this.loadingCtrl.create({message: 'Registracija...'}).then(el=>{
+                  el.present();
                   console.log(this.registerForm);
                   this.authService.register(this.registerForm.value).subscribe(resData => {
-                      //console.log('Registracija uspesna');
-                      console.log(resData);
-                      this.greska = false;
-                      this.user.setUser({ mejl, sifra, userID: resData.localId});
-                      this.afStore.doc(`users/` + resData.localId).set({
-                          mejl,
-                          sifra,
-                          name,
-                          surname,
-                          slika
-                      });
-
-                      this.presentAlert('', 'Uspesna registracija!');
-                      this.router.navigateByUrl('/movies');
-                  },
+                          //console.log('Registracija uspesna');
+                          console.log(resData);
+                          this.greska = false;
+                          this.user.setUser({ mejl, sifra, userID: resData.localId});
+                          this.afStore.doc(`users/` + resData.localId).set({
+                              mejl,
+                              sifra,
+                              name,
+                              surname,
+                              slika
+                          });
+                          el.dismiss();
+                          this.presentAlert('', 'Uspesna registracija!');
+                          this.router.navigateByUrl('/movies');
+                      },
                       errRes=>{
                           this.greska = true;
                           const textGreske= errRes.error.error.message;
                           console.log(errRes)
                           console.log(textGreske)
+                          el.dismiss();
                           if(textGreske === 'INVALID_EMAIL') {
                               this.tekstGreske ='E-mail adresa nije u odgovarajucem formatu!'
                           } else {
                               if(textGreske === 'EMAIL_EXISTS') {
                                   this.tekstGreske ='Nalog sa ovim e-mailom vec postoji!'
                               } else {
-                                  this.tekstGreske ='Desila se greska, pokusajte kasnije!'
+                                  this.tekstGreske ='Desila se greska, pokusaj kasnije!'
                               }
                           }
 
 
                       });
-              // const res = await this.afAuth.signInWithEmailAndPassword(mejl, sifra);
-              // console.log(res)
+                  // const res = await this.afAuth.signInWithEmailAndPassword(mejl, sifra);
+                  // console.log(res)
+              })
+
           }
       } else {
-          this.presentAlert('', 'Popunite polja koja nedostaju!');
+          this.presentAlert('', 'Popuni polja koja nedostaju!');
           if (this.greska === true) {
               this.greska = false;
           }
