@@ -110,10 +110,10 @@ export class ActivityPage implements OnInit {
   filtriraj(){
         this.filterData = this.movies;
         console.log(this.selectedSort);
-        if(this.selectedSort ==='asc') {
+        if(this.selectedSort ==='desc') {
             this.filterData.sort((a,b)=> parseInt(b.ocena,10) - parseInt(a.ocena, 10));
         }
-        if(this.selectedSort ==='desc'){
+        if(this.selectedSort ==='asc'){
             this.filterData.sort((a,b)=> parseInt(a.ocena,10) - parseInt(b.ocena, 10));
         }
         console.log(this.selectedZanr);
