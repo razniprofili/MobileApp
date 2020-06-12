@@ -9,6 +9,8 @@ import {AlertController, LoadingController, ModalController, NavController} from
 import {map} from "rxjs/operators";
 import {MovieModalComponent} from "../../movie-modal/movie-modal.component";
 import {MoviesService} from "../../movies.service";
+import {Subscription} from "rxjs";
+import {Movie} from "../../movie.model";
 
 
 @Component({
@@ -63,8 +65,15 @@ export class MovieAPIDetailsPage implements OnInit {
               private alertController: AlertController, private navCtrl: NavController,
               private modalCtrl: ModalController, private moviesService: MoviesService) {
   }
-
+  private moviesSub: Subscription;
+  movies: Movie[];
   ngOnInit() {
+
+    this.moviesSub = this.moviesService.movies.subscribe((movies) => {
+      this.isLoading = false;
+      this.movies = movies;
+    });
+
     this.imdbID = this.ruta.snapshot.paramMap.get('imdbID');
     this.isLoading = true;
     // ucitavamo detalje za onaj film koji smo kliknuli! http://www.omdbapi.com/?i=tt1570728&apikey=4a249f8d
@@ -82,6 +91,15 @@ export class MovieAPIDetailsPage implements OnInit {
     // proveravamo da li je film sacuvan
     this.proveraSacuvanFilm();
   }
+
+  ionViewWillEnter(){
+    console.log('izvrsen ion will enter')
+    this.isLoading = true;
+    this.moviesService.getMovies().subscribe(movieData =>{
+      this.isLoading = false;
+      console.log(movieData);
+    });
+  }
   // da se prveri da li je film sacuvan da bi se pojavila zuta zvezda
   proveraSacuvanFilm() {
 
@@ -98,9 +116,21 @@ export class MovieAPIDetailsPage implements OnInit {
       console.log(e);
     }
   }
+
+  odgledan = false;
+
+  proveraOdgledanFilm (naziv: string){
+    this.movies.forEach(film => {
+      if(film.naziv.toLowerCase() === naziv.toLowerCase()){
+        this.odgledan = true;
+        console.log('jeste odgledan je!!!!')
+      }
+    })
+  }
+
   sacuvajFilm() {
 
-    this.loadingCtrl.create({message: 'Cuvanje...'}).then(el => {
+    this.loadingCtrl.create({message: 'Čuvanje...'}).then(el => {
       el.present();
 
       const IDFilma = this.imdbID;
@@ -118,12 +148,12 @@ export class MovieAPIDetailsPage implements OnInit {
           });
           el.dismiss();
           console.log('Sacuvan film');
-          this.presentAlert('Done!', 'Film' + ' ' + this.pronadjenFilm.Title + ' je uspesno sacuvan!');
+          this.presentAlert('Done!', 'Film' + ' ' + this.pronadjenFilm.Title + ' je uspešno sačuvan!');
         } catch (e) {
           console.log(e);
         }
       } else {
-        this.presentAlert(' ', 'Ovaj film je vec sacuvan!');
+        this.presentAlert(' ', 'Ovaj film je već sačuvan!');
       }
     });
 
@@ -155,39 +185,43 @@ export class MovieAPIDetailsPage implements OnInit {
       return modal.onDidDismiss();
     }).then(resultData =>{
       if(resultData.role === 'confirm'){
-        this.loadingCtrl.create({message: 'Dodavanje...'}).then(el=>{
-          el.present();
-          console.log(resultData);
-          this.moviesService
-              .addMovie(resultData.data.movieData.nazivFilma,resultData.data.movieData.glumci, resultData.data.movieData.reziser,
-                  resultData.data.movieData.zanr, resultData.data.movieData.godina,resultData.data.movieData.trajanje,
-                  resultData.data.movieData.datum, resultData.data.movieData.ocena,
-                  resultData.data.movieData.komentar,
-                  resultData.data.movieData.zemlja)
-              .subscribe(movies => {
-                console.log(movies);
-              });
-          el.dismiss();
-        })
-        this.presentAlert1('Done!', 'Film' + ' ' + this.pronadjenFilm.Title + ' je uspešno dodat u listu odgledanih filmova!');
-        // nakon dodavanja on se brise iz liste sacuvanih i vracamo se na prethodnu stranu
-        this.afsStore.doc(`users/` + this.user.getUserID()).update({
-          sacuvaniFilmovi:  firestore.FieldValue.arrayRemove({
-            IDFilma: this.imdbID,
-            imeFilma: this.pronadjenFilm.Title,
-            poster: this.pronadjenFilm.Poster
-          })
-        })
-        this.navCtrl.navigateBack('/movies/tabs/home-page');
+        this.proveraOdgledanFilm(resultData.data.movieData.nazivFilma);
+          if(this.odgledan === true){
+            this.presentAlert2('Greška', 'Film' + ' ' + this.pronadjenFilm.Title + ' već postoji u listi odgledanih filmova!');
+          } else {
+            this.loadingCtrl.create({message: 'Dodavanje...'}).then(el=>{
+              el.present();
+              console.log(resultData);
+              this.moviesService
+                  .addMovie(resultData.data.movieData.nazivFilma,resultData.data.movieData.glumci, resultData.data.movieData.reziser,
+                      resultData.data.movieData.zanr, resultData.data.movieData.godina,resultData.data.movieData.trajanje,
+                      resultData.data.movieData.datum, resultData.data.movieData.ocena,
+                      resultData.data.movieData.komentar,
+                      resultData.data.movieData.zemlja)
+                  .subscribe(movies => {
+                    console.log(movies);
+                  });
+              el.dismiss();
+            })
+            this.presentAlert1('Done!', 'Film' + ' ' + this.pronadjenFilm.Title + ' je uspešno dodat u listu odgledanih filmova!');
+            // nakon dodavanja on se brise iz liste sacuvanih i vracamo se na prethodnu stranu
+            this.afsStore.doc(`users/` + this.user.getUserID()).update({
+              sacuvaniFilmovi:  firestore.FieldValue.arrayRemove({
+                IDFilma: this.imdbID,
+                imeFilma: this.pronadjenFilm.Title,
+                poster: this.pronadjenFilm.Poster
+              })
+            })
+            this.navCtrl.navigateBack('/movies/tabs/home-page');
+          }
       }
-
     })
   }
 
   obrisiIzListe(){
     this.alertController.create({
-      header: 'Ukloni film iz liste sacuvanih',
-      message: 'Da li ste sigurni da zelite da uklonite film?',
+      header: 'Ukloni film iz liste sačuvanih',
+      message: 'Ukloni film?',
       buttons: [
         {
           text: 'Ukloni',
@@ -259,4 +293,15 @@ export class MovieAPIDetailsPage implements OnInit {
     });
     await alert.present();
   }
+  async presentAlert2(title: string, content: string) {
+    const alert = await this.alert.create({
+      header: title,
+      message: content,
+      buttons: [{
+        text: 'OK'
+      }]
+    });
+    await alert.present();
+  }
+
 }

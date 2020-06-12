@@ -31,7 +31,7 @@
       </ion-col>
       <ion-col>
         <ion-card-content>
-          <h2>Zanr: {{movie.zanr}}</h2>
+          <h2>Žanr: {{movie.zanr}}</h2>
         </ion-card-content>
       </ion-col>
     </ion-row>
@@ -41,13 +41,15 @@
       <h2>Glumci: {{movie.glumci}}</h2>
     </ion-card-content>
     <ion-card-content>
-      <h2>Reziser: {{movie.reziser}}</h2>
+      <h2>Režiser: {{movie.reziser}}</h2>
     </ion-card-content>
     <ion-card-content>
-      <h2>Ocena: {{movie.ocena}}/5</h2>
+      <h2 *ngIf="movie.ocena!==undefined">Ocena: {{movie.ocena}}/5</h2>
+      <h2 *ngIf="movie.ocena===undefined">Ocena:</h2>
     </ion-card-content>
     <ion-card-content>
-      <h2>Datum gledanja: {{movie.datum.substring(0, 10)}}</h2>
+      <h2 *ngIf="movie.datum!==undefined">Datum gledanja: {{movie.datum.substring(0, 10)}}</h2>
+      <h2 *ngIf="movie.datum===undefined"> Datum gledanja: </h2>
     </ion-card-content>
     <ion-card-content>
       <h2>Moj komentar: {{movie.komentar}}</h2>
@@ -60,7 +62,7 @@
 <!--    Brisanje filma, pre tog alert!-->
     <ion-button color="filmlo" (click)="openAlert()" >
       <ion-icon name="trash-outline"></ion-icon>
-      Obrisi film
+      Obriši film
     </ion-button>
   </ion-card>
 

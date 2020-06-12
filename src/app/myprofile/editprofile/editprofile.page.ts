@@ -86,12 +86,13 @@ export class EditprofilePage implements OnInit {
 
         // moze da se izmeni samo ako unese sifru
         if(this.password === ''){
-             this.presentAlert('Greska','Moras uneti sifru!')
+             this.presentAlert('Greška','Moraš uneti sifru!')
         } else {
             //... i samo ako je ispravna
             if(this.password === this.userPassword){
-                //this.loadingCtrl.create({message: 'Cuvanje izmena...'}).then(el=>{
-                  //  el.present();
+              //  this.loadingCtrl.create({message: 'Cuvanje izmena...'}).then(el=>{
+                  // el.present();
+
                     if(this.newPassword){
                         if(this.newPassword.length < 8){
                             this.kratkaSifra = true;
@@ -136,14 +137,14 @@ export class EditprofilePage implements OnInit {
                        // el.dismiss()
                         this.password = ""
                         this.newPassword = ""
-                        this.presentAlert('Done!', 'Profil je uspesno azuriran!')
+                        this.presentAlert('Done!', 'Profil je uspešno ažuriran!')
                         this.router.navigateByUrl('/movies/tabs/myprofile');
                     }
                // })
 
 
             } else {
-                this.presentAlert('Greska','Pogresna sifru, pokusaj ponovo!')
+                this.presentAlert('Greška','Pogrešna šifra, pokušaj ponovo!')
                 this.password = ''
             }
         }

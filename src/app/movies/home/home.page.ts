@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MovieAPI} from '../movieAPI.model';
 
-import {AlertController} from '@ionic/angular';
+import {AlertController, LoadingController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {UserService} from '../../user.service';
@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
   isLoading = false;
 
   constructor(public alert: AlertController, public router: Router, public afStore: AngularFirestore,
-              public user: UserService, public afAuth: AngularFireAuth) {
+              public user: UserService, public afAuth: AngularFireAuth, private loadingCtrl: LoadingController) {
     // this.userBase = this.afStore.collection('users').doc(this.user.getUserID());
     // this.sub = this.userBase.valueChanges().subscribe(event => {
     //   this.movies = event.sacuvaniFilmovi;
@@ -37,7 +37,11 @@ export class HomePage implements OnInit {
       this.inicijalizuj();
   }
 otvoriPretragu() {
-      this.router.navigateByUrl('/movies/tabs/home-page/movies-api-search');
+    this.loadingCtrl.create().then(el => {
+        el.present();
+        this.router.navigateByUrl('/movies/tabs/home-page/movies-api-search');
+        el.dismiss();
+    });
 }
 
 

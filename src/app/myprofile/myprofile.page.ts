@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {UserService} from '../user.service';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AuthService} from "../auth/auth.service";
-import {AlertController} from "@ionic/angular";
+import {AlertController, LoadingController} from "@ionic/angular";
 
 
 @Component({
@@ -21,7 +21,7 @@ export class MyprofilePage implements OnInit {
   userBase;
   sub;
   constructor(private router: Router, public afStore: AngularFirestore, private currentUser: UserService,
-              private authService: AuthService, private alert: AlertController) {
+              private authService: AuthService, private alert: AlertController, private loadingCtrl: LoadingController) {
   }
 
   ngOnInit() {
@@ -61,7 +61,12 @@ export class MyprofilePage implements OnInit {
   }
 
   otvoriStranuZaIzmenu() {
-    this.router.navigateByUrl('/myprofile/editprofile');
+
+      this.loadingCtrl.create().then(el => {
+          el.present();
+          this.router.navigateByUrl('/myprofile/editprofile');
+          el.dismiss();
+      });
   }
 ngOnDestroy(){
     this.sub.unsubscribe();

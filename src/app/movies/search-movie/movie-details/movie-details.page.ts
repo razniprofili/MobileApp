@@ -76,38 +76,46 @@ export class MovieDetailsPage implements OnInit {
           modal.present();
           return modal.onDidDismiss();
       }).then(resultData =>{
-          if(resultData.role === 'confirm'){
+          if(resultData.role === 'confirm') {
               console.log(resultData);
 
-              this.moviesService.editMovie(this.movie.id, this.currentUSer.getUserID(),resultData.data.movieData.nazivFilma, resultData.data.movieData.trajanje,
-                  resultData.data.movieData.zanr, resultData.data.movieData.zemlja, resultData.data.movieData.glumci, resultData.data.movieData.ocena,
-                  resultData.data.movieData.datum, resultData.data.movieData.komentar,
-                  resultData.data.movieData.reziser, resultData.data.movieData.godina).subscribe((res)=>{
 
-                  this.movie.naziv = resultData.data.movieData.nazivFilma;
-                  this.movie.trajanje= resultData.data.movieData.trajanje;
-                  this.movie.zanr= resultData.data.movieData.zanr;
-                  this.movie.glumci = resultData.data.movieData.glumci;
-                  this.movie.reziser = resultData.data.movieData.reziser;
-                  this.movie.datum=resultData.data.movieData.datum;
-                  this.movie.godina=resultData.data.movieData.godina;
-                  this.movie.komentar=resultData.data.movieData.komentar;
-                  this.movie.ocena=resultData.data.movieData.ocena;
-                  this.movie.zemlja=resultData.data.movieData.zemlja;
 
+              this.loadingCtrl.create({message: 'Čuvanje izmena...'}).then(loadingEl => {
+                  loadingEl.present();
+
+                  this.moviesService.editMovie(this.movie.id, this.currentUSer.getUserID(), resultData.data.movieData.nazivFilma, resultData.data.movieData.trajanje,
+                      resultData.data.movieData.zanr, resultData.data.movieData.zemlja, resultData.data.movieData.glumci, resultData.data.movieData.ocena,
+                      resultData.data.movieData.datum, resultData.data.movieData.komentar,
+                      resultData.data.movieData.reziser, resultData.data.movieData.godina).subscribe((res) => {
+
+                      this.movie.naziv = resultData.data.movieData.nazivFilma;
+                      this.movie.trajanje = resultData.data.movieData.trajanje;
+                      this.movie.zanr = resultData.data.movieData.zanr;
+                      this.movie.glumci = resultData.data.movieData.glumci;
+                      this.movie.reziser = resultData.data.movieData.reziser;
+                      this.movie.datum = resultData.data.movieData.datum;
+                      this.movie.godina = resultData.data.movieData.godina;
+                      this.movie.komentar = resultData.data.movieData.komentar;
+                      this.movie.ocena = resultData.data.movieData.ocena;
+                      this.movie.zemlja = resultData.data.movieData.zemlja;
+
+                      loadingEl.dismiss();
+                  });
 
               });
           }
       })
   }
 
+
   openAlert() {
        this.alertController.create({
-          header: 'Obrisi film',
-          message: 'Da li ste sigurni da zelite da obrisete film?',
+          header: 'Obriši film',
+          message: 'Obriši film?',
           buttons: [
               {
-                  text: 'Obrisi',
+                  text: 'Obriši',
 
                   handler: () => {
                      // console.log('Obrisan film');

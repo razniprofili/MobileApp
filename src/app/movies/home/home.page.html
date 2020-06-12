@@ -3,26 +3,26 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="center">Sacuvani filmovi</ion-title>
+    <ion-title class="center">Sačuvani filmovi</ion-title>
 
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar animated="true" *ngIf="!prazno"  placeholder="Pretrazi sacuvane filmove" [(ngModel)]="queryText" (ionInput)="searchMovies($event)" ></ion-searchbar>
+  <ion-searchbar animated="true" *ngIf="!prazno"  placeholder="Pretraži sačuvane filmove" [(ngModel)]="queryText" (ionInput)="searchMovies($event)" ></ion-searchbar>
 
   <div class="ion-text-center" *ngIf="isLoading">
     <ion-spinner color="filmlo" name="bubbles"></ion-spinner>
   </div>
 <ion-list *ngIf="!isLoading">
   <ion-item class="center" *ngIf="prazno" lines="none" >
-    <ion-label class="font">Nema sacuvanih filmova!</ion-label>
+    <ion-label class="font">Nema sačuvanih filmova!</ion-label>
   </ion-item>
 
 <ion-row class="ion-justify-content-center"  *ngIf="prazno">
   <ion-item   *ngIf="prazno" lines="none">
     <div >
-      <ion-button color="filmlo" shape="round" (click)="otvoriPretragu()">Pretrazi IMDb bazu filmova sada!</ion-button>
+      <ion-button color="filmlo" shape="round" (click)="otvoriPretragu()">Pretraži IMDb bazu filmova sada!</ion-button>
     </div>
   </ion-item>
 </ion-row>

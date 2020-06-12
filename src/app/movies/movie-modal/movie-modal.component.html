@@ -81,21 +81,22 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col><ion-item>
-
+                <ion-col>
+                  <ion-item>
                   <ion-label position="floating">Godina</ion-label>
                   <ion-input type="number" [ngModel]="godina" name="godina"></ion-input>
-                </ion-item></ion-col>
-                <ion-col><ion-item>
+                </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
                   <ion-label position="floating">Trajanje (min)</ion-label>
                   <ion-input type="number" [ngModel]="trajanje"  name="trajanje"></ion-input>
-                </ion-item></ion-col>
+                </ion-item>
+                </ion-col>
               </ion-row>
 
-
-
                 <ion-row>
-                  <ion-col>
+                  <ion-col size-sm="6" offset-sm="3">
                     <ion-item>
                       <ion-label > Ocena</ion-label>
                       <ion-select value="" okText="Potvrdi" cancelText="Odustani" name="ocena" [ngModel]="ocena" (ionChange)="onChangeSelectOcena($event)" >
@@ -107,15 +108,22 @@
                       </ion-select>
                     </ion-item>
                   </ion-col>
+
+                    <ion-col size-sm="6" offset-sm="3">
+                      <ion-item>
+                        <ion-label position="floating">Datum gedanja filma</ion-label>
+                        <!--                <ion-input type="text" [ngModel]="datum" name="datum"></ion-input>-->
+                        <ion-datetime name="datum" displayFormat="DD MM YY" doneText="Potvrdi" cancelText="Odustani"
+                                      [ngModel]="datum"
+                                      (ionChange)="dateTimeChange($event) ">
+
+                        </ion-datetime>
+                      </ion-item>
+                    </ion-col>
+
                 </ion-row>
 
-              <ion-item>
-                <ion-label position="floating">Datum gedanja filma:</ion-label>
-<!--                <ion-input type="text" [ngModel]="datum" name="datum"></ion-input>-->
-                <ion-datetime displayFormat="DD MM YY" doneText="Potvrdi" cancelText="Odustani"
-                              ngModel name="datum"
-                              (ionChange)="dateTimeChange($event) "></ion-datetime>
-              </ion-item>
+
 
               <ion-item>
                 <ion-label position="floating">Komentar</ion-label>
@@ -127,7 +135,7 @@
 
         <ion-row >
           <ion-col offset-sm="-3">
-          <ion-button type="submit" expand="block"   color="filmlo" >Sačuvaj</ion-button>
+          <ion-button type="submit" expand="block"  [disabled]="f.invalid" color="filmlo" >Sačuvaj</ion-button>
         </ion-col>
         </ion-row>
       </ion-grid>

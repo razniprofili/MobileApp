@@ -30,13 +30,13 @@ export class MenuComponent implements OnInit {
   odjaviSe(){
     this.alertController.create({
       header: 'Odjava',
-      message: 'Da li si siguran/a da zelis da se odjavis?',
+      message: 'Da li si siguran/a da zeliš da se odjaviš?',
       buttons: [
         {
           text: 'Odjava',
 
           handler: () => {
-            console.log('Odjavljen'); //napravi da se odjavi korisnik
+            console.log('Odjavljen');
             //odjava
             this.authService.logout();
             this.afAuth.signOut();

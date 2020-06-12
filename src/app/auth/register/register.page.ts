@@ -46,7 +46,7 @@ export class RegisterPage implements OnInit {
    const{mejl, sifra, sifra2, name, surname, slika } = this;
    if (this.registerForm.valid) {
       if (this.sifra !== this.sifra2) {
-        this.presentAlert('Greska', 'Sifre se ne poklapaju, pokusajte opet.');
+        this.presentAlert('Greška', 'Šifre se ne poklapaju, pokušajte ponovo.');
       } else {
         try {
           const res = await this.afAuth.createUserWithEmailAndPassword(mejl, sifra);
@@ -64,7 +64,7 @@ export class RegisterPage implements OnInit {
               //    // kreirace ovaj niz filmova sa  defValue: '', pa yato u prebrojavanju filmova imamo -1
               // })
           });
-          this.presentAlert('', 'Uspesna registracija!');
+          this.presentAlert('', 'Uspešna registracija!');
           this.router.navigateByUrl('/movies');
         } catch (e) {
           console.dir(e);
@@ -84,12 +84,12 @@ export class RegisterPage implements OnInit {
       }
     }
   }
-
+  vecPostoji= false;
   async  onRegister2() {
       const{mejl, sifra, sifra2, name, surname, slika } = this;
       if (this.registerForm.valid) {
           if (this.sifra !== this.sifra2) {
-              this.presentAlert('Greska', 'Sifre se ne poklapaju, pokusaj opet.');
+              this.presentAlert('Greška', 'Šifre se ne poklapaju, pokušaj ponovo.');
           } else {
               this.loadingCtrl.create({message: 'Registracija...'}).then(el=>{
                   el.present();
@@ -107,7 +107,7 @@ export class RegisterPage implements OnInit {
                               slika
                           });
                           el.dismiss();
-                          this.presentAlert('', 'Uspesna registracija!');
+                          this.presentAlert('', 'Uspešna registracija!');
                           this.router.navigateByUrl('/movies');
                       },
                       errRes=>{
@@ -117,19 +117,16 @@ export class RegisterPage implements OnInit {
                           console.log(textGreske)
                           el.dismiss();
                           if(textGreske === 'INVALID_EMAIL') {
-                              this.tekstGreske ='E-mail adresa nije u odgovarajucem formatu!'
+                              this.tekstGreske ='E-mail adresa nije u odgovarajućem formatu!'
                           } else {
                               if(textGreske === 'EMAIL_EXISTS') {
-                                  this.tekstGreske ='Nalog sa ovim e-mailom vec postoji!'
+                                  this.vecPostoji = true;
+                                  this.tekstGreske ='Nalog sa ovim e-mailom već postoji!'
                               } else {
-                                  this.tekstGreske ='Desila se greska, pokusaj kasnije!'
+                                  this.tekstGreske ='Desila se greška, pokušaj kasnije!'
                               }
                           }
-
-
                       });
-                  // const res = await this.afAuth.signInWithEmailAndPassword(mejl, sifra);
-                  // console.log(res)
               })
 
           }

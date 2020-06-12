@@ -52,7 +52,7 @@ export class MoviesApiSearchPage implements OnInit {
                                   this.presentAlert('', 'Nema rezultata pretrage za ' + this.imeFilma);
                               }
                               if (res.Error === 'Too many results.') {
-                                  this.presentAlert('', 'Previse poklapanja, poboljsajte kriterijum pretrage!');
+                                  this.presentAlert('', 'Previše poklapanja, poboljšaj kriterijum pretrage!');
                               }
                           }
 
@@ -62,7 +62,7 @@ export class MoviesApiSearchPage implements OnInit {
               }
           } else {
 
-              this.presentAlert('Greska', 'Morate uneti naziv filma za pretragu!');
+              this.presentAlert('Greška', 'Moraš uneti naziv filma za pretragu!');
           }
       });
 

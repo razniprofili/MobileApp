@@ -10,7 +10,7 @@
   </div>
   <form [formGroup]="registerForm" (ngSubmit)="onRegister2()" >
     <ion-item lines="none" *ngIf="greska===true">
-      <ion-label color="danger">{{tekstGreske}}</ion-label>
+      <ion-label color="danger">{{tekstGreske}} <a *ngIf="vecPostoji===true" routerLink="/log-in">Prijavi se</a></ion-label>
     </ion-item>
     <ion-grid>
       <ion-row>
@@ -45,7 +45,7 @@
       </ion-row>
       <ion-row *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched">
         <ion-col size-sm="6" offset-sm="3">
-          <ion-label color="danger">Morate uneti validnu email adresu!</ion-label>
+          <ion-label color="danger">Moraš uneti validnu email adresu!</ion-label>
         </ion-col>
       </ion-row>
 
@@ -53,7 +53,7 @@
         <ion-col size-sm="6" offset-sm="3">
           <ion-item>
             <ion-label position="floating">
-              Sifra
+              Šifra
             </ion-label>
             <ion-input type="password" formControlName="password" [(ngModel)]="sifra"></ion-input>
           </ion-item>
@@ -62,7 +62,7 @@
 
       <ion-row *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched">
         <ion-col size-sm="6" offset-sm="3">
-         <ion-label color="danger">Sifra mora biti duzine minimum 8 karaktera</ion-label>
+         <ion-label color="danger">Šifra mora biti dužine minimum 8 karaktera</ion-label>
         </ion-col>
       </ion-row>
 
@@ -70,7 +70,7 @@
         <ion-col size-sm="6" offset-sm="3">
           <ion-item>
             <ion-label position="floating">
-              Ponovi sifru
+              Ponovi šifru
             </ion-label>
             <ion-input type="password" formControlName="cpassword" [(ngModel)]="sifra2"></ion-input>
           </ion-item>
@@ -79,7 +79,7 @@
 
       <ion-row class="ion-justify-content-center">
         <ion-col size-sm="6" >
-          Imas nalog?  <a routerLink="/log-in">Prijavi se</a>
+          Imaš nalog?  <a routerLink="/log-in">Prijavi se</a>
         </ion-col>
       </ion-row>
 

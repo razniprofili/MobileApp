@@ -18,7 +18,7 @@ export class MovieModalComponent implements OnInit {
   @Input() zemlja : string;
   @Input() godina : string;
   @Input() trajanje : string;
-  @Input() datum : string;
+  @Input() datum : any;
   @Input() ocena : string;
 
   @ViewChild('f', {static: true}) form: NgForm;
@@ -42,36 +42,59 @@ export class MovieModalComponent implements OnInit {
     this.selectedOptionZanr = this.itemO['value'];
     console.log(this.selectedOptionZanr);
   }
+  izmenjenDatum = false;
+  pomDatum: any
   dateTimeChange(event) {
     this.itemD = JSON.parse(JSON.stringify(event.detail));
     this.selectedDate = this.itemD['value'];
+    this.izmenjenDatum = true;
     console.log(this.selectedDate);
   }
-
+  izmenjenaOcena = false;
+  pomOcena: any
   onChangeSelectOcena(event) {
     this.itemR = JSON.parse(JSON.stringify(event.detail));
     this.selectedOptionOcena = this.itemR['value'];
+    this.izmenjenaOcena = true;
     console.log(this.selectedOptionOcena);
   }
 
+  promenaOcene(){
+    if(this.izmenjenaOcena === true){
+      this.pomOcena = this.selectedOptionOcena;
+    } else{
+      this.pomOcena = this.ocena;
+    }
+  }
 
+  promenaDatuma(){
+    if(this.izmenjenDatum === true){
+      this.pomDatum = this.selectedDate;
+      console.log(this.pomDatum)
+    } else{
+      this.pomDatum = this.datum;
+    }
+  }
 
   potvrdiIzmene(){
     if (!this.form.valid) {
       return;
     }
+    this.promenaOcene();
+    this.promenaDatuma();
 
     this.modalCtrl.dismiss({
+
       movieData:{
         trajanje: this.form.value['trajanje'],
         zanr: this.form.value['zanr'],
         glumci: this.form.value['glumci'],
         reziser: this.form.value['reziser'],
         nazivFilma: this.form.value['text'],
-        datum: this.form.value['datum'],
+        datum: this.pomDatum,
         godina: this.form.value['godina'],
         komentar: this.form.value['komentar'],
-        ocena: this.selectedOptionOcena,
+        ocena: this.pomOcena,
         zemlja: this.form.value['zemlja'],
       }
     }, 'confirm');
