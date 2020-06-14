@@ -13,7 +13,8 @@
     <div class="ion-text-center" *ngIf="isLoading">
         <ion-spinner  name="bubbles"></ion-spinner>
     </div>
-    <ion-card [hidden]="isLoading">
+    <ion-grid [hidden]="isLoading">
+    <ion-card >
   <form #f="ngForm"  >
     <ion-grid>
       <!--sirina u gridu je ogranicena na 12-->
@@ -82,11 +83,11 @@
               </ion-row>
               <ion-radio-group  allow-empty-selection = “true”
                                 name=“ocena”
-                                (ionChange)="radioGroupChange($event)">
+                                (ionChange)="radioGroupChange($event)" >
                   <ion-row>
                       <ion-item>
                       <ion-col [size]="3">
-                              <ion-label  > Ocena</ion-label>
+                              <ion-label > Ocena</ion-label>
                       </ion-col>
                       <ion-col >
                               <ion-label >1</ion-label>
@@ -136,8 +137,9 @@
           </ion-col>
       </ion-row>
     </ion-grid>
-  </form>
+    </form>
     </ion-card>
+    </ion-grid>
 </ion-content>
 
 

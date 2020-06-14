@@ -10,6 +10,7 @@ import { ActivityPage } from './activity.page';
 import {SearchMoviePageModule} from '../search-movie/search-movie.module';
 
 import { ChartsModule } from 'ng2-charts';
+import {NgxPopperModule} from 'ngx-popper';
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { ChartsModule } from 'ng2-charts';
         IonicModule,
         ActivityPageRoutingModule,
         SearchMoviePageModule,
-        ChartsModule
+        ChartsModule,
+    NgxPopperModule
     ],
     declarations: [ActivityPage]
 })

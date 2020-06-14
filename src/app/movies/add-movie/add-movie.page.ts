@@ -61,7 +61,13 @@ export class AddMoviePage implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit');
+      this.isLoading = true;
+      this.moviesService.getMovies().subscribe(movieData => {
+        console.log(movieData);
+        this.movies=movieData;
+        this.isLoading = false;
 
+    });
   }
 
   async presentAlertPrompt() {
@@ -100,16 +106,16 @@ export class AddMoviePage implements OnInit {
 
   openAlert() {
     this.alertController.create({
-      header: 'Sacuvaj film',
-      message: 'Da li zelis da sacuvas film?',
+      header: 'Sačuvaj film',
+      message: 'Da li želiš da sačuvaš film?',
       buttons: [
         {
-          text: 'Sacuvaj',
+          text: 'Sačuvaj',
 
           handler: () => {
-            console.log('Sacuvan film');
+            console.log('Sačuvan film');
 
-            this.loadingCtrl.create({message: 'Cuvanje...'}).then(loadingEl => {
+            this.loadingCtrl.create({message: 'Čuvanje...'}).then(loadingEl => {
 
               loadingEl.present();
               //this.onAddMovie();
@@ -128,25 +134,32 @@ export class AddMoviePage implements OnInit {
                 console.log(this.selectedDate);
               }
 
-                try{
-                  this.moviesSub=this.moviesService
+              if(this.postoji(this.form.value['naziv'])==true){
+                //vec postoji takav film u bazi
+                this.presentAlert(' ', 'Film sa nazivom '+this.form.value['naziv']+' se već nalazi u bazi!');
+                loadingEl.dismiss();
+                this.form.reset();
+
+              }else {
+                try {
+                  this.moviesSub = this.moviesService
                       .addMovie(this.form.value['naziv'], this.form.value['glumci'], this.form.value['reziser'],
-                          this.selectedOption, this.form.value['godina'],  this.form.value['trajanje'],
-                          this.selectedDate, this.selectedRadio, this.form.value['komentar'],this.form.value['zemlja'])
+                          this.selectedOption, this.form.value['godina'], this.form.value['trajanje'],
+                          this.selectedDate, this.selectedRadio, this.form.value['komentar'], this.form.value['zemlja'])
                       .subscribe(movies => {
                         console.log(movies);
-                        this.sacuvan=true;
+                        this.sacuvan = true;
                         loadingEl.dismiss();
-                        this.presentAlert(' ', 'Film je uspesno sacuvan!');
+                        this.presentAlert(' ', 'Film je uspešno sačuvan!');
                         this.form.reset();
                         this.navCtrl.navigateBack('/movies/tabs/search-movie');
 
                       });
-                }catch (e) {
-                  this.presentAlert(' ', 'Greska prilikom cuvanja. Probaj opet!');
+                } catch (e) {
+                  this.presentAlert(' ', 'Greška prilikom čuvanja. Probaj opet!');
                   console.log(e);
                 }
-
+              }
             });
 
 
@@ -201,6 +214,17 @@ export class AddMoviePage implements OnInit {
     this.itemO = JSON.parse(JSON.stringify(event.detail));
     this.selectedOption = this.itemO['value'];
     console.log(this.selectedOption);
+  }
+
+  postoji(naziv:String):boolean{
+    for(let i=0; i<this.movies.length; i++){
+      console.log(this.movies[i].naziv.trim().toLowerCase());
+      if(this.movies[i].naziv.trim().toLowerCase() === naziv.trim().toLowerCase()){
+        console.log(naziv.trim().toLowerCase());
+        return true;
+      }
+    }
+    return false;
   }
 
   ngOnDestroy(){

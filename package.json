@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "5.2.11",
     "@angular/common": "~8.2.14",
     "@angular/core": "~8.2.14",
     "@angular/fire": "^6.0.0",
@@ -28,7 +29,10 @@
     "chartjs-plugin-zoom": "^0.7.7",
     "core-js": "^2.5.4",
     "firebase": "^7.14.2",
+    "ionic-tooltips": "^3.1.0",
     "ng2-charts": "^2.3.2",
+    "ngx-popper": "^7.0.0",
+    "popper.js": "^1.16.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

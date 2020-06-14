@@ -16,6 +16,7 @@ import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore'
 import {HttpClientModule} from '@angular/common/http';
 import {MovieModalComponent} from './movies/movie-modal/movie-modal.component';
 import 'chartjs-plugin-zoom';
+import {NgxPopperModule} from "ngx-popper";
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,7 @@ import 'chartjs-plugin-zoom';
     AngularFireAuthModule,
     AngularFirestoreModule,
       HttpClientModule,
-
+  NgxPopperModule.forRoot({placement:'bottom'})
   ],
   providers: [
     StatusBar,

@@ -1,14 +1,14 @@
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy, NgModule} from '@angular/core';
 import {Movie} from '../movie.model';
 import {Router} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+import { AlertController } from '@ionic/angular';
+import {LoadingController, ModalController, NavController} from '@ionic/angular';
 import {MoviesService} from '../movies.service';
 import {UserService} from '../../user.service';
 import {Subscription} from 'rxjs';
 
 import { Chart } from 'chart.js';
-
 
 @Component({
   selector: 'app-activity',
@@ -28,12 +28,11 @@ export class ActivityPage implements OnInit {
   itemSort: any;
   selectedZanr: string="";
   selectedSort: string="";
-
+  detalji:string="";
   filterData:any[];
   statistics: any[];
   recently:any[];
   chartdata:any[];
-
 
     zanrovi = [] = [
         { id: 0, name: 'Avantura', value: 'Avantura' },
@@ -64,19 +63,21 @@ export class ActivityPage implements OnInit {
 
 
   constructor(private router: Router, private moviesService: MoviesService,
-              private currentUser: UserService, private http: HttpClient) {}
+              private currentUser: UserService, private http: HttpClient,
+              public alertController: AlertController,public navCtrl: NavController,
+              public loadingCtrl: LoadingController) {}
 
 
   ionViewWillEnter() {
     console.log('izvrsen ion will enter');
     this.isLoading = true;
-    this.moviesService.getMovies().subscribe(movieData => { //ovde sam uklonila userID jer nam nije potreban u potpisu metode
-      this.isLoading = false;
-      this.createBarChart();
-      console.log(movieData);
-      if ( this.movies.length === 0) {
-          this.prazan=true;
-      }
+    this.moviesService.getMovies().subscribe(movieData => {
+        this.isLoading = false;
+         this.createBarChart();
+         console.log(movieData);
+         if ( this.movies.length === 0) {
+             this.prazan=true;
+         }
     });
 
   }
@@ -103,7 +104,7 @@ export class ActivityPage implements OnInit {
   onChangeSort(event) {
     this.itemSort = JSON.parse(JSON.stringify(event.detail));
     this.selectedSort = this.itemSort['value'];
-      console.log(this.selectedSort);
+    console.log(this.selectedSort);
 
   }
 
@@ -155,10 +156,10 @@ export class ActivityPage implements OnInit {
           for(let i=1; i<last.length; i++){
                elem= Date.parse(last[i].datum.trim());
                console.log(elem);
-              if(max<elem){
+               if(max<elem){
                   max=elem;
                   index=i;
-              }
+               }
           }
           //console.log("Poslednji pogledani");
           //console.log(last[index].naziv);
@@ -174,32 +175,41 @@ export class ActivityPage implements OnInit {
               last.push(movies[i].naziv);
           }
       }
-      //console.log(last[last.length-1]);
       this.recently.push({ id: 1, name: 'Poslednji film ocenjen ocenom 5:', value: last[last.length-1] });
-     // console.log(this.recently[0].name+" "+this.recently[0].value);
-      //console.log(this.recently[1].name+" "+this.recently[1].value);
 
       return  this.recently;
   }
 
   izracunajStatistike(movies: Movie[]):any[]{
       this.statistics=[];
+      this.detalji='';
       //ukupno filmova
         this.statistics.push({ id:0, name:'Ukupno filmova', value:movies.length});
+        this.detalji+='Ukupno filmova: Ukupan broj filmova koji se nalaze u bazi. ';
 
         //ukupno vreme
         //default vreme filma je npr 100min
         var minuti=0;
         for(let i =0; i<movies.length; i++){
             if(movies[i].trajanje==undefined || movies[i].trajanje=='')
-                minuti+=100;
+                minuti+=120;
             else minuti+= +movies[i].trajanje;
         }
         //console.log(minuti);
-       
-        this.statistics.push({id:1, name:'Ukupno minuta', value:minuti});
+        var x=minuti;
+        var min=x%60;
+        var sat=((x%(24*60))/60)+"";
+        var dan=(x/(24*60))+"";
 
-        //prosek ocena-nemaju svi ocenu
+        console.log(dan.split('.')[0]+"d "+sat.split('.')[0]+"h "+min+"m");
+
+    this.detalji=this.detalji+'Ukupno minuta: Ukupno vreme utrošeno na gledanje filmova. ' +
+        'Podrazumevano trajanje je 120 min - ' +
+        dan.split('.')[0]+" dana "+sat.split('.')[0]+" sati "+min+" minuta. ";
+
+    this.statistics.push({id:1, name:'Ukupno minuta', value:minuti});
+
+        //prosek ocena onih koji imaju ocenu
         var suma=0;
         var broj=0;
         for(let i=0; i<movies.length; i++){
@@ -215,50 +225,75 @@ export class ActivityPage implements OnInit {
             sred=suma/broj;
         }
         this.statistics.push({id:2, name:'Prosek ocena', value:sred.toFixed(2)});
+        this.detalji+='Prosek ocena: Prosečna ocena filmova koje si ocenio/ocenila. ';
 
         //najgledaniji zanr
-      //za svaki zanr broji koliko puta se pojavljuje u movies
-      var novi: any[]=[];
-      var brojac=0;
-      for(let i=0; i<this.zanrovi.length;i++){
-          brojac=0;
-          for(let j=0; j<movies.length; j++) {
-              if(movies[j].zanr!=undefined && movies[j].zanr.trim()!='' &&
-              movies[j].zanr.trim().toLowerCase()== this.zanrovi[i].name.trim().toLowerCase()){
-                  brojac++;
-              }
-          }
+        //za svaki zanr broji koliko puta se pojavljuje u movies
+         var novi: any[]=[];
+         var brojac=0;
+         for(let i=0; i<this.zanrovi.length;i++){
+             brojac=0;
+             for(let j=0; j<movies.length; j++) {
+                 if(movies[j].zanr!=undefined && movies[j].zanr.trim()!='' &&
+                 movies[j].zanr.trim().toLowerCase()== this.zanrovi[i].name.trim().toLowerCase()){
+                      brojac++;
+                 }
+             }
           novi.push({name:this.zanrovi[i].name.trim(), value:brojac});
           //console.log(this.zanrovi[i].name.trim()+" "+brojac);
       }
       var max=0;
       var naziv="";
+      var labela="";
       for(let i=0; i<novi.length; i++){
+          if(novi[i].value==max){
+                labela=labela+", "+novi[i].name;
+          }
           if(novi[i].value> max){
               max=novi[i].value;
               naziv=novi[i].name;
-              //console.log(max+" "+naziv);
+              labela=novi[i].name;
           }
+      }
+      if(labela!= naziv){
+          naziv+='...';
 
       }
+        console.log(labela);
+        this.detalji=this.detalji+'Najčešći žanr: Žanr koji si najčešće gledao/la. ' +
+          'Različiti žanrovi mogu imati isti broj gledanja - '+labela;
+        this.statistics.push({id:3, name:'Najčešći žanr', value:naziv});
 
-      this.statistics.push({id:3, name:'Najgledaniji zanr', value:naziv});
 
-      // for(let i=0; i<this.statistics.length;i++){
-        //    console.log(this.statistics[i]);
-        //}
         return this.statistics;
     }
 
-  izracunajPodatke(movies: Movie[]):any[]{
+    detaljnije(){
+        this.alertController.create({
+            message:this.detalji,
+            cssClass:'myAlert',
+            buttons: [
+                {
+                    text: 'OK',
+                    handler: () => {
+                        console.log('OK');
+                    }
+                }
+            ]
+        }).then((alert) => {
+            alert.present();
+        });
+    }
+
+    izracunajPodatke(movies: Movie[]):any[]{
       var godina= new Date().getFullYear();
       var pomocna=0;
-       this.chartdata=[];
+      this.chartdata=[];
 
       for(let i=godina-9; i<=godina; i++){
-        pomocna=0;
-        for(let  j=0; j<movies.length; j++){
-            if(movies[j].datum!=undefined && movies[j].datum.trim()!=''){
+          pomocna=0;
+          for(let  j=0; j<movies.length; j++){
+               if(movies[j].datum!=undefined && movies[j].datum.trim()!=''){
                 var dat=parseInt(movies[j].datum.trim().split('-')[0], 10);
                 if(dat==i) pomocna++;
             }
